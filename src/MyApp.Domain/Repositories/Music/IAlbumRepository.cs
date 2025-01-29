@@ -10,7 +10,7 @@ namespace MyApp.Domain.Repositories.Music
     public interface IAlbumRepository
     {
         Task<Album?> GetByIdAsync(int id);
-        Task<List<Album>> GetAllAsync();
+        IQueryable<Album> GetAllAsync();
         Task AddAsync(Album album);
         Task UpdateAsync(Album album);
         Task DeleteAsync(int id);

@@ -57,7 +57,7 @@ else
     private async Task LoadAlbums()
     {
         isLoading = true;
-        albums = await AlbumUseCases.GetAllAlbumsAsync();
+        albums = await AlbumUseCases.GetAllAlbumsAsync(new AlbumSearchDto());
         isLoading = false;
     }
 

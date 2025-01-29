@@ -1,5 +1,7 @@
-﻿using MyApp.Application.DTOs.Music;
+﻿using Microsoft.EntityFrameworkCore;
+using MyApp.Application.DTOs.Music;
 using MyApp.Domain.Entities.Music;
+using MyApp.Domain.Enums.Music;
 using MyApp.Domain.Exceptions;
 using MyApp.Domain.Repositories.Music;
 using System;
@@ -26,12 +28,53 @@ namespace MyApp.Application.UseCases.Music
             return MapToDto(album);
         }
 
-        public async Task<List<AlbumDto>> GetAllAlbumsAsync()
+        public async Task<List<AlbumDto>?> GetAllAlbumsAsync(AlbumSearchDto dto)
         {
-            var albums = await _albumRepo.GetAllAsync();
-            return albums.Select(album => MapToDto(album)!)
-                         .Where(dto => dto != null)
-                         .ToList();
+            var query = _albumRepo.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(dto.ArtistName))
+            {
+                query = query.Where(a => a.Artist.Contains(dto.ArtistName));
+            }
+
+            if (!string.IsNullOrEmpty(dto.CdName))
+            {
+                query = query.Where(a => a.CDs.Any(c => c.Name.Contains(dto.CdName)));
+            }
+
+            if (!string.IsNullOrEmpty(dto.TrackTitle))
+            {
+                query = query.Where(a => a.CDs.Any(c => c.Tracks.Any(t => t.Title.Contains(dto.TrackTitle))));
+            }
+
+            if (dto.Genre.HasValue)
+            {
+                query = query.Where(a => a.CDs.Any(c => c.Genre == dto.Genre.Value));
+            }
+
+            switch (dto.SortBy)
+            {
+                case AlbumSortBy.CdName:
+                    query = dto.SortOrder == AlbumSortOrder.Asc
+                        ? query.OrderBy(a => a.CDs.First().Name)
+                        : query.OrderByDescending(a => a.CDs.First().Name);
+                    break;
+                case AlbumSortBy.Artist:
+                    query = dto.SortOrder == AlbumSortOrder.Asc
+                        ? query.OrderBy(a => a.Artist)
+                        : query.OrderByDescending(a => a.Artist);
+                    break;
+                default:
+                    break;
+            }
+
+            // Apply paging
+            var pagedAlbums = await query
+                .Skip((dto.PageNumber) * dto.PageSize)
+                .Take(dto.PageSize)
+                .ToListAsync();
+
+            return pagedAlbums.Select(MapToDto).ToList();
         }
 
         public async Task CreateAlbumAsync(CreateAlbumDto dto)
@@ -81,9 +124,12 @@ namespace MyApp.Application.UseCases.Music
             await _albumRepo.DeleteAsync(dto.Id);
         }
 
-        private static AlbumDto? MapToDto(Album? album)
+        private static AlbumDto MapToDto(Album album)
         {
-            if (album == null) return null;
+            if (album == null)
+            {
+                throw new ArgumentNullException(nameof(album), "Album cannot be null.");
+            }
 
             return new AlbumDto()
             {

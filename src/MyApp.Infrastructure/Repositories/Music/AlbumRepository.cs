@@ -45,12 +45,12 @@ namespace MyApp.Infrastructure.Repositories.Music
             .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<Album>> GetAllAsync()
+        public IQueryable<Album> GetAllAsync()
         {
-            return await _context.Albums
-            .Include(a => a.CDs)
-            .ThenInclude(c => c.Tracks)
-            .ToListAsync();
+            return _context.Albums
+                .Include(a => a.CDs)
+                .ThenInclude(c => c.Tracks)
+                .AsQueryable();
         }
     }
 }
