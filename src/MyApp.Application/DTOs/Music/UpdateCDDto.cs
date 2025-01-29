@@ -9,6 +9,7 @@ namespace MyApp.Application.DTOs.Music
 {
     public class UpdateCDDto
     {
+        public int Id { get; set; }
         public required string Name { get; set; }
         public Genre Genre { get; set; }
         public List<UpdateTrackDto>? Tracks { get; set; }

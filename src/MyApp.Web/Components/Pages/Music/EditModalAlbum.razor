@@ -18,11 +18,79 @@
     {
         if (album!.Id == 0)
         {
-            await AlbumUseCases.CreateAlbumAsync(new CreateAlbumDto { Artist = album.Artist });
+            var createAlbumDto = new CreateAlbumDto { Artist = album.Artist };
+
+            if (album.CDs != null)
+            {
+                createAlbumDto.CDs = [];
+
+                foreach (var cd in album.CDs)
+                {
+                    var createCd = new CreateCDDto
+                        {
+                            Name = cd.Name,
+                            Genre = cd.Genre
+                        };
+
+                    createAlbumDto.CDs.Add(createCd);
+
+                    if (cd.Tracks != null)
+                    {
+                        createCd.Tracks = [];
+
+                        foreach (var track in cd.Tracks)
+                        {
+                            createCd.Tracks.Add(new CreateTrackDto
+                                {
+                                    Number = track.Number,
+                                    Title = track.Title,
+                                    Length = track.Length
+                                });
+                        }
+                    }
+                }
+            }
+
+            await AlbumUseCases.CreateAlbumAsync(createAlbumDto);
         }
         else
         {
-            await AlbumUseCases.UpdateAlbumAsync(album.Id, new UpdateAlbumDto { Artist = album.Artist });
+            var updateAlbumDto = new UpdateAlbumDto { Artist = album.Artist };
+
+            if (album.CDs != null)
+            {
+                updateAlbumDto.CDs = [];
+
+                foreach (var cd in album.CDs)
+                {
+                    var updateCd = new UpdateCDDto
+                        {
+                            Id = cd.Id,
+                            Name = cd.Name,
+                            Genre = cd.Genre
+                        };
+
+                    updateAlbumDto.CDs.Add(updateCd);
+
+                    if (cd.Tracks != null)
+                    {
+                        updateCd.Tracks = [];
+
+                        foreach (var track in cd.Tracks)
+                        {
+                            updateCd.Tracks.Add(new UpdateTrackDto
+                                {
+                                    Id = track.Id,
+                                    Number = track.Number,
+                                    Title = track.Title,
+                                    Length = track.Length
+                                });
+                        }
+                    }
+                }
+            }
+
+            await AlbumUseCases.UpdateAlbumAsync(album.Id, updateAlbumDto);
         }
 
         album = null;
