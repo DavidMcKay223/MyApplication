@@ -23,7 +23,6 @@
     <div class="col-md-3">
         <div class="mb-3 form-floating">
             <InputSelect id="ddl_genre" class="form-select" @bind-Value="SearchDto.Genre">
-                <option value="">Select Genre</option>
                 @foreach (var genre in Enum.GetValues(typeof(Genre)))
                 {
                     <option value="@genre">@genre</option>

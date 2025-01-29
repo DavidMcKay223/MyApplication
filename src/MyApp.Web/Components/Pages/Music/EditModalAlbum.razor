@@ -1,5 +1,7 @@
 ﻿@using MyApp.Application.DTOs.Music
 @using MyApp.Application.UseCases.Music
+@using MyApp.Domain.Enums.Music
+@using MyApp.Web.Components.Shared
 @inject IAlbumUseCases AlbumUseCases
 
 @code {
@@ -10,8 +12,20 @@
 
     public void Show(AlbumDto? albumToEdit)
     {
-        album = albumToEdit;
+        album = albumToEdit ?? new AlbumDto { Artist = "", CDs = new List<CDDto>() };
         StateHasChanged();
+    }
+
+    private void AddNewCD()
+    {
+        album!.CDs ??= new List<CDDto>();
+        album.CDs.Add(new CDDto { Name = string.Empty, Tracks = new List<TrackDto>() });
+    }
+
+    private void AddNewTrack(CDDto cd)
+    {
+        cd.Tracks ??= new List<TrackDto>();
+        cd.Tracks.Add(new TrackDto { Title = string.Empty, Number = cd.Tracks.Count + 1, Length = new TimeSpan() });
     }
 
     private async Task SaveAlbum()
@@ -107,8 +121,8 @@
 {
     <div class="modal-backdrop">
         <div class="modal show d-block" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="height: 80%;">
                     <div class="modal-header">
                         <h5 class="modal-title">@(album.Id == 0 ? "Add Album" : "Edit Album")</h5>
                         <button type="button" class="btn-close" @onclick="Cancel"></button>
@@ -120,6 +134,70 @@
                                 <InputText id="artistName" class="form-control" @bind-Value="album.Artist" />
                                 <label for="artistName">Artist Name</label>
                                 <ValidationMessage For="@(() => album.Artist)" />
+                            </div>
+
+                            @if (album.CDs != null)
+                            {
+                                @foreach (var cd in album.CDs)
+                                {
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <h5>CD Details</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3 form-floating">
+                                                <InputText id="cdName" class="form-control" @bind-Value="cd.Name" />
+                                                <label>CD Name</label>
+                                                <ValidationMessage For="@(() => cd.Name)" />
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <InputSelect id="ddl_genre" class="form-select" @bind-Value="cd.Genre">
+                                                    @foreach (var genre in Enum.GetValues(typeof(Genre)))
+                                                    {
+                                                        <option value="@genre">@genre</option>
+                                                    }
+                                                </InputSelect>
+                                                <label for="ddl_genre">Genre</label>
+                                            </div>
+
+                                            @if (cd.Tracks != null)
+                                            {
+                                                @foreach (var track in cd.Tracks)
+                                                {
+                                                    <div class="row g-3">
+                                                        <div class="col-md-2">
+                                                            <div class="mb-3 form-floating">
+                                                                <InputNumber id="trackNumber" class="form-control" @bind-Value="track.Number" />
+                                                                <label>Track Number</label>
+                                                                <ValidationMessage For="@(() => track.Number)" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="mb-3 form-floating">
+                                                                <InputText id="trackTitle" class="form-control" @bind-Value="track.Title" />
+                                                                <label>Track Title</label>
+                                                                <ValidationMessage For="@(() => track.Title)" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="mb-3 form-floating">
+                                                                <CustomTimeInput TValue="TimeSpan" @bind-Value="track.Length" class="form-control" />
+                                                                <label>Track Length</label>
+                                                                <ValidationMessage For="@(() => track.Length)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            <div class="mt-3">
+                                                <button type="button" class="btn btn-primary" @onclick="() => AddNewTrack(cd)">Add New Track</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-primary" @onclick="AddNewCD">Add New CD</button>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -148,10 +226,24 @@
     }
 
     .modal-dialog-centered {
-        max-width: 500px;
+        max-width: 80%;
+        height: 80%;
     }
 
     .modal-content {
-        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
+        overflow: hidden;
+    }
+
+    .modal-body {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        max-height: calc(100vh - 325px);
+    }
+
+    .modal-footer {
+        flex-shrink: 0;
     }
 </style>
