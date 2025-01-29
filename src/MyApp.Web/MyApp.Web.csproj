@@ -21,9 +21,4 @@
     <ProjectReference Include="..\MyApp.Shared\MyApp.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Pages\Music\CDs\" />
-    <Folder Include="Components\Pages\Music\Tracks\" />
-  </ItemGroup>
-
 </Project>
