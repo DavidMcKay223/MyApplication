@@ -8,6 +8,7 @@ namespace MyApp.Domain.Enums.Music
 {
     public enum Genre
     {
+        None,
         Rock,
         Pop,
         Jazz,

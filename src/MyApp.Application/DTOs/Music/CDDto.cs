@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public record CDDto(int Id, string Name, Genre Genre, List<TrackDto> Tracks);
+    public record CDDto(int Id = 0, string Name = "", Genre Genre = Genre.None, List<TrackDto>? Tracks = null);
 }

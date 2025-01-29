@@ -15,7 +15,11 @@ namespace MyApp.Infrastructure.Repositories.Music
         private readonly AppDbContext _context;
         public AlbumRepository(AppDbContext context) => _context = context;
 
-        public async Task AddAsync(Album album) => await _context.Albums.AddAsync(album);
+        public async Task AddAsync(Album album)
+        {
+            await _context.Albums.AddAsync(album);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task UpdateAsync(Album album)
         {

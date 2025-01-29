@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public record UpdateAlbumDto(int Id, string Artist, List<UpdateCDDto> CDs);
+    public record UpdateAlbumDto(string Artist = "", List<UpdateCDDto>? CDs = null);
 }
