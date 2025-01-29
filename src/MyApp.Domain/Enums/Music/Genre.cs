@@ -12,6 +12,12 @@ namespace MyApp.Domain.Enums.Music
         Rock,
         Pop,
         Jazz,
-        Classical
+        Classical,
+        HipHop,
+        Electronic,
+        Country,
+        Reggae,
+        Blues,
+        Metal
     }
 }

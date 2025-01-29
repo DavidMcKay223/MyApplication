@@ -15,5 +15,6 @@ namespace MyApp.Application.Common
         public Boolean UsePagination { get; set; } = true;
         public TSortBy? SortBy { get; set; }
         public TSortOrder? SortOrder { get; set; }
+        public int TotalItems { get; set; }
     }
 }

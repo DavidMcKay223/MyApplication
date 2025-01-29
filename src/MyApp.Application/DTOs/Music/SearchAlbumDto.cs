@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public class AlbumSearchDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
+    public class SearchAlbumDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
     {
         public string? ArtistName { get; set; }
         public string? CdName { get; set; }

@@ -1,0 +1,82 @@
+﻿@using MyApp.Application.DTOs.Music
+
+@if (Albums?.Any() == false)
+{
+    <p class="text-muted">No albums found.</p>
+} 
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Artist Name</th>
+                <th>CDs</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var album in Albums ?? [])
+            {
+                <tr>
+                    <td>@album.Artist</td>
+                    <td>
+                        <table class="table table-bordered nested-table">
+                            <thead>
+                                <tr>
+                                    <th>CD Name</th>
+                                    <th>Genre</th>
+                                    <th>Tracks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cd in album.CDs ?? [])
+                                {
+                                    <tr>
+                                        <td>@cd.Name</td>
+                                        <td>@cd.Genre</td>
+                                        <td>
+                                            <table class="table table-bordered nested-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Track Number</th>
+                                                        <th>Track Title</th>
+                                                        <th>Track Length</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var track in cd.Tracks ?? [])
+                                                    {
+                                                        <tr>
+                                                            <td>@track.Number</td>
+                                                            <td>@track.Title</td>
+                                                            <td>@track.Length</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary" @onclick="() => OnEdit.InvokeAsync(album.Id)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => OnDelete.InvokeAsync(album)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public List<AlbumDto>? Albums { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<AlbumDto> OnDelete { get; set; }
+}

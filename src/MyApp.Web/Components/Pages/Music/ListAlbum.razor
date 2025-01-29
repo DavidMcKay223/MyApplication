@@ -1,0 +1,94 @@
+﻿@using MyApp.Application.DTOs.Music
+@using MyApp.Application.UseCases.Music
+@using MyApp.Domain.Enums.Music
+@using MyApp.Web.Components.Shared
+@inject IAlbumUseCases AlbumUseCases
+
+<div class="container">
+    <h1 class="my-4 text-center">Albums</h1>
+</div>
+
+@if (isLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <FormSearchAlbum SearchDto="searchDto" />
+
+    <SearchButton OnSearch="Search" OnReset="ResetSearch" OnAdd="ShowAddModal" />
+
+    <FormTableAlbum Albums="albums" OnEdit="ShowEditModal" OnDelete="DeleteAlbum" />
+
+    <Pagination TItem="AlbumDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+}
+
+<EditModalAlbum @ref="editModal" OnAlbumSaved="LoadAlbums" />
+
+@code {
+    private List<AlbumDto>? albums;
+    private bool isLoading = true;
+    private EditModalAlbum? editModal;
+    private SearchAlbumDto searchDto = new SearchAlbumDto();
+    private int totalItems;
+    private int pageSize = 10;
+    private int currentPage = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAlbums();
+    }
+
+    private async Task LoadAlbums()
+    {
+        isLoading = true;
+        searchDto.PageNumber = currentPage;
+        searchDto.PageSize = pageSize;
+
+        albums = await AlbumUseCases.GetAllAlbumsAsync(searchDto);
+        totalItems = searchDto.TotalItems;
+        isLoading = false;
+    }
+
+    private void ShowAddModal()
+    {
+        editModal!.Show(new AlbumDto { Id = 0, Artist = "" });
+    }
+
+    private async void ShowEditModal(int id)
+    {
+        var album = await AlbumUseCases.GetAlbumByIdAsync(id);
+        editModal!.Show(album);
+    }
+
+    private async Task DeleteAlbum(AlbumDto dto)
+    {
+        await AlbumUseCases.DeleteAlbumAsync(new DeleteAlbumDto() { Id = dto.Id });
+        await LoadAlbums();
+    }
+
+    private async Task OnPageChanged(int page)
+    {
+        currentPage = page;
+        await LoadAlbums();
+    }
+
+    private async Task OnPageSizeChanged(int size)
+    {
+        pageSize = size;
+        currentPage = 0;
+        await LoadAlbums();
+    }
+
+    private async Task Search()
+    {
+        currentPage = 0;
+        await LoadAlbums();
+    }
+
+    private async Task ResetSearch()
+    {
+        searchDto = new SearchAlbumDto();
+        await LoadAlbums();
+    }
+}

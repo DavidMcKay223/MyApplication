@@ -9,7 +9,7 @@ namespace MyApp.Application.UseCases.Music
 {
     public interface IAlbumUseCases
     {
-        Task<List<AlbumDto>?> GetAllAlbumsAsync(AlbumSearchDto dto);
+        Task<List<AlbumDto>?> GetAllAlbumsAsync(SearchAlbumDto dto);
         Task<AlbumDto?> GetAlbumByIdAsync(int id);
         Task CreateAlbumAsync(CreateAlbumDto dto);
         Task UpdateAlbumAsync(int id, UpdateAlbumDto dto);

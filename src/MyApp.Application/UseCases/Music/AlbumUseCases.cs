@@ -28,7 +28,7 @@ namespace MyApp.Application.UseCases.Music
             return MapToDto(album);
         }
 
-        public async Task<List<AlbumDto>?> GetAllAlbumsAsync(AlbumSearchDto dto)
+        public async Task<List<AlbumDto>?> GetAllAlbumsAsync(SearchAlbumDto dto)
         {
             var query = _albumRepo.GetAllAsync();
 
@@ -68,7 +68,8 @@ namespace MyApp.Application.UseCases.Music
                     break;
             }
 
-            // Apply paging
+            dto.TotalItems = await query.CountAsync();
+
             var pagedAlbums = await query
                 .Skip((dto.PageNumber) * dto.PageSize)
                 .Take(dto.PageSize)
