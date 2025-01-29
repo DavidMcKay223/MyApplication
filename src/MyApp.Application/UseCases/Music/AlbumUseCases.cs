@@ -4,6 +4,7 @@ using MyApp.Domain.Exceptions;
 using MyApp.Domain.Repositories.Music;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,10 @@ namespace MyApp.Application.UseCases.Music
     {
         private readonly IAlbumRepository _albumRepo;
 
-        public AlbumUseCases(IAlbumRepository albumRepo) => _albumRepo = albumRepo;
+        public AlbumUseCases(IAlbumRepository albumRepo)
+        {
+            _albumRepo = albumRepo;
+        }
 
         public async Task<AlbumDto?> GetAlbumAsync(int id)
         {
@@ -34,24 +38,48 @@ namespace MyApp.Application.UseCases.Music
         {
             var album = new Album
             {
-                Artist = dto.Artist,
-                //CDs = dto.CDs.Select(cd => new CD
-                //{
-                //    Name = cd.Name,
-                //    Genre = cd.Genre,
-                //    Tracks = cd.Tracks.Select(t => new Track
-                //    {
-                //        Number = t.Number,
-                //        Title = t.Title,
-                //        Length = t.Length
-                //    }).ToList()
-                //}).ToList()
+                Artist = dto.Artist
             };
+
+            album.CDs ??= [];
+
+            if (dto.CDs != null)
+            {
+                foreach (var cdDto in dto.CDs)
+                {
+                    var cd = new CD
+                    {
+                        Name = cdDto.Name,
+                        Genre = cdDto.Genre
+                    };
+
+                    if (cdDto.Tracks != null)
+                    {
+                        cd.Tracks ??= [];
+
+                        foreach (var trackDto in cdDto.Tracks)
+                        {
+                            var track = new Track
+                            {
+                                Number = trackDto.Number,
+                                Title = trackDto.Title,
+                                Length = trackDto.Length
+                            };
+                            cd.Tracks.Add(track);
+                        }
+                    }
+
+                    album.CDs.Add(cd);
+                }
+            }
 
             await _albumRepo.AddAsync(album);
         }
 
-        public async Task DeleteAlbumAsync(int id) => await _albumRepo.DeleteAsync(id);
+        public async Task DeleteAlbumAsync(DeleteAlbumDto dto)
+        {
+            await _albumRepo.DeleteAsync(dto.Id);
+        }
 
         private static AlbumDto? MapToDto(Album? album)
         {

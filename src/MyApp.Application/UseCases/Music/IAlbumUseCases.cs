@@ -13,6 +13,6 @@ namespace MyApp.Application.UseCases.Music
         Task<AlbumDto?> GetAlbumByIdAsync(int id);
         Task CreateAlbumAsync(CreateAlbumDto dto);
         Task UpdateAlbumAsync(int id, UpdateAlbumDto dto);
-        Task DeleteAlbumAsync(int id);
+        Task DeleteAlbumAsync(DeleteAlbumDto dto);
     }
 }

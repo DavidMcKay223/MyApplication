@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public class UpdateAlbumDto
+    public class DeleteTrackDto
     {
-        public required string Artist { get; set; }
-        public List<UpdateCDDto>? CDs { get; set; }
+        public int Id { get; set; }
     }
 }

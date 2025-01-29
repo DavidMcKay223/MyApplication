@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public record CreateTrackDto(
-        int Number,
-        string Title,
-        TimeSpan Length
-    );
+    public class CreateTrackDto
+    {
+        public required int Number { get; set; }
+        public required string Title { get; set; }
+        public required TimeSpan Length { get; set; }
+    }
 }

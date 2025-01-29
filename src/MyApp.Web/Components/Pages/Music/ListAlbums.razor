@@ -34,7 +34,7 @@ else
                     <td>@album.Artist</td>
                     <td>
                         <button class="btn btn-sm btn-warning" @onclick="() => ShowEditModal(album.Id)">Edit</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteAlbum(album.Id)">Delete</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteAlbum(album)">Delete</button>
                     </td>
                 </tr>
             }
@@ -72,9 +72,9 @@ else
         editModal!.Show(album);
     }
 
-    private async Task DeleteAlbum(int id)
+    private async Task DeleteAlbum(AlbumDto dto)
     {
-        await AlbumUseCases.DeleteAlbumAsync(id);
+        await AlbumUseCases.DeleteAlbumAsync(new DeleteAlbumDto() { Id = dto.Id });
         await LoadAlbums();
     }
 }

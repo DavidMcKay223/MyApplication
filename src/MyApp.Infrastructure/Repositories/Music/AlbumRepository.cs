@@ -37,14 +37,20 @@ namespace MyApp.Infrastructure.Repositories.Music
             }
         }
 
-        public async Task<Album?> GetByIdAsync(int id) => await _context.Albums
+        public async Task<Album?> GetByIdAsync(int id)
+        {
+            return await _context.Albums
             .Include(a => a.CDs)
             .ThenInclude(c => c.Tracks)
             .FirstOrDefaultAsync(a => a.Id == id);
+        }
 
-        public async Task<List<Album>> GetAllAsync() => await _context.Albums
+        public async Task<List<Album>> GetAllAsync()
+        {
+            return await _context.Albums
             .Include(a => a.CDs)
             .ThenInclude(c => c.Tracks)
             .ToListAsync();
+        }
     }
 }

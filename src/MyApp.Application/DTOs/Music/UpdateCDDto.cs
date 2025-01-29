@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public record UpdateCDDto(
-        string Name,
-        Genre Genre,
-        List<UpdateTrackDto> Tracks
-    );
+    public class UpdateCDDto
+    {
+        public required string Name { get; set; }
+        public Genre Genre { get; set; }
+        public List<UpdateTrackDto>? Tracks { get; set; }
+    }
 }

@@ -6,5 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.DTOs.Music
 {
-    public record CreateAlbumDto(string Artist = "", List<CreateCDDto>? CDs = null);
+    public class CreateAlbumDto
+    {
+        public required string Artist { get; set; }
+        public List<CreateCDDto>? CDs { get; set; }
+    }
 }
