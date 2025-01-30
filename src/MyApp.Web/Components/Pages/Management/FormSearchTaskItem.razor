@@ -1,0 +1,38 @@
+﻿@using MyApp.Application.DTOs.Management
+@using MyApp.Domain.Enums.Management
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" @bind="SearchDto.Title" />
+            <label>Search Task Title</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <InputSelect id="ddl_taskType" class="form-select" @bind-Value="SearchDto.TaskType">
+                <option value="">Select Task Type</option>
+                @foreach (var taskType in Enum.GetValues(typeof(TaskType)))
+                {
+                    <option value="@taskType">@taskType</option>
+                }
+            </InputSelect>
+            <label for="ddl_taskType">Task Type</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <InputSelect id="ddl_isCompleted" class="form-select" @bind-Value="SearchDto.IsCompleted">
+                <option value="">Select Completion Status</option>
+                <option value="true">Completed</option>
+                <option value="false">Not Completed</option>
+            </InputSelect>
+            <label for="ddl_isCompleted">Completion Status</label>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public SearchTaskItemDto SearchDto { get; set; } = new SearchTaskItemDto();
+}

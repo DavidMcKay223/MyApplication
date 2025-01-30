@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using MyApp.Application.Mappings.Management;
 using MyApp.Application.Mappings.Music;
 
 namespace MyApp.Application.Configurations
@@ -19,6 +20,7 @@ namespace MyApp.Application.Configurations
                 cfg.AddProfile(new AlbumProfile());
                 cfg.AddProfile(new CDProfile());
                 cfg.AddProfile(new TrackProfile());
+                cfg.AddProfile(new TaskItemProfile());
             });
 
             var mapper = mapperConfig.CreateMapper();

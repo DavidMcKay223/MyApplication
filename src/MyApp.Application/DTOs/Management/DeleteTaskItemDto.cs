@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyApp.Domain.Enums.Music
+namespace MyApp.Application.DTOs.Management
 {
-    public enum AlbumSortBy
+    public class DeleteTaskItemDto
     {
-        ArtistName,
-        CdName,
-        TrackName
+        public int ID { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@using MyApp.Application.DTOs.Management
+
+@if (TaskItems?.Any() == false)
+{
+    <p class="text-muted">No TaskItems found.</p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Task Type</th>
+                <th>Completion Status</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var taskItem in TaskItems!)
+            {
+                <tr>
+                    <td>@taskItem.Title</td>
+                    <td>@taskItem.Description</td>
+                    <td>@taskItem.TaskType</td>
+                    <td>@(taskItem.IsCompleted ? "Completed" : "Not Completed")</td>
+                    <td>@taskItem.CreatedDate.ToShortDateString()</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" @onclick="() => OnEdit.InvokeAsync(taskItem.ID)">Edit</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => OnDelete.InvokeAsync(taskItem)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public List<TaskItemDto>? TaskItems { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<TaskItemDto> OnDelete { get; set; }
+}

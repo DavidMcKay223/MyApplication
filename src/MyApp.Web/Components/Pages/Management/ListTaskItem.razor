@@ -1,0 +1,94 @@
+﻿@using MyApp.Application.DTOs.Management
+@using MyApp.Application.UseCases.Management
+@using MyApp.Domain.Enums.Management
+@using MyApp.Web.Components.Shared
+@inject ITaskItemUseCases TaskItemUseCases
+
+<div class="container">
+    <h1 class="my-4 text-center">TaskItems</h1>
+</div>
+
+@if (isLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <FormSearchTaskItem SearchDto="searchDto" />
+
+    <SearchButton OnSearch="Search" OnReset="ResetSearch" OnAdd="ShowAddModal" />
+
+    <FormTableTaskItem TaskItems="TaskItems" OnEdit="ShowEditModal" OnDelete="DeleteTaskItem" />
+
+    <Pagination TItem="TaskItemDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+}
+
+<EditModalTaskItem @ref="editModal" OnTaskItemSaved="LoadTaskItems" />
+
+@code {
+    private List<TaskItemDto>? TaskItems;
+    private bool isLoading = true;
+    private EditModalTaskItem? editModal;
+    private SearchTaskItemDto searchDto = new SearchTaskItemDto();
+    private int totalItems;
+    private int pageSize = 10;
+    private int currentPage = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTaskItems();
+    }
+
+    private async Task LoadTaskItems()
+    {
+        isLoading = true;
+        searchDto.PageNumber = currentPage;
+        searchDto.PageSize = pageSize;
+
+        TaskItems = await TaskItemUseCases.GetAllTaskItemsAsync(searchDto);
+        totalItems = searchDto.TotalItems;
+        isLoading = false;
+    }
+
+    private void ShowAddModal()
+    {
+        editModal!.Show(new TaskItemDto() { Title = "", Description = "" });
+    }
+
+    private async void ShowEditModal(int id)
+    {
+        var TaskItem = await TaskItemUseCases.GetTaskItemByIdAsync(id);
+        editModal!.Show(TaskItem);
+    }
+
+    private async Task DeleteTaskItem(TaskItemDto dto)
+    {
+        await TaskItemUseCases.DeleteTaskItemAsync(new DeleteTaskItemDto() { ID = dto.ID });
+        await LoadTaskItems();
+    }
+
+    private async Task OnPageChanged(int page)
+    {
+        currentPage = page;
+        await LoadTaskItems();
+    }
+
+    private async Task OnPageSizeChanged(int size)
+    {
+        pageSize = size;
+        currentPage = 0;
+        await LoadTaskItems();
+    }
+
+    private async Task Search()
+    {
+        currentPage = 0;
+        await LoadTaskItems();
+    }
+
+    private async Task ResetSearch()
+    {
+        searchDto = new SearchTaskItemDto();
+        await LoadTaskItems();
+    }
+}

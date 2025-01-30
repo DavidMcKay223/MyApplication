@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyApp.Domain.Enums.Music
+namespace MyApp.Domain.Enums.Management
 {
-    public enum AlbumSortBy
+    public enum TaskSortOrder
     {
-        ArtistName,
-        CdName,
-        TrackName
+        Asc,
+        Desc
     }
 }

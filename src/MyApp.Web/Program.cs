@@ -5,6 +5,9 @@ using MyApp.Application.UseCases.Music;
 using MyApp.Domain.Repositories.Music;
 using MyApp.Infrastructure.Repositories.Music;
 using MyApp.Application.Configurations;
+using MyApp.Domain.Repositories.Management;
+using MyApp.Application.UseCases.Management;
+using MyApp.Infrastructure.Repositories.Management;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,9 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumUseCases, AlbumUseCases>();
+
+builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
+builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(

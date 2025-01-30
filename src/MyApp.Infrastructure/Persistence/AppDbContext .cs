@@ -1,4 +1,5 @@
 ﻿using MyApp.Domain.Entities.Music;
+using MyApp.Domain.Entities.Management;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace MyApp.Infrastructure.Persistence
         public DbSet<Album> Albums { get; set; }
         public DbSet<CD> CDs { get; set; }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<TaskItem> TaskItems { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

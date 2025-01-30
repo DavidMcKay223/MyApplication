@@ -60,7 +60,7 @@ namespace MyApp.Application.UseCases.Music
                 AlbumSortBy.CdName => dto.SortOrder == AlbumSortOrder.Asc
                                         ? query.OrderBy(a => a.CDs.First().Name)
                                         : query.OrderByDescending(a => a.CDs.First().Name),
-                AlbumSortBy.Artist => dto.SortOrder == AlbumSortOrder.Asc
+                AlbumSortBy.ArtistName => dto.SortOrder == AlbumSortOrder.Asc
                                         ? query.OrderBy(a => a.ArtistName)
                                         : query.OrderByDescending(a => a.ArtistName),
                 _ => dto.SortOrder == AlbumSortOrder.Asc
