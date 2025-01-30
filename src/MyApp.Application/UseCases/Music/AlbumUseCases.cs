@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MyApp.Application.DTOs.Music;
 using MyApp.Domain.Entities.Music;
 using MyApp.Domain.Enums.Music;
@@ -18,23 +19,20 @@ namespace MyApp.Application.UseCases.Music
     {
         private readonly IAlbumRepository _albumRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger<AlbumUseCases> _logger;
 
-        public AlbumUseCases(IAlbumRepository albumRepo, IMapper mapper)
+        public AlbumUseCases(IAlbumRepository albumRepo, IMapper mapper, ILogger<AlbumUseCases> logger)
         {
             _albumRepo = albumRepo;
             _mapper = mapper;
-        }
-
-        public async Task<AlbumDto?> GetAlbumAsync(int id)
-        {
-            var album = await _albumRepo.GetByIdAsync(id) ?? throw new NotFoundException("Album not found");
-            return _mapper.Map<AlbumDto>(album);
+            _logger = logger;
         }
 
         public async Task<List<AlbumDto>?> GetAllAlbumsAsync(SearchAlbumDto dto)
         {
-            var query = _albumRepo.GetAllAsync();
+            var query = _albumRepo.GetAllAsync().AsNoTracking();
 
+            // Apply filters
             if (!string.IsNullOrEmpty(dto.ArtistName))
             {
                 query = query.Where(a => a.ArtistName.Contains(dto.ArtistName));
@@ -55,21 +53,24 @@ namespace MyApp.Application.UseCases.Music
                 query = query.Where(a => a.CDs.Any(c => c.Genre == dto.Genre.Value));
             }
 
+            // Apply sorting
             query = dto.SortBy switch
             {
                 AlbumSortBy.CdName => dto.SortOrder == AlbumSortOrder.Asc
-                                        ? query.OrderBy(a => a.CDs.First().Name)
-                                        : query.OrderByDescending(a => a.CDs.First().Name),
+                                    ? query.OrderBy(a => a.CDs.First().Name)
+                                    : query.OrderByDescending(a => a.CDs.First().Name),
                 AlbumSortBy.ArtistName => dto.SortOrder == AlbumSortOrder.Asc
-                                        ? query.OrderBy(a => a.ArtistName)
-                                        : query.OrderByDescending(a => a.ArtistName),
+                                    ? query.OrderBy(a => a.ArtistName)
+                                    : query.OrderByDescending(a => a.ArtistName),
                 _ => dto.SortOrder == AlbumSortOrder.Asc
-                                        ? query.OrderBy(a => a.ArtistName)
-                                        : query.OrderByDescending(a => a.ArtistName),
+                                    ? query.OrderBy(a => a.ArtistName)
+                                    : query.OrderByDescending(a => a.ArtistName),
             };
 
+            // Count total items for pagination
             dto.TotalItems = await query.CountAsync();
 
+            // Apply pagination
             var pagedAlbums = await query
                 .Skip((dto.PageNumber) * dto.PageSize)
                 .Take(dto.PageSize)
@@ -104,13 +105,17 @@ namespace MyApp.Application.UseCases.Music
 
         public async Task CreateAlbumAsync(CreateAlbumDto dto)
         {
+            ArgumentNullException.ThrowIfNull(dto);
+
             var album = _mapper.Map<Album>(dto);
             await _albumRepo.AddAsync(album);
+            _logger.LogInformation("Album created with ID: {AlbumId}", album.ID);
         }
 
         public async Task DeleteAlbumAsync(DeleteAlbumDto dto)
         {
             await _albumRepo.DeleteAsync(dto.ID);
+            _logger.LogInformation("Album deleted with ID: {AlbumId}", dto.ID);
         }
 
         public async Task<AlbumDto?> GetAlbumByIdAsync(int id)
@@ -121,9 +126,43 @@ namespace MyApp.Application.UseCases.Music
 
         public async Task UpdateAlbumAsync(int id, UpdateAlbumDto dto)
         {
-            var album = await _albumRepo.GetByIdAsync(id) ?? throw new NotFoundException("Album not found");
-            _mapper.Map(dto, album);
-            await _albumRepo.UpdateAsync(album);
+            var existingAlbum = await _albumRepo.GetByIdAsync(id) ?? throw new NotFoundException("Album not found");
+
+            // Ensure the ID in the DTO matches the provided ID (if applicable)
+            if (dto.ID != 0 && dto.ID != id)
+            {
+                throw new BadRequestException("ID in the request body does not match the route ID.");
+            }
+
+            // Map updated album properties
+            _mapper.Map(dto, existingAlbum);
+
+            // Update CDs
+            if (dto.CDs != null)
+            {
+                foreach (var cdDto in dto.CDs)
+                {
+                    var existingCD = existingAlbum.CDs?.FirstOrDefault(cd => cd.ID == cdDto.ID);
+                    if (existingCD != null)
+                    {
+                        _mapper.Map(cdDto, existingCD);
+                    }
+                    else
+                    {
+                        var newCD = _mapper.Map<CD>(cdDto);
+                        existingAlbum.CDs ??= []; // Ensure CDs list is initialized
+                        existingAlbum.CDs.Add(newCD);
+                    }
+                }
+
+                // Remove CDs not present in the updated DTO
+                var cdIds = dto.CDs.Select(cd => cd.ID).ToList();
+                existingAlbum.CDs?.RemoveAll(cd => !cdIds.Contains(cd.ID));
+            }
+
+            // Update the album
+            await _albumRepo.UpdateAsync(existingAlbum);
+            _logger.LogInformation("Album updated with ID: {AlbumId}", id);
         }
     }
 }

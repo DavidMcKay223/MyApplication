@@ -8,7 +8,7 @@ namespace MyApp.Application.DTOs.Music
 {
     public class CreateAlbumDto
     {
-        public required string Artist { get; set; }
+        public required string ArtistName { get; set; }
         public List<CreateCDDto>? CDs { get; set; }
     }
 }

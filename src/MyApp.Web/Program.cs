@@ -35,7 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServiceLifetime.Scoped);
 
 // Register AutoMapper
-builder.Services.AddAutoMapper();
+builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 
 var app = builder.Build();
 

@@ -12,5 +12,6 @@ namespace MyApp.Application.DTOs.Music
         public required int Number { get; set; }
         public required string Title { get; set; }
         public required TimeSpan Length { get; set; }
+        public int CDId { get; set; }
     }
 }

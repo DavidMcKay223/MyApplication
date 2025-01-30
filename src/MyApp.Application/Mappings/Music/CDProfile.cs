@@ -23,7 +23,11 @@ namespace MyApp.Application.Mappings.Music
             CreateMap<CreateCDDto, CD>();
 
             // Map from UpdateCDDto (DTO) to CD (Domain)
-            CreateMap<UpdateCDDto, CD>();
+            CreateMap<UpdateCDDto, CD>()
+                .ForMember(dest => dest.Tracks, opt => opt.MapFrom(src => src.Tracks));
+
+            // Add the missing mapping
+            CreateMap<CDDto, UpdateCDDto>();
         }
     }
 }

@@ -23,7 +23,8 @@ namespace MyApp.Application.Mappings.Music
             CreateMap<CreateAlbumDto, Album>();
 
             // Map from UpdateAlbumDto (DTO) to Album (Domain)
-            CreateMap<UpdateAlbumDto, Album>();
+            CreateMap<UpdateAlbumDto, Album>()
+                .ForMember(dest => dest.CDs, opt => opt.MapFrom(src => src.CDs));
 
             // Map AlbumDto to CreateAlbumDto
             CreateMap<AlbumDto, CreateAlbumDto>();
@@ -34,6 +35,10 @@ namespace MyApp.Application.Mappings.Music
             // Map nested objects (CDs and Tracks)
             CreateMap<CD, CDDto>().ReverseMap();
             CreateMap<Track, TrackDto>().ReverseMap();
+
+            // Add missing mappings
+            CreateMap<CDDto, UpdateCDDto>();
+            CreateMap<TrackDto, UpdateTrackDto>();
         }
     }
 }
