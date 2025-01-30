@@ -26,7 +26,8 @@ namespace MyApp.Application.Mappings.Music
             CreateMap<UpdateCDDto, CD>()
                 .ForMember(dest => dest.Tracks, opt => opt.MapFrom(src => src.Tracks));
 
-            // Add the missing mapping
+            // Add missing mappings
+            CreateMap<CDDto, CreateCDDto>();
             CreateMap<CDDto, UpdateCDDto>();
         }
     }

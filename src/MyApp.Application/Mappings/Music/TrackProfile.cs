@@ -25,7 +25,8 @@ namespace MyApp.Application.Mappings.Music
             // Map from UpdateTrackDto (DTO) to Track (Domain)
             CreateMap<UpdateTrackDto, Track>();
 
-            // Add the missing mapping
+            // Add missing mappings
+            CreateMap<TrackDto, CreateTrackDto>();
             CreateMap<TrackDto, UpdateTrackDto>();
         }
     }

@@ -37,7 +37,9 @@ namespace MyApp.Application.Mappings.Music
             CreateMap<Track, TrackDto>().ReverseMap();
 
             // Add missing mappings
+            CreateMap<CDDto, CreateCDDto>();
             CreateMap<CDDto, UpdateCDDto>();
+            CreateMap<TrackDto, CreateTrackDto>();
             CreateMap<TrackDto, UpdateTrackDto>();
         }
     }
