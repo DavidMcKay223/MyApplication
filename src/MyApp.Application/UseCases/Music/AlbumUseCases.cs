@@ -52,21 +52,18 @@ namespace MyApp.Application.UseCases.Music
                 query = query.Where(a => a.CDs.Any(c => c.Genre == dto.Genre.Value));
             }
 
-            switch (dto.SortBy)
+            query = dto.SortBy switch
             {
-                case AlbumSortBy.CdName:
-                    query = dto.SortOrder == AlbumSortOrder.Asc
-                        ? query.OrderBy(a => a.CDs.First().Name)
-                        : query.OrderByDescending(a => a.CDs.First().Name);
-                    break;
-                case AlbumSortBy.Artist:
-                    query = dto.SortOrder == AlbumSortOrder.Asc
-                        ? query.OrderBy(a => a.Artist)
-                        : query.OrderByDescending(a => a.Artist);
-                    break;
-                default:
-                    break;
-            }
+                AlbumSortBy.CdName => dto.SortOrder == AlbumSortOrder.Asc
+                                        ? query.OrderBy(a => a.CDs.First().Name)
+                                        : query.OrderByDescending(a => a.CDs.First().Name),
+                AlbumSortBy.Artist => dto.SortOrder == AlbumSortOrder.Asc
+                                        ? query.OrderBy(a => a.Artist)
+                                        : query.OrderByDescending(a => a.Artist),
+                _ => dto.SortOrder == AlbumSortOrder.Asc
+                                        ? query.OrderBy(a => a.Artist)
+                                        : query.OrderByDescending(a => a.Artist),
+            };
 
             dto.TotalItems = await query.CountAsync();
 
@@ -74,6 +71,34 @@ namespace MyApp.Application.UseCases.Music
                 .Skip((dto.PageNumber) * dto.PageSize)
                 .Take(dto.PageSize)
                 .ToListAsync();
+
+            // Further filter the CD and Track lists
+            foreach (var album in pagedAlbums)
+            {
+                if (album.CDs != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(dto.CdName))
+                    {
+                        album.CDs = album.CDs
+                            .Where(cd => cd.Name.Contains(dto.CdName))
+                            .ToList();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(dto.TrackTitle))
+                    {
+                        foreach (var cd in album.CDs)
+                        {
+                            if (cd.Tracks != null)
+                            {
+                                cd.Tracks = cd.Tracks
+                                    .Where(t => t.Title.Contains(dto.TrackTitle))
+                                    .ToList();
+                            }
+                        }
+                        album.CDs = album.CDs.Where(cd => cd.Tracks.Count != 0).ToList();
+                    }
+                }
+            }
 
             return pagedAlbums.Select(MapToDto).ToList();
         }
@@ -160,13 +185,103 @@ namespace MyApp.Application.UseCases.Music
 
         public async Task UpdateAlbumAsync(int id, UpdateAlbumDto dto)
         {
-            var album = await _albumRepo.GetByIdAsync(id);
-            if (album != null)
+            var album = await _albumRepo.GetByIdAsync(id) ?? throw new NotFoundException("Album not found");
+
+            // Update album properties
+            album.Artist = dto.Artist;
+
+            // Update or add CDs
+            if (dto.CDs != null)
             {
-                album.Artist = dto.Artist;
-                // Add logic to update CDs and tracks
-                await _albumRepo.UpdateAsync(album);
+                // Ensure album.CDs is initialized
+                album.CDs ??= [];
+
+                // Create a dictionary of existing CDs for quick lookup
+                var existingCDs = album.CDs.ToDictionary(cd => cd.Id);
+
+                foreach (var cdDto in dto.CDs)
+                {
+                    if (cdDto.Id == 0)
+                    {
+                        // Add new CD
+                        var newCD = new CD
+                        {
+                            Name = cdDto.Name,
+                            Genre = cdDto.Genre,
+                            Tracks = cdDto.Tracks?.Select(trackDto => new Track
+                            {
+                                Number = trackDto.Number,
+                                Title = trackDto.Title,
+                                Length = trackDto.Length
+                            }).ToList() ?? []
+                        };
+
+                        album.CDs.Add(newCD);
+                    }
+                    else if (existingCDs.TryGetValue(cdDto.Id, out var existingCD))
+                    {
+                        // Update existing CD
+                        existingCD.Name = cdDto.Name;
+                        existingCD.Genre = cdDto.Genre;
+
+                        // Update or add tracks
+                        if (cdDto.Tracks != null)
+                        {
+                            // Ensure existingCD.Tracks is initialized
+                            existingCD.Tracks ??= [];
+
+                            // Create a dictionary of existing tracks for quick lookup
+                            var existingTracks = existingCD.Tracks.ToDictionary(track => track.Id);
+
+                            foreach (var trackDto in cdDto.Tracks)
+                            {
+                                if (trackDto.Id == 0)
+                                {
+                                    // Add new track
+                                    var newTrack = new Track
+                                    {
+                                        Number = trackDto.Number,
+                                        Title = trackDto.Title,
+                                        Length = trackDto.Length
+                                    };
+
+                                    existingCD.Tracks.Add(newTrack);
+                                }
+                                else if (existingTracks.TryGetValue(trackDto.Id, out var existingTrack))
+                                {
+                                    // Update existing track
+                                    existingTrack.Number = trackDto.Number;
+                                    existingTrack.Title = trackDto.Title;
+                                    existingTrack.Length = trackDto.Length;
+                                }
+                            }
+
+                            // Remove tracks that are no longer in the DTO
+                            var tracksToRemove = existingCD.Tracks
+                                .Where(track => !cdDto.Tracks.Any(trackDto => trackDto.Id == track.Id))
+                                .ToList();
+
+                            foreach (var track in tracksToRemove)
+                            {
+                                existingCD.Tracks.Remove(track);
+                            }
+                        }
+                    }
+                }
+
+                // Remove CDs that are no longer in the DTO
+                var cdsToRemove = album.CDs
+                    .Where(cd => !dto.CDs.Any(cdDto => cdDto.Id == cd.Id))
+                    .ToList();
+
+                foreach (var cd in cdsToRemove)
+                {
+                    album.CDs.Remove(cd);
+                }
             }
+
+            // Save changes to the database
+            await _albumRepo.UpdateAsync(album);
         }
     }
 }
