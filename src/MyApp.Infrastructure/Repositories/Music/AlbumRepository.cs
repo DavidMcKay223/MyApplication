@@ -42,7 +42,7 @@ namespace MyApp.Infrastructure.Repositories.Music
             return await _context.Albums
             .Include(a => a.CDs)
             .ThenInclude(c => c.Tracks)
-            .FirstOrDefaultAsync(a => a.Id == id);
+            .FirstOrDefaultAsync(a => a.ID == id);
         }
 
         public IQueryable<Album> GetAllAsync()

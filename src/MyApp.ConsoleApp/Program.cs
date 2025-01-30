@@ -31,7 +31,7 @@ namespace MyApp.ConsoleApp
                 var albums = new List<Album>
                 {
                     new() {
-                        Artist = "The Beatles",
+                        ArtistName = "The Beatles",
                         CDs =
                         [
                             new CD
@@ -83,7 +83,7 @@ namespace MyApp.ConsoleApp
                         ]
                     },
                     new() {
-                        Artist = "Daft Punk",
+                        ArtistName = "Daft Punk",
                         CDs =
                         [
                             new CD

@@ -52,7 +52,7 @@ else
 
     private void ShowAddModal()
     {
-        editModal!.Show(new AlbumDto { Id = 0, Artist = "" });
+        editModal!.Show(new AlbumDto { ID = 0, ArtistName = "" });
     }
 
     private async void ShowEditModal(int id)
@@ -63,7 +63,7 @@ else
 
     private async Task DeleteAlbum(AlbumDto dto)
     {
-        await AlbumUseCases.DeleteAlbumAsync(new DeleteAlbumDto() { Id = dto.Id });
+        await AlbumUseCases.DeleteAlbumAsync(new DeleteAlbumDto() { ID = dto.ID });
         await LoadAlbums();
     }
 

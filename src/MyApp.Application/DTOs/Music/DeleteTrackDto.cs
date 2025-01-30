@@ -8,6 +8,6 @@ namespace MyApp.Application.DTOs.Music
 {
     public class DeleteTrackDto
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
     }
 }

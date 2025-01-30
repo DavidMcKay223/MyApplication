@@ -4,6 +4,7 @@ using MyApp.Infrastructure.Persistence;
 using MyApp.Application.UseCases.Music;
 using MyApp.Domain.Repositories.Music;
 using MyApp.Infrastructure.Repositories.Music;
+using MyApp.Application.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                 errorNumbersToAdd: null);
         }),
         ServiceLifetime.Scoped);
+
+// Register AutoMapper
+builder.Services.AddAutoMapper();
 
 var app = builder.Build();
 

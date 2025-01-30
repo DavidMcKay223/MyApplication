@@ -8,8 +8,8 @@ namespace MyApp.Application.DTOs.Music
 {
     public class AlbumDto
     {
-        public int Id { get; set; }
-        public required string Artist { get; set; }
+        public int ID { get; set; }
+        public required string ArtistName { get; set; }
         public List<CDDto>? CDs { get; set; }
     }
 }

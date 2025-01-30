@@ -8,7 +8,7 @@ namespace MyApp.Application.DTOs.Music
 {
     public class DeleteCDDto
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public List<DeleteTrackDto>? Tracks { get; set; }
     }
 }

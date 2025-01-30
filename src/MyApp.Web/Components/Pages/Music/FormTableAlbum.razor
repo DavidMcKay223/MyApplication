@@ -18,7 +18,7 @@ else
             @foreach (var album in Albums ?? [])
             {
                 <tr>
-                    <td>@album.Artist</td>
+                    <td>@album.ArtistName</td>
                     <td>
                         <table class="table table-bordered nested-table">
                             <thead>
@@ -61,7 +61,7 @@ else
                         </table>
                     </td>
                     <td>
-                        <button class="btn btn-secondary" @onclick="() => OnEdit.InvokeAsync(album.Id)">Edit</button>
+                        <button class="btn btn-secondary" @onclick="() => OnEdit.InvokeAsync(album.ID)">Edit</button>
                         <button class="btn btn-danger" @onclick="() => OnDelete.InvokeAsync(album)">Delete</button>
                     </td>
                 </tr>
