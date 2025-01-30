@@ -10,6 +10,12 @@
     </div>
     <div class="col-md-3">
         <div class="mb-3 form-floating">
+            <input type="text" class="form-control" @bind="SearchDto.Description" />
+            <label>Search Task Title</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
             <InputSelect id="ddl_taskType" class="form-select" @bind-Value="SearchDto.TaskType">
                 <option value="">Select Task Type</option>
                 @foreach (var taskType in Enum.GetValues(typeof(TaskType)))

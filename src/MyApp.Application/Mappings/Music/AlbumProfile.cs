@@ -25,6 +25,12 @@ namespace MyApp.Application.Mappings.Music
             // Map from UpdateAlbumDto (DTO) to Album (Domain)
             CreateMap<UpdateAlbumDto, Album>();
 
+            // Map AlbumDto to CreateAlbumDto
+            CreateMap<AlbumDto, CreateAlbumDto>();
+
+            // Map AlbumDto to UpdateAlbumDto
+            CreateMap<AlbumDto, UpdateAlbumDto>();
+
             // Map nested objects (CDs and Tracks)
             CreateMap<CD, CDDto>().ReverseMap();
             CreateMap<Track, TrackDto>().ReverseMap();

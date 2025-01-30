@@ -1,5 +1,6 @@
 ﻿@using MyApp.Application.DTOs.Management
 @using MyApp.Application.UseCases.Management
+@using MyApp.Domain.Entities.Management
 @using MyApp.Domain.Enums.Management
 @using MyApp.Web.Components.Shared
 @using AutoMapper
@@ -11,10 +12,12 @@
     public EventCallback OnTaskItemSaved { get; set; }
 
     private TaskItemDto? TaskItem;
+    private List<TaskSubType> ValidSubTypes = new();
 
     public void Show(TaskItemDto? TaskItemToEdit)
     {
         TaskItem = TaskItemToEdit ?? new TaskItemDto { Title = "", Description = "" };
+        ValidSubTypes = TaskTypeHelper.GetValidSubTypes(TaskItem.TaskType);
         StateHasChanged();
     }
 
@@ -39,6 +42,18 @@
     {
         TaskItem = null;
     }
+
+    private void OnTaskTypeChanged(ChangeEventArgs e)
+    {
+        if (Enum.TryParse<TaskType>(e.Value?.ToString(), out var taskType))
+        {
+            TaskItem!.TaskType = taskType;
+            ValidSubTypes = TaskTypeHelper.GetValidSubTypes(taskType);
+            TaskItem.TaskSubType = ValidSubTypes.FirstOrDefault();
+
+            StateHasChanged();
+        }
+    }
 }
 
 @if (TaskItem != null)
@@ -54,6 +69,32 @@
                     <EditForm Model="@TaskItem">
                         <div class="modal-body">
                             <DataAnnotationsValidator />
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <InputText id="title" class="form-control" @bind-Value="TaskItem.Title" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="taskType" class="form-label">Task Type</label>
+                                <InputSelect id="taskType" class="form-control" @bind-Value="TaskItem.TaskType" @onchange="OnTaskTypeChanged">
+                                    @foreach (var taskType in Enum.GetValues<TaskType>())
+                                    {
+                                        <option value="@taskType">@taskType</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="mb-3">
+                                <label for="taskSubType" class="form-label">Task SubType</label>
+                                <InputSelect id="taskSubType" class="form-control" @bind-Value="TaskItem.TaskSubType">
+                                    @foreach (var subType in ValidSubTypes)
+                                    {
+                                        <option value="@subType">@subType</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <InputTextArea id="description" class="form-control" @bind-Value="TaskItem.Description" />
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" @onclick="SaveTaskItem">Save</button>

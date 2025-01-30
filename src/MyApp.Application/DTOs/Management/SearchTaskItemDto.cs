@@ -11,6 +11,7 @@ namespace MyApp.Application.DTOs.Management
     public class SearchTaskItemDto : AbstractSearchDto<TaskSortBy, TaskSortOrder>
     {
         public string? Title { get; set; }
+        public string? Description { get; set; }
         public TaskType? TaskType { get; set; }
         public bool? IsCompleted { get; set; }
     }

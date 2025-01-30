@@ -51,6 +51,11 @@ namespace MyApp.Application.UseCases.Management
                 query = query.Where(t => t.Title.Contains(dto.Title));
             }
 
+            if (!string.IsNullOrEmpty(dto.Description))
+            {
+                query = query.Where(t => t.Description.Contains(dto.Description));
+            }
+
             if (dto.TaskType.HasValue)
             {
                 query = query.Where(t => t.TaskType == dto.TaskType.Value);

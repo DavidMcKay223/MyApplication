@@ -17,6 +17,12 @@ namespace MyApp.Application.Mappings.Management
             // Map TaskItem to TaskItemDto
             CreateMap<TaskItem, TaskItemDto>();
 
+            // Map TaskItemDto to CreateTaskItemDto
+            CreateMap<TaskItemDto, CreateTaskItemDto>();
+
+            // Map TaskItemDto to UpdateTaskItemDto
+            CreateMap<TaskItemDto, UpdateTaskItemDto>();
+
             // Map CreateTaskItemDto to TaskItem
             CreateMap<CreateTaskItemDto, TaskItem>();
 
