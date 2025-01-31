@@ -20,11 +20,9 @@ namespace MyApp.Infrastructure.ExternalServices.NPI
             _httpClient = httpClient;
         }
 
-        public async Task<List<Provider?>> GetProviderAsync(SearchProviderCriteria searchProviderCriteria)
+        public async Task<List<Provider?>> GetProvidersAsync(SearchProviderCriteria searchProviderCriteria)
         {
-            var response = await _httpClient.GetFromJsonAsync<Root>(
-                $"https://npiregistry.cms.hhs.gov/api/?{searchProviderCriteria.GetSearchParameter()}"
-            );
+            var response = await _httpClient.GetFromJsonAsync<Root>($"?{searchProviderCriteria.GetSearchParameter()}");
 
             if (response != null)
             {
@@ -37,14 +35,11 @@ namespace MyApp.Infrastructure.ExternalServices.NPI
 
         public async Task<Provider?> GetProviderByNpiAsync(string npiNumber)
         {
-            var response = await _httpClient.GetFromJsonAsync<Root>(
-                $"https://npiregistry.cms.hhs.gov/api/?number={npiNumber}&version=2.1"
-            );
+            var response = await _httpClient.GetFromJsonAsync<Root>($"?number={npiNumber}&version=2.1");
 
             if (response != null)
             {
                 var provider = ParseProvider(response?.Results?.FirstOrDefault()!);
-
                 return provider;
             }
 

@@ -10,7 +10,7 @@ namespace MyApp.Domain.Abstractions.NPI
 {
     public interface INpiRegistryClient
     {
-        Task<List<Provider?>> GetProviderAsync(SearchProviderCriteria searchProviderCriteria);
+        Task<List<Provider?>> GetProvidersAsync(SearchProviderCriteria searchProviderCriteria);
         Task<Provider?> GetProviderByNpiAsync(string npiNumber);
     }
 }

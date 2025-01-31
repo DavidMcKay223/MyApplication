@@ -8,6 +8,10 @@ using MyApp.Application.Configurations;
 using MyApp.Domain.Repositories.Management;
 using MyApp.Application.UseCases.Management;
 using MyApp.Infrastructure.Repositories.Management;
+using MyApp.Application.UseCases.NPI;
+using MyApp.Domain.Abstractions.NPI;
+using MyApp.Infrastructure.ExternalServices.NPI;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,16 @@ builder.Services.AddScoped<IAlbumUseCases, AlbumUseCases>();
 
 builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
+
+builder.Services.AddScoped<IProviderUseCases, ProviderUseCases>();
+
+var npiRegistryBaseUrl = builder.Configuration["NpiRegistry:BaseUrl"];
+builder.Services.AddHttpClient<INpiRegistryClient, NpiRegistryService>(client =>
+{
+    client.BaseAddress = new Uri(npiRegistryBaseUrl!);
+    client.DefaultRequestHeaders.Accept.Add(
+        new MediaTypeWithQualityHeaderValue("application/json"));
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
