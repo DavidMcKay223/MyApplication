@@ -19,7 +19,7 @@ using MyApp.Application.UseCases.Medical;
 using MyApp.Application.Validators.Medical;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using BootstrapBlazor;
+using BlazorBootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +30,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddFluentValidationAutoValidation();
 
 // Add Blazor Bootstrap services
-builder.Services.AddBootstrapBlazor();
+builder.Services.AddBlazorBootstrap();
 
 // Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
