@@ -13,6 +13,7 @@ namespace MyApp.Application.Validators.Medical
         public ClaimDtoValidator()
         {
             RuleFor(x => x.InsuredIdNumber).MaximumLength(20).WithMessage("Insured ID Number must be less than 20 characters.");
+            RuleFor(x => x.InsuredIdNumber).NotNull().WithMessage("Insured ID Number is required.");
             RuleFor(x => x.Patient).NotNull().WithMessage("Patient information is required.");
             RuleFor(x => x.Insured).NotNull().WithMessage("Insured information is required.");
             RuleFor(x => x.BillingProvider).NotNull().WithMessage("Billing provider information is required.");
@@ -21,6 +22,14 @@ namespace MyApp.Application.Validators.Medical
             RuleFor(x => x.AmountPaid).GreaterThanOrEqualTo(0).WithMessage("Amount paid must be greater than or equal to 0.");
             RuleFor(x => x.PatientSignatureDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Patient signature date cannot be in the future.");
             RuleFor(x => x.PhysicianSignatureDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Physician signature date cannot be in the future.");
+
+            RuleForEach(x => x.ServiceLines).SetValidator(new ServiceLineDtoValidator());
+            RuleForEach(x => x.DiagnosisCodes).SetValidator(new DiagnosisCodeDtoValidator());
+
+            RuleFor(x => x.Patient.Address).SetValidator(new AddressDtoValidator());
+            RuleFor(x => x.Insured.Address).SetValidator(new AddressDtoValidator());
+            RuleFor(x => x.BillingProvider.Address).SetValidator(new AddressDtoValidator());
+            RuleFor(x => x.ServiceFacility.Address).SetValidator(new AddressDtoValidator());
         }
     }
 }

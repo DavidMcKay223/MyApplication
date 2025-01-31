@@ -21,6 +21,8 @@ using FluentValidation;
 using Blazored.FluentValidation;
 using BlazorBootstrap;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel.DataAnnotations;
+using MyApp.Application.DTOs.Medical;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,11 @@ builder.Services.AddRazorComponents()
 
 // Add Blazor Bootstrap services
 builder.Services.AddBlazorBootstrap();
+
+// Add FluentValidation services
 builder.Services.AddScoped<FluentValidationValidator>();
+builder.Services.AddTransient<IValidator<ClaimDto>, ClaimDtoValidator>();
+//builder.Services.AddValidatorsFromAssemblyContaining<ClaimDtoValidator>();
 
 // Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
@@ -43,9 +49,6 @@ builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 // Medical:
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<IClaimUseCases, ClaimUseCases>();
-
-// Register all validators from the assembly containing ClaimDtoValidator
-builder.Services.AddValidatorsFromAssemblyContaining<ClaimDtoValidator>();
 
 // Shared:
 builder.Services.AddScoped<IStateService, StateService>();

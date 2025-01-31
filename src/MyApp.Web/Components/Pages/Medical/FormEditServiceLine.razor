@@ -29,6 +29,7 @@
                             <InputDate @bind-Value="ServiceLineList[index].ServiceStartDate"
                             class="form-control" id="@($"startDate{index}")" />
                             <label for="@($"startDate{index}")">Start Date</label>
+                            <ValidationMessage For="@(() => ServiceLineList[index].ServiceStartDate)" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -36,6 +37,7 @@
                             <InputDate @bind-Value="ServiceLineList[index].ServiceEndDate"
                             class="form-control" id="@($"endDate{index}")" />
                             <label for="@($"endDate{index}")">End Date</label>
+                            <ValidationMessage For="@(() => ServiceLineList[index].ServiceEndDate)" />
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -43,6 +45,7 @@
                             <InputText @bind-Value="ServiceLineList[index].ProcedureCode"
                             class="form-control" id="@($"procedureCode{index}")" />
                             <label for="@($"procedureCode{index}")">Procedure Code</label>
+                            <ValidationMessage For="@(() => ServiceLineList[index].ProcedureCode)" />
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -50,6 +53,7 @@
                             <InputText @bind-Value="ServiceLineList[index].Modifier"
                             class="form-control" id="@($"modifier{index}")" />
                             <label for="@($"modifier{index}")">Modifier</label>
+                            <ValidationMessage For="@(() => ServiceLineList[index].Modifier)" />
                         </div>
                     </div>
                     <div class="col-md-2">
