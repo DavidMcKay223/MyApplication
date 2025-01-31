@@ -1,8 +1,69 @@
 ﻿@using MyApp.Application.DTOs.Medical
+@using MyApp.Domain.Enums.Medical
 
 @code {
     [Parameter]
     public required PatientInfoDto PatientInfo { get; set; }
 }
 
-@*Need Code Implementation*@
+@if (PatientInfo != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Patient Information</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="PatientInfo.LastName" class="form-control" id="patientLastName" />
+                        <label for="patientLastName">Last Name</label>
+                        <ValidationMessage For="@(() => PatientInfo.LastName)" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="PatientInfo.FirstName" class="form-control" id="patientFirstName" />
+                        <label for="patientFirstName">First Name</label>
+                        <ValidationMessage For="@(() => PatientInfo.FirstName)" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputDate @bind-Value="PatientInfo.BirthDate" class="form-control" id="birthDate" />
+                        <label for="birthDate">Birth Date</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputSelect @bind-Value="PatientInfo.Sex" class="form-select" id="sex">
+                            <option value="">Select Sex</option>
+                            @foreach (var value in Enum.GetValues(typeof(Sex)))
+                            {
+                                <option value="@value">@value</option>
+                            }
+                        </InputSelect>
+                        <label for="sex">Sex</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <FormEditAddress Address="@PatientInfo.Address" />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputSelect @bind-Value="PatientInfo.RelationshipToInsured" class="form-select" id="relationship">
+                            <option value="">Select Relationship</option>
+                            @foreach (var value in Enum.GetValues(typeof(Relationship)))
+                            {
+                                <option value="@value">@value</option>
+                            }
+                        </InputSelect>
+                        <label for="relationship">Relationship to Insured</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -5,4 +5,38 @@
     public required InsuredInfoDto InsuredInfo { get; set; }
 }
 
-@*Need Code Implementation*@
+@if (InsuredInfo != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Insured Information</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="InsuredInfo.LastName" class="form-control" id="insuredLastName" />
+                        <label for="insuredLastName">Last Name</label>
+                        <ValidationMessage For="@(() => InsuredInfo.LastName)" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="InsuredInfo.FirstName" class="form-control" id="insuredFirstName" />
+                        <label for="insuredFirstName">First Name</label>
+                        <ValidationMessage For="@(() => InsuredInfo.FirstName)" />
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <FormEditAddress Address="@InsuredInfo.Address" />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="InsuredInfo.GroupNumber" class="form-control" id="groupNumber" />
+                        <label for="groupNumber">Group Number</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

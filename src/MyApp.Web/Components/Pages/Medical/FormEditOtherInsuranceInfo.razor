@@ -5,4 +5,34 @@
     public required OtherInsuranceInfoDto OtherInsuranceInfo { get; set; }
 }
 
-@*Need Code Implementation*@
+@if (OtherInsuranceInfo != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Other Insurance Information</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="OtherInsuranceInfo.PolicyHolderName" class="form-control"
+                        id="policyHolder" />
+                        <label for="policyHolder">Policy Holder Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="OtherInsuranceInfo.PolicyNumber" class="form-control"
+                        id="policyNumber" />
+                        <label for="policyNumber">Policy Number</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating">
+                        <InputText @bind-Value="OtherInsuranceInfo.PlanName" class="form-control"
+                        id="planName" />
+                        <label for="planName">Plan Name</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

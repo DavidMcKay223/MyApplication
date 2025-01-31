@@ -3,6 +3,51 @@
 @code {
     [Parameter]
     public required List<DiagnosisCodeDto> DiagnosisCodeList { get; set; }
+
+    private void AddDiagnosisCode()
+    {
+        DiagnosisCodeList.Add(new DiagnosisCodeDto());
+    }
+
+    private void RemoveDiagnosisCode(int index)
+    {
+        DiagnosisCodeList.RemoveAt(index);
+    }
 }
 
-@*Need Code Implementation*@
+@if (DiagnosisCodeList != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Diagnosis Codes</div>
+        <div class="card-body">
+            @for (int i = 0; i < DiagnosisCodeList.Count; i++)
+            {
+                var index = i;
+                <div class="row g-3 mb-3 align-items-end">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <InputText @bind-Value="DiagnosisCodeList[index].Code" class="form-control"
+                            id="@($"diagnosisCode{index}")" />
+                            <label for="@($"diagnosisCode{index}")">Code</label>
+                            <ValidationMessage For="@(() => DiagnosisCodeList[index].Code)" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <InputNumber @bind-Value="DiagnosisCodeList[index].Priority" class="form-control"
+                            id="@($"priority{index}")" />
+                            <label for="@($"priority{index}")">Priority</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger"
+                        @onclick="@(() => RemoveDiagnosisCode(index))">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            }
+            <button type="button" class="btn btn-primary" @onclick="AddDiagnosisCode">Add Diagnosis Code</button>
+        </div>
+    </div>
+}

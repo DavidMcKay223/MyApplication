@@ -8,4 +8,43 @@
     public String? Title { get; set; }
 }
 
-@*Need Code Implementation*@
+@if (ProviderInfo != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">@Title</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="ProviderInfo.Name" class="form-control" id="providerName" />
+                        <label for="providerName">Name</label>
+                        <ValidationMessage For="@(() => ProviderInfo.Name)" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="ProviderInfo.FederalTaxId" class="form-control" id="taxId" />
+                        <label for="taxId">Federal Tax ID</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <FormEditAddress Address="@ProviderInfo.Address" />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="ProviderInfo.NpiNumber" class="form-control" id="npi" />
+                        <label for="npi">NPI Number</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <InputText @bind-Value="ProviderInfo.Phone" class="form-control" id="providerPhone" />
+                        <label for="providerPhone">Phone</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -10,7 +10,7 @@ namespace MyApp.Application.DTOs.Medical
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public AddressDto Address { get; set; }
+        public required AddressDto Address { get; set; }
         public string? GroupNumber { get; set; }
     }
 }

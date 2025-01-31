@@ -3,6 +3,64 @@
 @code {
     [Parameter]
     public required List<ServiceLineDto> ServiceLineList { get; set; }
+
+    private void AddServiceLine()
+    {
+        ServiceLineList.Add(new ServiceLineDto());
+    }
+
+    private void RemoveServiceLine(int index)
+    {
+        ServiceLineList.RemoveAt(index);
+    }
 }
 
-@*Need Code Implementation*@
+@if (ServiceLineList != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Service Lines</div>
+        <div class="card-body">
+            @for (int i = 0; i < ServiceLineList.Count; i++)
+            {
+                var index = i;
+                <div class="row g-3 mb-3 align-items-end">
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <InputDate @bind-Value="ServiceLineList[index].ServiceStartDate"
+                            class="form-control" id="@($"startDate{index}")" />
+                            <label for="@($"startDate{index}")">Start Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <InputDate @bind-Value="ServiceLineList[index].ServiceEndDate"
+                            class="form-control" id="@($"endDate{index}")" />
+                            <label for="@($"endDate{index}")">End Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-floating">
+                            <InputText @bind-Value="ServiceLineList[index].ProcedureCode"
+                            class="form-control" id="@($"procedureCode{index}")" />
+                            <label for="@($"procedureCode{index}")">Procedure Code</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-floating">
+                            <InputText @bind-Value="ServiceLineList[index].Modifier"
+                            class="form-control" id="@($"modifier{index}")" />
+                            <label for="@($"modifier{index}")">Modifier</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger"
+                        @onclick="@(() => RemoveServiceLine(index))">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            }
+            <button type="button" class="btn btn-primary" @onclick="AddServiceLine">Add Service Line</button>
+        </div>
+    </div>
+}

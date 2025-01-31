@@ -10,7 +10,7 @@ namespace MyApp.Application.DTOs.Medical
     {
         public string Name { get; set; }
         public string FederalTaxId { get; set; }
-        public AddressDto Address { get; set; }
+        public required AddressDto Address { get; set; }
         public string? NpiNumber { get; set; }
         public string? Phone { get; set; }
     }

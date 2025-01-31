@@ -1,8 +1,61 @@
-﻿@using MyApp.Application.DTOs.Medical
+﻿@using MyApp.Shared.Services
+@using MyApp.Shared.DTOs
+@using MyApp.Application.DTOs.Medical
+@inject IStateService StateService
 
 @code {
     [Parameter]
     public required ConditionRelatedDto ConditionRelated { get; set; }
+
+    private List<StateDto> states = new();
+
+    protected override void OnInitialized()
+    {
+        states = StateService.GetStates();
+    }
 }
 
-@*Need Code Implementation*@
+@if (ConditionRelated != null)
+{
+    <div class="card mb-3">
+        <div class="card-header">Condition Related To</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <InputCheckbox @bind-Value="ConditionRelated.Employment" class="form-check-input" id="employment" />
+                        <label class="form-check-label" for="employment">Employment</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <InputCheckbox @bind-Value="ConditionRelated.AutoAccident" class="form-check-input" id="autoAccident" />
+                        <label class="form-check-label" for="autoAccident">Auto Accident</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <InputCheckbox @bind-Value="ConditionRelated.OtherAccident" class="form-check-input" id="otherAccident" />
+                        <label class="form-check-label" for="otherAccident">Other Accident</label>
+                    </div>
+                </div>
+
+                @if (ConditionRelated.AutoAccident || ConditionRelated.OtherAccident)
+                {
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <InputSelect @bind-Value="ConditionRelated.AccidentState" class="form-select" id="accidentState">
+                                <option value="">Select State</option>
+                                @foreach (var state in states)
+                                {
+                                    <option value="@state.Value">@state.Description</option>
+                                }
+                            </InputSelect>
+                            <label for="accidentState">Accident State</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

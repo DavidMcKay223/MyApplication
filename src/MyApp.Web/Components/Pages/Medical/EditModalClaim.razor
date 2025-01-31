@@ -11,7 +11,17 @@
 
     public void Show(ClaimDto? ClaimToEdit)
     {
-        Claim = ClaimToEdit ?? new ClaimDto();
+        Claim = ClaimToEdit ?? new ClaimDto() { 
+            BillingProvider = new ProviderInfoDto() { Address = new AddressDto() }, 
+            ConditionRelated = new ConditionRelatedDto(),
+            DiagnosisCodes = [],
+            Insured = new InsuredInfoDto() { Address = new AddressDto() },
+            OtherInsurance = new OtherInsuranceInfoDto(),
+            Patient = new PatientInfoDto() { Address = new AddressDto() },
+            ServiceFacility = new ProviderInfoDto() { Address = new AddressDto() },
+            ServiceLines = new List<ServiceLineDto>()
+        };
+
         StateHasChanged();
     }
 
@@ -52,7 +62,7 @@
                             <!-- Insurance Section -->
  
                             <!-- Patient Information --> 
-                                <FormEditPatientInfo PatientInfo="@Claim.Patient" />
+                            <FormEditPatientInfo PatientInfo="@Claim.Patient" />
 
                             <!-- Insured Information --> 
                             <FormEditInsuredInfo InsuredInfo="@Claim.Insured" /> 
@@ -85,20 +95,19 @@
                             </div> 
  
                             <!-- Financials --> 
-                            <div class="card mb-3"> 
+                            <div class="card mb-3">
+                                <div class="card-header">Financials</div>
                                 <div class="card-body"> 
                                     <div class="row g-3"> 
                                         <div class="col-md-4"> 
                                             <div class="form-floating"> 
-                                                <InputNumber @bind-Value="Claim.TotalCharge"  
-                                                            class="form-control" /> 
+                                                <InputNumber @bind-Value="Claim.TotalCharge" class="form-control" /> 
                                                 <label>28. Total Charge</label> 
                                             </div> 
                                         </div> 
                                         <div class="col-md-4"> 
                                             <div class="form-floating"> 
-                                                <InputNumber @bind-Value="Claim.AmountPaid"  
-                                                            class="form-control" /> 
+                                                <InputNumber @bind-Value="Claim.AmountPaid" class="form-control" /> 
                                                 <label>29. Amount Paid</label> 
                                             </div> 
                                         </div> 
@@ -107,8 +116,25 @@
                             </div> 
  
                             <!-- Signatures -->
-                            @Claim.PatientSignatureDate
-                            @Claim.PhysicianSignatureDate
+                            <div class="card mb-3">
+                                <div class="card-header">Signatures</div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <InputDate @bind-Value="Claim.PatientSignatureDate" class="form-control" />
+                                                <label>Patient Signature Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <InputDate @bind-Value="Claim.PhysicianSignatureDate" class="form-control" />
+                                                <label>Physician Signature Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div> 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" @onclick="SaveClaim">Save</button>
