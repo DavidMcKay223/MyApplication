@@ -18,7 +18,7 @@ using MyApp.Infrastructure.Repositories.Medical;
 using MyApp.Application.UseCases.Medical;
 using MyApp.Application.Validators.Medical;
 using FluentValidation;
-using FluentValidation.AspNetCore;
+using Blazored.FluentValidation;
 using BlazorBootstrap;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +26,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
 .AddInteractiveServerComponents();
-
-builder.Services.AddFluentValidationAutoValidation();
 
 // Add Blazor Bootstrap services
 builder.Services.AddBlazorBootstrap();

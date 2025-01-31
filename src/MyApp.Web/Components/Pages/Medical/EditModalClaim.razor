@@ -11,7 +11,7 @@
     public EventCallback OnClaimSaved { get; set; }
 
     private ClaimDto? Claim;
-    private EditContext? EditContext;
+    private FluentValidationValidator? _fluentValidationValidator;
 
     public void Show(ClaimDto? ClaimToEdit)
     {
@@ -26,13 +26,12 @@
             ServiceLines = new List<ServiceLineDto>()
         };
 
-        EditContext = new EditContext(Claim);
         StateHasChanged();
     }
 
     private async Task SaveClaim()
     {
-        if (EditContext != null && EditContext.Validate())
+        if (await _fluentValidationValidator!.ValidateAsync())
         {
             if (Claim!.FormId == 0)
             {
@@ -65,8 +64,7 @@
                         <button type="button" class="btn-close" @onclick="Cancel"></button>
                     </div>
                     <EditForm Model="@Claim" OnValidSubmit="SaveClaim">
-                        <FluentValidationValidator />
-                        <ValidationSummary />
+                        <FluentValidationValidator @ref="_fluentValidationValidator" />
                         <div class="modal-body">
                             <!-- Insurance Section -->
                             <div class="card mb-3">
