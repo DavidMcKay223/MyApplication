@@ -12,6 +12,7 @@ using MyApp.Application.UseCases.NPI;
 using MyApp.Domain.Abstractions.NPI;
 using MyApp.Infrastructure.ExternalServices.NPI;
 using System.Net.Http.Headers;
+using MyApp.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 
 builder.Services.AddScoped<IProviderUseCases, ProviderUseCases>();
+
+builder.Services.AddScoped<IStateService, StateService>();
 
 var npiRegistryBaseUrl = builder.Configuration["NpiRegistry:BaseUrl"];
 builder.Services.AddHttpClient<INpiRegistryClient, NpiRegistryService>(client =>
