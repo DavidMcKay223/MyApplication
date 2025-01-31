@@ -21,8 +21,4 @@
     <ProjectReference Include="..\MyApp.Shared\MyApp.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Pages\NPI\" />
-  </ItemGroup>
-
 </Project>
