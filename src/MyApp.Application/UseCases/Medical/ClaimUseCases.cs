@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyApp.Application.DTOs.Medical;
+using MyApp.Domain.Entities.Medical;
 using MyApp.Domain.Repositories.Medical;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyApp.Application.UseCases.Medical
@@ -23,29 +22,43 @@ namespace MyApp.Application.UseCases.Medical
             _logger = logger;
         }
 
-        public Task CreateClaimAsync(ClaimDto claim)
+        public async Task CreateClaimAsync(ClaimDto claimDto)
         {
-            throw new NotImplementedException();
+            var claim = _mapper.Map<Claim>(claimDto);
+            await _claimRepo.AddAsync(claim);
+            _logger.LogInformation("Claim created with ID: {ClaimId}", claim.FormId);
         }
 
-        public Task DeleteClaimAsync(int claimId)
+        public async Task DeleteClaimAsync(int claimId)
         {
-            throw new NotImplementedException();
+            await _claimRepo.DeleteAsync(claimId);
+            _logger.LogInformation("Claim deleted with ID: {ClaimId}", claimId);
         }
 
-        public Task<ClaimDto?> GetClaimAsync(int claimId)
+        public async Task<ClaimDto?> GetClaimAsync(int claimId)
         {
-            throw new NotImplementedException();
+            var claim = await _claimRepo.GetByIdAsync(claimId);
+            return _mapper.Map<ClaimDto>(claim);
         }
 
-        public Task<List<ClaimDto>?> GetClaimsAsync()
+        public async Task<List<ClaimDto>?> GetClaimsAsync()
         {
-            throw new NotImplementedException();
+            var claims = await _claimRepo.GetAllAsync().ToListAsync();
+            return _mapper.Map<List<ClaimDto>>(claims);
         }
 
-        public Task UpdateClaimAsync(int claimId, ClaimDto claim)
+        public async Task UpdateClaimAsync(int claimId, ClaimDto claimDto)
         {
-            throw new NotImplementedException();
+            var existingClaim = await _claimRepo.GetByIdAsync(claimId);
+            if (existingClaim == null)
+            {
+                _logger.LogWarning("Claim not found with ID: {ClaimId}", claimId);
+                return;
+            }
+
+            _mapper.Map(claimDto, existingClaim);
+            await _claimRepo.UpdateAsync(existingClaim);
+            _logger.LogInformation("Claim updated with ID: {ClaimId}", claimId);
         }
     }
 }

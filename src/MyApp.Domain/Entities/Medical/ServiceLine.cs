@@ -25,5 +25,7 @@ namespace MyApp.Domain.Entities.Medical
         public decimal Charge { get; set; }
         [MaxLength(20)]
         public required string RenderingProviderId { get; set; }
+        public Claim Claim { get; set; }
+        public int ClaimId { get; set; }
     }
 }

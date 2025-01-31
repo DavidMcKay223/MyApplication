@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using MyApp.Application.Mappings.Management;
+using MyApp.Application.Mappings.Medical;
 using MyApp.Application.Mappings.Music;
 using MyApp.Application.Mappings.NPI;
 
@@ -23,6 +24,7 @@ namespace MyApp.Application.Configurations
                 cfg.AddProfile(new TrackProfile());
                 cfg.AddProfile(new TaskItemProfile());
                 cfg.AddProfile(new ProviderProfile());
+                cfg.AddProfile(new ClaimProfile());
             });
 
             var mapper = mapperConfig.CreateMapper();

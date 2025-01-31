@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyApp.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using MyApp.Infrastructure.Persistence;
 namespace MyApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131060810_FixCascadeDelete11")]
+    partial class FixCascadeDelete11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,10 +80,16 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<decimal>("AmountPaid")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("BillingProviderId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("InsuranceProgram")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InsuredId")
                         .HasColumnType("int");
 
                     b.Property<string>("InsuredIdNumber")
@@ -92,6 +101,9 @@ namespace MyApp.Infrastructure.Migrations
 
                     b.Property<DateTime>("PhysicianSignatureDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceFacilityId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalCharge")
                         .HasColumnType("decimal(18,2)");

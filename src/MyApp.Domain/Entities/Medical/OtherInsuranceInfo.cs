@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyApp.Domain.Entities.Medical
 {
-    [ComplexType]
+    [Owned]
     public class OtherInsuranceInfo
     {
         [MaxLength(50)]
@@ -17,5 +18,6 @@ namespace MyApp.Domain.Entities.Medical
         public string? PolicyNumber { get; set; }
         [MaxLength(50)]
         public string? PlanName { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     }
 }
