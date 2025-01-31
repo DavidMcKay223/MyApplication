@@ -29,6 +29,7 @@ builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 builder.Services.AddScoped<IProviderUseCases, ProviderUseCases>();
 
 builder.Services.AddScoped<IStateService, StateService>();
+builder.Services.AddScoped<INavBarService, NavBarService>();
 
 var npiRegistryBaseUrl = builder.Configuration["NpiRegistry:BaseUrl"];
 builder.Services.AddHttpClient<INpiRegistryClient, NpiRegistryService>(client =>
