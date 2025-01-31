@@ -37,7 +37,6 @@
                 <div class="col-md-6">
                     <div class="form-floating">
                         <InputSelect @bind-Value="PatientInfo.Sex" class="form-select" id="sex">
-                            <option value="">Select Sex</option>
                             @foreach (var value in Enum.GetValues(typeof(Sex)))
                             {
                                 <option value="@value">@value</option>

@@ -11,10 +11,10 @@ namespace MyApp.Application.DTOs.Medical
         public int ServiceLineId { get; set; }
         public DateTime? ServiceStartDate { get; set; }
         public DateTime? ServiceEndDate { get; set; }
-        public string ProcedureCode { get; set; }
+        public string? ProcedureCode { get; set; }
         public string? Modifier { get; set; }
         public string? DiagnosisPointer { get; set; }
         public decimal Charge { get; set; }
-        public string RenderingProviderId { get; set; }
+        public string? RenderingProviderId { get; set; }
     }
 }

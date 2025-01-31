@@ -1,13 +1,17 @@
 ﻿@using MyApp.Application.DTOs.Medical
 @using MyApp.Application.UseCases.Medical
 @using MyApp.Domain.Enums.Medical
+@using MyApp.Application.Validators.Medical
+@using FluentValidation
 @inject IClaimUseCases ClaimUseCases
+@inject IValidator<ClaimDto> ClaimValidator
 
 @code {
     [Parameter]
     public EventCallback OnClaimSaved { get; set; }
 
     private ClaimDto? Claim;
+    private EditContext? EditContext;
 
     public void Show(ClaimDto? ClaimToEdit)
     {
@@ -22,22 +26,26 @@
             ServiceLines = new List<ServiceLineDto>()
         };
 
+        EditContext = new EditContext(Claim);
         StateHasChanged();
     }
 
     private async Task SaveClaim()
     {
-        if (Claim!.FormId == 0)
+        if (EditContext != null && EditContext.Validate())
         {
-            await ClaimUseCases.CreateClaimAsync(Claim);
-        }
-        else
-        {
-            await ClaimUseCases.UpdateClaimAsync(Claim.FormId, Claim);
-        }
+            if (Claim!.FormId == 0)
+            {
+                await ClaimUseCases.CreateClaimAsync(Claim);
+            }
+            else
+            {
+                await ClaimUseCases.UpdateClaimAsync(Claim.FormId, Claim);
+            }
 
-        Claim = null;
-        await OnClaimSaved.InvokeAsync();
+            Claim = null;
+            await OnClaimSaved.InvokeAsync();
+        }
     }
 
     private void Cancel()
@@ -56,26 +64,51 @@
                         <h5 class="modal-title">@(Claim.FormId == 0 ? "Add Claim" : "Edit Claim")</h5>
                         <button type="button" class="btn-close" @onclick="Cancel"></button>
                     </div>
-                    <EditForm Model="@Claim">
+                    <EditForm Model="@Claim" OnValidSubmit="SaveClaim">
+                        <FluentValidationValidator />
+                        <ValidationSummary />
                         <div class="modal-body">
-                            <DataAnnotationsValidator />
                             <!-- Insurance Section -->
- 
+                            <div class="card mb-3">
+                                <div class="card-header">Insurance</div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <InputSelect @bind-Value="Claim.InsuranceProgram" class="form-select">
+                                                    @foreach (var value in Enum.GetValues(typeof(InsuranceProgram)))
+                                                    {
+                                                        <option value="@value">@value</option>
+                                                    }
+                                                </InputSelect>
+                                                <label>Insurance Program</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <InputText @bind-Value="Claim.InsuredIdNumber" class="form-control" />
+                                                <label>Claim Number</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Patient Information --> 
                             <FormEditPatientInfo PatientInfo="@Claim.Patient" />
 
                             <!-- Insured Information --> 
                             <FormEditInsuredInfo InsuredInfo="@Claim.Insured" /> 
- 
+
                             <!-- Other Insurance --> 
                             <FormEditOtherInsuranceInfo OtherInsuranceInfo="@Claim.OtherInsurance" /> 
- 
+
                             <!-- Condition Related --> 
                             <FormEditConditionRelated ConditionRelated="@Claim.ConditionRelated" /> 
- 
+
                             <!-- Diagnosis Codes --> 
                             <FormEditDiagnosisCode DiagnosisCodeList="@Claim.DiagnosisCodes" /> 
- 
+
                             <!-- Service Lines --> 
                             <div class="card mb-3"> 
                                 <div class="card-header">24. Service Details</div> 
@@ -83,7 +116,7 @@
                                     <FormEditServiceLine ServiceLineList="@Claim.ServiceLines" /> 
                                 </div> 
                             </div> 
- 
+
                             <!-- Providers --> 
                             <div class="row g-3"> 
                                 <div class="col-md-6"> 
@@ -93,7 +126,7 @@
                                     <FormEditProviderInfo ProviderInfo="@Claim.ServiceFacility" Title="32. Service Facility" />
                                 </div> 
                             </div> 
- 
+
                             <!-- Financials --> 
                             <div class="card mb-3">
                                 <div class="card-header">Financials</div>
@@ -113,8 +146,8 @@
                                         </div> 
                                     </div> 
                                 </div> 
-                            </div> 
- 
+                            </div>
+
                             <!-- Signatures -->
                             <div class="card mb-3">
                                 <div class="card-header">Signatures</div>
@@ -137,7 +170,7 @@
                             </div>
                         </div> 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" @onclick="SaveClaim">Save</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
                         </div>
                     </EditForm>

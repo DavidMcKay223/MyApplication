@@ -8,8 +8,8 @@ namespace MyApp.Application.DTOs.Medical
 {
     public class InsuredInfoDto
     {
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? FirstName { get; set; }
         public required AddressDto Address { get; set; }
         public string? GroupNumber { get; set; }
     }

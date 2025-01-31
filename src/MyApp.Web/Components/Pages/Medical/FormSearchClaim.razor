@@ -17,7 +17,6 @@
     <div class="col-md-3">
         <div class="mb-3 form-floating">
             <InputSelect id="ddl_insuranceProgram" class="form-select" @bind-Value="SearchDto.InsuranceProgram">
-                <option value="">Select Insurance Program</option>
                 @foreach (var program in Enum.GetValues(typeof(InsuranceProgram)))
                 {
                     <option value="@program">@program</option>
