@@ -88,6 +88,7 @@
                                             <div class="form-floating">
                                                 <InputText @bind-Value="Claim.InsuredIdNumber" class="form-control" />
                                                 <label>Claim Number</label>
+                                                <ValidationMessage For="@(() => Claim.InsuredIdNumber)" />
                                             </div>
                                         </div>
                                     </div>

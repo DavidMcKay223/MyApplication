@@ -20,7 +20,7 @@ else
 
     <FormTableAlbum Albums="albums" OnEdit="ShowEditModal" OnDelete="DeleteAlbum" />
 
-    <Pagination TItem="AlbumDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+    <SearchPagination TItem="AlbumDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
 }
 
 <EditModalAlbum @ref="editModal" OnAlbumSaved="LoadAlbums" />

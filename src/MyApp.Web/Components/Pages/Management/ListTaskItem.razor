@@ -20,7 +20,7 @@ else
 
     <FormTableTaskItem TaskItems="TaskItems" OnEdit="ShowEditModal" OnDelete="DeleteTaskItem" />
 
-    <Pagination TItem="TaskItemDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+    <SearchPagination TItem="TaskItemDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
 }
 
 <EditModalTaskItem @ref="editModal" OnTaskItemSaved="LoadTaskItems" />

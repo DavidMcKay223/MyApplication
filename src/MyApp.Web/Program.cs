@@ -19,12 +19,18 @@ using MyApp.Application.UseCases.Medical;
 using MyApp.Application.Validators.Medical;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using BootstrapBlazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
 .AddInteractiveServerComponents();
+
+builder.Services.AddFluentValidationAutoValidation();
+
+// Add Blazor Bootstrap services
+builder.Services.AddBootstrapBlazor();
 
 // Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
@@ -37,9 +43,6 @@ builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 // Medical:
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<IClaimUseCases, ClaimUseCases>();
-
-builder.Services.AddFluentValidationAutoValidation();
-//builder.Services.AddFluentValidationClientsideAdapters();
 
 // Register all validators from the assembly containing ClaimDtoValidator
 builder.Services.AddValidatorsFromAssemblyContaining<ClaimDtoValidator>();

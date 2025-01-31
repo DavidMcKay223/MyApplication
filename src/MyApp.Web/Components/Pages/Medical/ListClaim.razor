@@ -20,7 +20,7 @@ else
 
     <FormTableClaim Claims="Claims" OnEdit="ShowEditModal" OnDelete="DeleteClaim" />
 
-    <Pagination TItem="ClaimDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+    <SearchPagination TItem="ClaimDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
 }
 
 <EditModalClaim @ref="editModal" OnClaimSaved="LoadClaims" />
