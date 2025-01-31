@@ -19,7 +19,6 @@ using MyApp.Application.UseCases.Medical;
 using MyApp.Application.Validators.Medical;
 using FluentValidation;
 using Blazored.FluentValidation;
-using BlazorBootstrap;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.DataAnnotations;
 using MyApp.Application.DTOs.Medical;
@@ -29,9 +28,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
 .AddInteractiveServerComponents();
-
-// Add Blazor Bootstrap services
-builder.Services.AddBlazorBootstrap();
 
 // Add FluentValidation services
 builder.Services.AddScoped<FluentValidationValidator>();
