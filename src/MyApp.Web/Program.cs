@@ -16,6 +16,8 @@ using MyApp.Shared.Services;
 using MyApp.Domain.Repositories.Medical;
 using MyApp.Infrastructure.Repositories.Medical;
 using MyApp.Application.UseCases.Medical;
+using MyApp.Application.Validators.Medical;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,9 @@ builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 // Medical:
 builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 builder.Services.AddScoped<IClaimUseCases, ClaimUseCases>();
+
+// Register all validators from the assembly containing AddressDtoValidator
+builder.Services.AddValidatorsFromAssemblyContaining<AddressDtoValidator>();
 
 // Shared:
 builder.Services.AddScoped<IStateService, StateService>();
