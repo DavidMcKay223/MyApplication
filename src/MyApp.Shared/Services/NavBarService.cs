@@ -38,6 +38,12 @@ namespace MyApp.Shared.Services
                     Description = "NPI Registry",
                     Href = "npi",
                     Class = "bi bi-search"
+                },
+                new NavBarItemDto
+                {
+                    Description = "Claims",
+                    Href = "claims",
+                    Class = "bi bi-info-circle"
                 }
             };
         }

@@ -1,0 +1,94 @@
+﻿@using MyApp.Application.DTOs.Medical
+@using MyApp.Application.UseCases.Medical
+@using MyApp.Domain.Enums.Medical
+@using MyApp.Web.Components.Shared
+@inject IClaimUseCases ClaimUseCases
+
+<div class="container">
+    <h1 class="my-4 text-center">Claims</h1>
+</div>
+
+@if (isLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <FormSearchClaim SearchDto="searchDto" />
+
+    <SearchButton OnSearch="Search" OnReset="ResetSearch" OnAdd="ShowAddModal" />
+
+    <FormTableClaim Claims="Claims" OnEdit="ShowEditModal" OnDelete="DeleteClaim" />
+
+    <Pagination TItem="ClaimDto" TotalItems="@totalItems" PageSize="@pageSize" CurrentPage="@currentPage" OnPageChanged="OnPageChanged" OnPageSizeChangedCallback="OnPageSizeChanged" />
+}
+
+<EditModalClaim @ref="editModal" OnClaimSaved="LoadClaims" />
+
+@code {
+    private List<ClaimDto>? Claims;
+    private bool isLoading = true;
+    private EditModalClaim? editModal;
+    private SearchClaimDto searchDto = new SearchClaimDto();
+    private int totalItems;
+    private int pageSize = 10;
+    private int currentPage = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadClaims();
+    }
+
+    private async Task LoadClaims()
+    {
+        isLoading = true;
+        searchDto.PageNumber = currentPage;
+        searchDto.PageSize = pageSize;
+
+        Claims = await ClaimUseCases.GetClaimsAsync();
+        totalItems = searchDto.TotalItems;
+        isLoading = false;
+    }
+
+    private void ShowAddModal()
+    {
+        editModal!.Show(new ClaimDto());
+    }
+
+    private async void ShowEditModal(int id)
+    {
+        var claim = await ClaimUseCases.GetClaimAsync(id);
+        editModal!.Show(claim);
+    }
+
+    private async Task DeleteClaim(ClaimDto dto)
+    {
+        await ClaimUseCases.DeleteClaimAsync(dto.FormId);
+        await LoadClaims();
+    }
+
+    private async Task OnPageChanged(int page)
+    {
+        currentPage = page;
+        await LoadClaims();
+    }
+
+    private async Task OnPageSizeChanged(int size)
+    {
+        pageSize = size;
+        currentPage = 0;
+        await LoadClaims();
+    }
+
+    private async Task Search()
+    {
+        currentPage = 0;
+        await LoadClaims();
+    }
+
+    private async Task ResetSearch()
+    {
+        searchDto = new SearchClaimDto();
+        await LoadClaims();
+    }
+}

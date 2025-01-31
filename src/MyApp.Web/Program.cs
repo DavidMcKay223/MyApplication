@@ -13,6 +13,9 @@ using MyApp.Domain.Abstractions.NPI;
 using MyApp.Infrastructure.ExternalServices.NPI;
 using System.Net.Http.Headers;
 using MyApp.Shared.Services;
+using MyApp.Domain.Repositories.Medical;
+using MyApp.Infrastructure.Repositories.Medical;
+using MyApp.Application.UseCases.Medical;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,16 +23,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
 .AddInteractiveServerComponents();
 
+// Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumUseCases, AlbumUseCases>();
 
+// Management:
 builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 builder.Services.AddScoped<ITaskItemUseCases, TaskItemUseCases>();
 
-builder.Services.AddScoped<IProviderUseCases, ProviderUseCases>();
+// Medical:
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
+builder.Services.AddScoped<IClaimUseCases, ClaimUseCases>();
 
+// Shared:
 builder.Services.AddScoped<IStateService, StateService>();
 builder.Services.AddScoped<INavBarService, NavBarService>();
+
+// NPI:
+builder.Services.AddScoped<IProviderUseCases, ProviderUseCases>();
 
 var npiRegistryBaseUrl = builder.Configuration["NpiRegistry:BaseUrl"];
 builder.Services.AddHttpClient<INpiRegistryClient, NpiRegistryService>(client =>

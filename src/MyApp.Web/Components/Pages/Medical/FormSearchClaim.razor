@@ -1,0 +1,40 @@
+﻿@using MyApp.Application.DTOs.Medical
+@using MyApp.Domain.Enums.Medical
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" @bind="SearchDto.InsuredIdNumber" />
+            <label>Search Insured ID Number</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" @bind="SearchDto.PatientLastName" />
+            <label>Search Patient Last Name</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <InputSelect id="ddl_insuranceProgram" class="form-select" @bind-Value="SearchDto.InsuranceProgram">
+                <option value="">Select Insurance Program</option>
+                @foreach (var program in Enum.GetValues(typeof(InsuranceProgram)))
+                {
+                    <option value="@program">@program</option>
+                }
+            </InputSelect>
+            <label for="ddl_insuranceProgram">Insurance Program</label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" @bind="SearchDto.PatientFirstName" />
+            <label>Search Patient First Name</label>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public SearchClaimDto SearchDto { get; set; } = new SearchClaimDto();
+}
