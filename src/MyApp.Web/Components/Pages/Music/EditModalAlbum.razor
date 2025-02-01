@@ -2,15 +2,21 @@
 @using MyApp.Application.UseCases.Music
 @using MyApp.Domain.Enums.Music
 @using MyApp.Web.Components.Shared
+@using MyApp.Application.Validators.Music
 @using AutoMapper
+@using FluentValidation
 @inject IAlbumUseCases AlbumUseCases
 @inject IMapper Mapper
+@inject IValidator<AlbumDto> AlbumValidator
 
 @code {
     [Parameter]
     public EventCallback OnAlbumSaved { get; set; }
 
     private AlbumDto? album;
+    private EditForm? EditForm;
+
+    private FluentValidationValidator? _fluentValidationValidator;
 
     public void Show(AlbumDto? albumToEdit)
     {
@@ -32,19 +38,26 @@
 
     private async Task SaveAlbum()
     {
-        if (album!.ID == 0)
+        if (await _fluentValidationValidator!.ValidateAsync())
         {
-            var createAlbumDto = Mapper.Map<CreateAlbumDto>(album);
-            await AlbumUseCases.CreateAlbumAsync(createAlbumDto);
+            if (album!.ID == 0)
+            {
+                var createAlbumDto = Mapper.Map<CreateAlbumDto>(album);
+                await AlbumUseCases.CreateAlbumAsync(createAlbumDto);
+            }
+            else
+            {
+                var updateAlbumDto = Mapper.Map<UpdateAlbumDto>(album);
+                await AlbumUseCases.UpdateAlbumAsync(album.ID, updateAlbumDto);
+            }
+
+            album = null;
+            await OnAlbumSaved.InvokeAsync();
         }
         else
         {
-            var updateAlbumDto = Mapper.Map<UpdateAlbumDto>(album);
-            await AlbumUseCases.UpdateAlbumAsync(album.ID, updateAlbumDto);
+            EditForm?.EditContext?.NotifyValidationStateChanged();
         }
-
-        album = null;
-        await OnAlbumSaved.InvokeAsync();
     }
 
     private void Cancel()
@@ -63,9 +76,9 @@
                         <h5 class="modal-title">@(album.ID == 0 ? "Add Album" : "Edit Album")</h5>
                         <button type="button" class="btn-close" @onclick="Cancel"></button>
                     </div>
-                    <EditForm Model="@album">
-                        <div class="modal-body">
-                            <DataAnnotationsValidator />
+                    <div class="modal-body">
+                        <EditForm @ref="EditForm" Model="@album">
+                            <FluentValidationValidator @ref="_fluentValidationValidator" />
                             <div class="mb-3 form-floating">
                                 <InputText id="artistName" class="form-control" @bind-Value="album.ArtistName" />
                                 <label for="artistName">Artist Name</label>
@@ -135,12 +148,12 @@
                             <div class="mt-3">
                                 <button type="button" class="btn btn-primary" @onclick="AddNewCD">Add New CD</button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" @onclick="SaveAlbum">Save</button>
-                            <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
-                        </div>
-                    </EditForm>
+                        </EditForm>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" @onclick="SaveAlbum">Save</button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,6 +24,8 @@ using System.ComponentModel.DataAnnotations;
 using MyApp.Application.DTOs.Medical;
 using MyApp.Application.DTOs.Management;
 using MyApp.Application.Validators.Management;
+using MyApp.Application.DTOs.Music;
+using MyApp.Application.Validators.Music;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<FluentValidationValidator>();
 builder.Services.AddTransient<IValidator<ClaimDto>, ClaimDtoValidator>();
 builder.Services.AddTransient<IValidator<TaskItemDto>, TaskItemDtoValidator>();
+builder.Services.AddTransient<IValidator<AlbumDto>, AlbumDtoValidator>();
 
 // Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
