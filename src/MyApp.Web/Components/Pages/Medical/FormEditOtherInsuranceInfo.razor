@@ -16,6 +16,7 @@
                         <InputText @bind-Value="OtherInsuranceInfo.PolicyHolderName" class="form-control"
                         id="policyHolder" />
                         <label for="policyHolder">Policy Holder Name</label>
+                        <ValidationMessage For="@(() => OtherInsuranceInfo.PolicyHolderName)" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -23,6 +24,7 @@
                         <InputText @bind-Value="OtherInsuranceInfo.PolicyNumber" class="form-control"
                         id="policyNumber" />
                         <label for="policyNumber">Policy Number</label>
+                        <ValidationMessage For="@(() => OtherInsuranceInfo.PolicyNumber)" />
                     </div>
                 </div>
                 <div class="col-12">
@@ -30,6 +32,7 @@
                         <InputText @bind-Value="OtherInsuranceInfo.PlanName" class="form-control"
                         id="planName" />
                         <label for="planName">Plan Name</label>
+                        <ValidationMessage For="@(() => OtherInsuranceInfo.PlanName)" />
                     </div>
                 </div>
             </div>

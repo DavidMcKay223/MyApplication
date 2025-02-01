@@ -37,6 +37,7 @@
                             <InputNumber @bind-Value="DiagnosisCodeList[index].Priority" class="form-control"
                             id="@($"priority{index}")" />
                             <label for="@($"priority{index}")">Priority</label>
+                            <ValidationMessage For="@(() => DiagnosisCodeList[index].Priority)" />
                         </div>
                     </div>
                     <div class="col-md-2">

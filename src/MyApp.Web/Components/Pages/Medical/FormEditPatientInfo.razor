@@ -31,6 +31,7 @@
                     <div class="form-floating">
                         <InputDate @bind-Value="PatientInfo.BirthDate" class="form-control" id="birthDate" />
                         <label for="birthDate">Birth Date</label>
+                        <ValidationMessage For="@(() => PatientInfo.BirthDate)" />
                     </div>
                 </div>
 

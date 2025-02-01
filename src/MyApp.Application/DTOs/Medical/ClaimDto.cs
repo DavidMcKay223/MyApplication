@@ -14,7 +14,7 @@ namespace MyApp.Application.DTOs.Medical
         public string? InsuredIdNumber { get; set; }
         public required PatientInfoDto Patient { get; set; }
         public required InsuredInfoDto Insured { get; set; }
-        public required OtherInsuranceInfoDto? OtherInsurance { get; set; }
+        public required OtherInsuranceInfoDto OtherInsurance { get; set; }
         public required ConditionRelatedDto ConditionRelated { get; set; }
         public required List<DiagnosisCodeDto> DiagnosisCodes { get; set; } = [];
         public required List<ServiceLineDto> ServiceLines { get; set; } = [];

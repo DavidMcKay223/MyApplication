@@ -139,13 +139,15 @@
                                         <div class="col-md-4"> 
                                             <div class="form-floating"> 
                                                 <InputNumber @bind-Value="Claim.TotalCharge" class="form-control" /> 
-                                                <label>28. Total Charge</label> 
+                                                <label>28. Total Charge</label>
+                                                <ValidationMessage For="@(() => Claim.TotalCharge)" />
                                             </div> 
                                         </div> 
                                         <div class="col-md-4"> 
                                             <div class="form-floating"> 
                                                 <InputNumber @bind-Value="Claim.AmountPaid" class="form-control" /> 
-                                                <label>29. Amount Paid</label> 
+                                                <label>29. Amount Paid</label>
+                                                <ValidationMessage For="@(() => Claim.AmountPaid)" />
                                             </div> 
                                         </div> 
                                     </div> 
@@ -161,12 +163,14 @@
                                             <div class="form-floating">
                                                 <InputDate @bind-Value="Claim.PatientSignatureDate" class="form-control" />
                                                 <label>Patient Signature Date</label>
+                                                <ValidationMessage For="@(() => Claim.PatientSignatureDate)" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
                                                 <InputDate @bind-Value="Claim.PhysicianSignatureDate" class="form-control" />
                                                 <label>Physician Signature Date</label>
+                                                <ValidationMessage For="@(() => Claim.PhysicianSignatureDate)" />
                                             </div>
                                         </div>
                                     </div>

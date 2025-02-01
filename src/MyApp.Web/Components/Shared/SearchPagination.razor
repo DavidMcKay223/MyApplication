@@ -1,20 +1,23 @@
 ﻿@typeparam TItem
 
-<div class="d-flex justify-content-between align-items-center my-3">
-    <div>
-        <select class="form-select" @onchange="OnPageSizeChanged">
-            @foreach (var size in PageSizes)
-            {
-                <option value="@size" selected="@(size == PageSize)">@size</option>
-            }
-        </select>
+@if(TotalItems > 0)
+{
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <div>
+            <select class="form-select" @onchange="OnPageSizeChanged">
+                @foreach (var size in PageSizes)
+                {
+                    <option value="@size" selected="@(size == PageSize)">@size</option>
+                }
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-primary" @onclick="PreviousPage" disabled="@IsFirstPage">Previous</button>
+            <span class="mx-2">Page @(CurrentPage + 1) of @(TotalPages == 0 ? 1 : TotalPages)</span>
+            <button class="btn btn-primary" @onclick="NextPage" disabled="@IsLastPage">Next</button>
+        </div>
     </div>
-    <div>
-        <button class="btn btn-primary" @onclick="PreviousPage" disabled="@IsFirstPage">Previous</button>
-        <span class="mx-2">Page @(CurrentPage + 1) of @(TotalPages == 0 ? 1 : TotalPages)</span>
-        <button class="btn btn-primary" @onclick="NextPage" disabled="@IsLastPage">Next</button>
-    </div>
-</div>
+}
 
 @code {
     [Parameter] public int TotalItems { get; set; }

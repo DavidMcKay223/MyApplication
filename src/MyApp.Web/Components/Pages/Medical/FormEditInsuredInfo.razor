@@ -34,6 +34,7 @@
                     <div class="form-floating">
                         <InputText @bind-Value="InsuredInfo.GroupNumber" class="form-control" id="groupNumber" />
                         <label for="groupNumber">Group Number</label>
+                        <ValidationMessage For="@(() => InsuredInfo.GroupNumber)" />
                     </div>
                 </div>
             </div>

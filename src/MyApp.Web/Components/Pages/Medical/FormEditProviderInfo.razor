@@ -25,24 +25,25 @@
                     <div class="form-floating">
                         <InputText @bind-Value="ProviderInfo.FederalTaxId" class="form-control" id="taxId" />
                         <label for="taxId">Federal Tax ID</label>
+                        <ValidationMessage For="@(() => ProviderInfo.FederalTaxId)" />
                     </div>
                 </div>
-
-                <div class="col-12">
-                    <FormEditAddress Address="@ProviderInfo.Address" />
-                </div>
-
                 <div class="col-md-6">
                     <div class="form-floating">
                         <InputText @bind-Value="ProviderInfo.NpiNumber" class="form-control" id="npi" />
                         <label for="npi">NPI Number</label>
+                        <ValidationMessage For="@(() => ProviderInfo.NpiNumber)" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <InputText @bind-Value="ProviderInfo.Phone" class="form-control" id="providerPhone" />
                         <label for="providerPhone">Phone</label>
+                        <ValidationMessage For="@(() => ProviderInfo.Phone)" />
                     </div>
+                </div>
+                <div class="col-12">
+                    <FormEditAddress Address="@ProviderInfo.Address" />
                 </div>
             </div>
         </div>
