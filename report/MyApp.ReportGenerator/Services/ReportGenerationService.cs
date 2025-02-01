@@ -86,7 +86,7 @@ namespace MyApp.ReportGenerator.Services
             sb.AppendLine("# Project Classes Index");
             sb.AppendLine();
 
-            foreach (var classInfo in classes.OrderBy(c => c.Name))
+            foreach (var classInfo in classes.OrderBy(c => c.Namespace).ThenBy(c => c.Name))
             {
                 var relativePath = $"{classInfo.Namespace}-{classInfo.Name}.md";
                 sb.AppendLine($"- [{classInfo.Namespace}.{classInfo.Name}]({relativePath})");
