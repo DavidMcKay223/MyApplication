@@ -10,22 +10,22 @@ namespace MyApp.ReportGenerator.Models
     public class MethodInfo
     {
         /// <summary>
-        /// Method name.
+        /// The name of the method.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Return type of the method.
+        /// The return type of the method.
         /// </summary>
         public string ReturnType { get; set; }
 
         /// <summary>
-        /// List of parameters and their types.
+        /// List of parameters for the method.
         /// </summary>
         public List<ParameterInfo> Parameters { get; set; } = new List<ParameterInfo>();
 
         /// <summary>
-        /// Access modifier (public, private, etc.).
+        /// Access modifier of the method (public, private, etc.).
         /// </summary>
         public string AccessModifier { get; set; }
 
@@ -33,5 +33,10 @@ namespace MyApp.ReportGenerator.Models
         /// Indicates whether the method is static.
         /// </summary>
         public bool IsStatic { get; set; }
+
+        /// <summary>
+        /// The full code of the method.
+        /// </summary>
+        public string CodeSnippet { get; set; }
     }
 }

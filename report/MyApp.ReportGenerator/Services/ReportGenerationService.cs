@@ -10,7 +10,7 @@ namespace MyApp.ReportGenerator.Services
     public class ReportGenerationService
     {
         /// <summary>
-        /// Generates Markdown reports for the provided classes, including properties, grouped by namespace.
+        /// Generates Markdown reports for the provided classes, including properties and methods with code snippets, grouped by namespace.
         /// </summary>
         /// <param name="classes">List of ClassInfo objects.</param>
         /// <param name="outputPath">Directory where the reports will be saved.</param>
@@ -57,6 +57,14 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine($"- **Inherits From:** N/A");
                 }
 
+                // Include the full class code
+                sb.AppendLine();
+                sb.AppendLine("### Class Code");
+                sb.AppendLine();
+                sb.AppendLine("```csharp");
+                sb.AppendLine(classInfo.CodeSnippet);
+                sb.AppendLine("```");
+
                 if (classInfo.Properties.Any())
                 {
                     sb.AppendLine();
@@ -64,17 +72,15 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine();
 
                     // Table Header for Properties
-                    sb.AppendLine("| Name | Type |");
-                    sb.AppendLine("|------|------|");
+                    sb.AppendLine("| Name | Type | Definition |");
+                    sb.AppendLine("|------|------|-------------|");
 
                     // Table Rows
                     foreach (var prop in classInfo.Properties)
                     {
-                        var propertyParts = prop.Split(' ');
-                        var propType = propertyParts[0];
-                        var propName = propertyParts[1];
-
-                        sb.AppendLine($"| `{propName}` | `{propType}` |");
+                        // Include the property code directly in the "Definition" column
+                        var code = prop.CodeSnippet.Replace("\n", "<br>").Replace("|", "\\|"); // Replace newlines with <br>, escape pipes
+                        sb.AppendLine($"| `{prop.Name}` | `{prop.Type}` | `{code}` |");
                     }
                 }
 
@@ -85,17 +91,18 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine();
 
                     // Table Header for Methods
-                    sb.AppendLine("| Name | Return Type | Access Modifier | Static | Parameters |");
-                    sb.AppendLine("|------|-------------|-----------------|--------|------------|");
+                    sb.AppendLine("| Name | Signature | Definition |");
+                    sb.AppendLine("|------|-----------|-------------|");
 
                     // Table Rows
                     foreach (var method in classInfo.Methods)
                     {
                         var parameters = method.Parameters.Any()
-                            ? string.Join(", ", method.Parameters.Select(p => $"`{p.Type} {p.Name}`"))
-                            : "None";
-
-                        sb.AppendLine($"| `{method.Name}` | `{method.ReturnType}` | `{method.AccessModifier}` | `{(method.IsStatic ? "Yes" : "No")}` | {parameters} |");
+                            ? string.Join(", ", method.Parameters.Select(p => $"{p.Type} {p.Name}"))
+                            : "";
+                        var signature = $"{(method.AccessModifier != "private" ? method.AccessModifier + " " : "")}{(method.IsStatic ? "static " : "")}{method.ReturnType} {method.Name}({parameters})";
+                        var code = method.CodeSnippet.Replace("\n", "<br>").Replace("|", "\\|"); // Replace newlines with <br>, escape pipes
+                        sb.AppendLine($"| `{method.Name}` | `{signature}` | `{code}` |");
                     }
                 }
 
@@ -104,6 +111,7 @@ namespace MyApp.ReportGenerator.Services
 
             return sb.ToString();
         }
+
 
         private void GenerateIndexMarkdown(IEnumerable<IGrouping<string, ClassInfo>> namespaceGroups, string outputPath)
         {

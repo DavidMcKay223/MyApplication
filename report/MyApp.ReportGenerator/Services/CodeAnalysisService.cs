@@ -12,32 +12,34 @@ namespace MyApp.ReportGenerator.Services
 {
     public class CodeAnalysisService
     {
-        /// <summary>
-        /// Analyzes C# source files in the given project path and extracts class information.
-        /// </summary>
-        /// <param name="projectPath">The root directory of the C# project.</param>
-        /// <returns>List of ClassInfo objects representing each class found.</returns>
         public List<ClassInfo> AnalyzeSourceFiles(string projectPath)
         {
-            var csFiles = Directory.GetFiles(projectPath, "*.cs", SearchOption.AllDirectories);
             var classes = new List<ClassInfo>();
+            var csFiles = Directory.GetFiles(projectPath, "*.cs", SearchOption.AllDirectories);
 
             foreach (var file in csFiles)
             {
                 var code = FileHelper.ReadFileContent(file);
                 var syntaxTree = CSharpSyntaxTree.ParseText(code);
-                var root = syntaxTree.GetRoot();
+                var root = syntaxTree.GetCompilationUnitRoot();
 
                 var classDeclarations = root.DescendantNodes().OfType<ClassDeclarationSyntax>();
 
                 foreach (var classDecl in classDeclarations)
                 {
+                    // Get the text span corresponding to the class
+                    var classSpan = classDecl.FullSpan;
+
+                    // Extract the class code from the original code using the span
+                    var classCode = code.Substring(classSpan.Start, classSpan.Length).Trim();
+
                     var classInfo = new ClassInfo
                     {
                         Name = classDecl.Identifier.Text,
                         Namespace = GetNamespace(classDecl),
                         FilePath = file,
-                        RelativePath = Path.GetRelativePath(projectPath, file)
+                        RelativePath = Path.GetRelativePath(projectPath, file),
+                        CodeSnippet = classCode
                     };
 
                     classInfo.BaseTypes.AddRange(GetBaseTypes(classDecl));
@@ -50,6 +52,7 @@ namespace MyApp.ReportGenerator.Services
 
             return classes;
         }
+
 
         private string GetNamespace(SyntaxNode classDecl)
         {
@@ -75,12 +78,26 @@ namespace MyApp.ReportGenerator.Services
             return baseTypes;
         }
 
-        private List<string> GetProperties(ClassDeclarationSyntax classDecl)
+        private List<PropertyInfo> GetProperties(ClassDeclarationSyntax classDecl)
         {
-            var properties = classDecl.Members
-                                      .OfType<PropertyDeclarationSyntax>()
-                                      .Select(prop => $"{prop.Type.ToString()} {prop.Identifier.Text}")
-                                      .ToList();
+            var properties = new List<PropertyInfo>();
+
+            foreach (var prop in classDecl.Members.OfType<PropertyDeclarationSyntax>())
+            {
+                var propType = prop.Type.ToString();
+                var propName = prop.Identifier.Text;
+
+                // Get the full code of the property
+                var codeSnippet = prop.ToFullString().Trim();
+
+                properties.Add(new PropertyInfo
+                {
+                    Name = propName,
+                    Type = propType,
+                    CodeSnippet = codeSnippet
+                });
+            }
+
             return properties;
         }
 
@@ -98,7 +115,8 @@ namespace MyApp.ReportGenerator.Services
                     ReturnType = methodDecl.ReturnType.ToString(),
                     AccessModifier = GetAccessModifier(methodDecl.Modifiers),
                     IsStatic = methodDecl.Modifiers.Any(SyntaxKind.StaticKeyword),
-                    Parameters = GetMethodParameters(methodDecl)
+                    Parameters = GetMethodParameters(methodDecl),
+                    CodeSnippet = methodDecl.ToFullString().Trim()
                 };
 
                 methods.Add(methodInfo);

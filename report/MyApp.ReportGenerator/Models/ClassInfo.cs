@@ -31,7 +31,7 @@ namespace MyApp.ReportGenerator.Models
         /// <summary>
         /// Properties defined in the class.
         /// </summary>
-        public List<string> Properties { get; set; } = new List<string>();
+        public List<PropertyInfo> Properties { get; set; } = new List<PropertyInfo>();
 
         /// <summary>
         /// Methods defined in the class.
@@ -42,5 +42,10 @@ namespace MyApp.ReportGenerator.Models
         /// The relative path from the project root to the class file.
         /// </summary>
         public string RelativePath { get; set; }
+
+        /// <summary>
+        /// The full code of the class.
+        /// </summary>
+        public string CodeSnippet { get; set; }
     }
 }
