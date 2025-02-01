@@ -1,5 +1,5 @@
 # MyApplication
-[Source Code](https://github.com/DavidMcKay223/MyApplication/tree/main/report/MyApp.Report.Output/Class)
+[Source Code Report Generated](https://github.com/DavidMcKay223/MyApplication/tree/main/report/MyApp.Report.Output/Class)
 
 ## Clean Architecture: Overview
 ```
