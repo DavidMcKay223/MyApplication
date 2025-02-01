@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,10 +19,21 @@ namespace MyApp.ReportGenerator.Services
         {
             Directory.CreateDirectory(outputPath);
 
-            foreach (var classInfo in classes)
+            // Group By Namespace:
+
+            List<string> classNamespaceList = classes.Select(x => x.Name).Distinct().ToList();
+
+
+            foreach (string tempNamespace in classNamespaceList)
             {
-                var content = GenerateClassMarkdown(classInfo);
-                var fileName = $"{classInfo.Namespace}-{classInfo.Name}.md";
+                string content = "";
+
+                foreach(var classInfo in classes.Where(x => x.Namespace == tempNamespace))
+                {
+                    content += GenerateClassMarkdown(classInfo);
+                }
+
+                var fileName = $"{tempNamespace}.md";
                 var filePath = Path.Combine(outputPath, fileName);
 
                 File.WriteAllText(filePath, content);
