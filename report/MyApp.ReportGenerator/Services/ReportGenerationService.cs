@@ -1,17 +1,16 @@
 ﻿using MyApp.ReportGenerator.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MyApp.ReportGenerator.Services
 {
     public class ReportGenerationService
     {
         /// <summary>
-        /// Generates Markdown reports for the provided classes.
+        /// Generates Markdown reports for the provided classes, grouped by namespace.
         /// </summary>
         /// <param name="classes">List of ClassInfo objects.</param>
         /// <param name="outputPath">Directory where the reports will be saved.</param>
@@ -19,89 +18,60 @@ namespace MyApp.ReportGenerator.Services
         {
             Directory.CreateDirectory(outputPath);
 
-            // Group By Namespace:
+            // Group classes by Namespace
+            var namespaceGroups = classes.GroupBy(c => c.Namespace);
 
-            List<string> classNamespaceList = classes.Select(x => x.Namespace).Distinct().ToList();
-
-
-            foreach (string tempNamespace in classNamespaceList)
+            foreach (var namespaceGroup in namespaceGroups)
             {
-                string content = "";
+                string content = $"# Namespace: `{namespaceGroup.Key}`\n\n";
+                content += GenerateNamespaceTable(namespaceGroup.ToList());
 
-                foreach(var classInfo in classes.Where(x => x.Namespace == tempNamespace))
-                {
-                    content += GenerateClassMarkdown(classInfo);
-                }
-
-                var fileName = $"{tempNamespace}.md";
+                var fileName = $"{namespaceGroup.Key.Replace('.', '_')}.md";
                 var filePath = Path.Combine(outputPath, fileName);
 
                 File.WriteAllText(filePath, content);
             }
 
-            // Optionally, generate an index or summary README
-            GenerateIndexMarkdown(classes, outputPath);
+            // Generate an index or summary README
+            GenerateIndexMarkdown(namespaceGroups, outputPath);
         }
 
-        private string GenerateClassMarkdown(ClassInfo classInfo)
+        private string GenerateNamespaceTable(List<ClassInfo> classes)
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine($"# {classInfo.Name}");
-            sb.AppendLine();
-            sb.AppendLine($"**Namespace:** `{classInfo.Namespace}`");
-            sb.AppendLine();
-            sb.AppendLine($"**File Path:** `{classInfo.RelativePath.Replace("\\", "/")}`");
-            sb.AppendLine();
+            // Table Header
+            sb.AppendLine("| Class Name | File Path | Inherits From |");
+            sb.AppendLine("|------------|-----------|---------------|");
 
-            if (classInfo.BaseTypes.Any())
+            // Table Rows
+            foreach (var classInfo in classes.OrderBy(c => c.Name))
             {
-                sb.AppendLine("## Inherits From");
-                sb.AppendLine();
-                foreach (var baseType in classInfo.BaseTypes)
-                {
-                    sb.AppendLine($"- `{baseType}`");
-                }
-                sb.AppendLine();
+                var inheritsFrom = classInfo.BaseTypes.Any()
+                    ? string.Join(", ", classInfo.BaseTypes.Select(bt => $"`{bt}`"))
+                    : "N/A";
+
+                var filePath = classInfo.RelativePath.Replace("\\", "/");
+
+                sb.AppendLine($"| `{classInfo.Name}` | `{filePath}` | {inheritsFrom} |");
             }
 
-            if (classInfo.Properties.Any())
-            {
-                sb.AppendLine("## Properties");
-                sb.AppendLine();
-                foreach (var prop in classInfo.Properties)
-                {
-                    sb.AppendLine($"- `{prop}`");
-                }
-                sb.AppendLine();
-            }
-
-            if (classInfo.Methods.Any())
-            {
-                sb.AppendLine("## Methods");
-                sb.AppendLine();
-                foreach (var method in classInfo.Methods)
-                {
-                    var parameters = string.Join(", ", method.Parameters.Select(p => $"{p.Type} {p.Name}"));
-                    sb.AppendLine($"- `{method.AccessModifier}` {(method.IsStatic ? "static " : "")}`{method.ReturnType} {method.Name}({parameters})`");
-                }
-                sb.AppendLine();
-            }
+            sb.AppendLine(); // Add an empty line after the table for Markdown formatting
 
             return sb.ToString();
         }
 
-        private void GenerateIndexMarkdown(List<ClassInfo> classes, string outputPath)
+        private void GenerateIndexMarkdown(IEnumerable<IGrouping<string, ClassInfo>> namespaceGroups, string outputPath)
         {
             var sb = new StringBuilder();
 
             sb.AppendLine("# Project Classes Index");
             sb.AppendLine();
 
-            foreach (var classInfo in classes.OrderBy(c => c.Namespace).ThenBy(c => c.Name))
+            foreach (var namespaceGroup in namespaceGroups.OrderBy(g => g.Key))
             {
-                var relativePath = $"{classInfo.Namespace}.md";
-                sb.AppendLine($"- [{classInfo.Namespace}.{classInfo.Name}]({relativePath})");
+                var namespaceFileName = $"{namespaceGroup.Key.Replace('.', '_')}.md";
+                sb.AppendLine($"- [Namespace: `{namespaceGroup.Key}`]({namespaceFileName})");
             }
 
             var filePath = Path.Combine(outputPath, "README.md");
