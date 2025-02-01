@@ -9,44 +9,45 @@
 
 ```csharp
 public class TaskItemRepository : ITaskItemRepository
+{
+    private readonly AppDbContext _context;
+    public TaskItemRepository(AppDbContext context) => _context = context;
+
+    public async Task AddAsync(TaskItem TaskItem)
     {
-        private readonly AppDbContext _context;
-        public TaskItemRepository(AppDbContext context) => _context = context;
+        await _context.TaskItems.AddAsync(TaskItem);
+        await _context.SaveChangesAsync();
+    }
 
-        public async Task AddAsync(TaskItem TaskItem)
+    public async Task UpdateAsync(TaskItem TaskItem)
+    {
+        _context.TaskItems.Update(TaskItem);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var TaskItem = await GetByIdAsync(id);
+        if (TaskItem != null)
         {
-            await _context.TaskItems.AddAsync(TaskItem);
+            _context.TaskItems.Remove(TaskItem);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(TaskItem TaskItem)
-        {
-            _context.TaskItems.Update(TaskItem);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var TaskItem = await GetByIdAsync(id);
-            if (TaskItem != null)
-            {
-                _context.TaskItems.Remove(TaskItem);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<TaskItem?> GetByIdAsync(int id)
-        {
-            return await _context.TaskItems
-                .FirstOrDefaultAsync(a => a.ID == id);
-        }
-
-        public IQueryable<TaskItem> GetAllAsync()
-        {
-            return _context.TaskItems
-                .AsQueryable();
         }
     }
+
+    public async Task<TaskItem?> GetByIdAsync(int id)
+    {
+        return await _context.TaskItems
+            .FirstOrDefaultAsync(a => a.ID == id);
+    }
+
+    public IQueryable<TaskItem> GetAllAsync()
+    {
+        return _context.TaskItems
+            .AsQueryable();
+    }
+}
+
 ```
 
 ### Methods
@@ -62,54 +63,64 @@ public class TaskItemRepository : ITaskItemRepository
 #### Method: `AddAsync`
 
 ```csharp
+
 public async Task AddAsync(TaskItem TaskItem)
-        {
-            await _context.TaskItems.AddAsync(TaskItem);
-            await _context.SaveChangesAsync();
-        }
+{
+    await _context.TaskItems.AddAsync(TaskItem);
+    await _context.SaveChangesAsync();
+}
+
 ```
 
 #### Method: `UpdateAsync`
 
 ```csharp
+
 public async Task UpdateAsync(TaskItem TaskItem)
-        {
-            _context.TaskItems.Update(TaskItem);
-            await _context.SaveChangesAsync();
-        }
+{
+    _context.TaskItems.Update(TaskItem);
+    await _context.SaveChangesAsync();
+}
+
 ```
 
 #### Method: `DeleteAsync`
 
 ```csharp
+
 public async Task DeleteAsync(int id)
-        {
-            var TaskItem = await GetByIdAsync(id);
-            if (TaskItem != null)
-            {
-                _context.TaskItems.Remove(TaskItem);
-                await _context.SaveChangesAsync();
-            }
-        }
+{
+    var TaskItem = await GetByIdAsync(id);
+    if (TaskItem != null)
+    {
+        _context.TaskItems.Remove(TaskItem);
+        await _context.SaveChangesAsync();
+    }
+}
+
 ```
 
 #### Method: `GetByIdAsync`
 
 ```csharp
+
 public async Task<TaskItem?> GetByIdAsync(int id)
-        {
-            return await _context.TaskItems
-                .FirstOrDefaultAsync(a => a.ID == id);
-        }
+{
+    return await _context.TaskItems
+        .FirstOrDefaultAsync(a => a.ID == id);
+}
+
 ```
 
 #### Method: `GetAllAsync`
 
 ```csharp
+
 public IQueryable<TaskItem> GetAllAsync()
-        {
-            return _context.TaskItems
-                .AsQueryable();
-        }
+{
+    return _context.TaskItems
+        .AsQueryable();
+}
+
 ```
 

@@ -9,14 +9,15 @@
 
 ```csharp
 public class CreateTaskItemDto
-    {
-        public required string Title { get; set; }
-        public required string Description { get; set; }
-        public TaskType TaskType { get; set; }
-        public TaskSubType TaskSubType { get; set; }
-        public TaskObjectType TaskObjectType { get; set; }
-        public int? TaskObjectId { get; set; }
-    }
+{
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    public TaskType TaskType { get; set; }
+    public TaskSubType TaskSubType { get; set; }
+    public TaskObjectType TaskObjectType { get; set; }
+    public int? TaskObjectId { get; set; }
+}
+
 ```
 
 ### Properties
@@ -30,6 +31,48 @@ public class CreateTaskItemDto
 | `TaskObjectType` | `TaskObjectType` |
 | `TaskObjectId` | `int?` |
 
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public required string Description { get; set; }
+
+```
+
+#### Property: `TaskType`
+
+```csharp
+public TaskType TaskType { get; set; }
+
+```
+
+#### Property: `TaskSubType`
+
+```csharp
+public TaskSubType TaskSubType { get; set; }
+
+```
+
+#### Property: `TaskObjectType`
+
+```csharp
+public TaskObjectType TaskObjectType { get; set; }
+
+```
+
+#### Property: `TaskObjectId`
+
+```csharp
+public int? TaskObjectId { get; set; }
+
+```
+
 ## Class: `DeleteTaskItemDto`
 
 - **File Path:** `MyApp.Application/DTOs/Management/DeleteTaskItemDto.cs`
@@ -39,9 +82,10 @@ public class CreateTaskItemDto
 
 ```csharp
 public class DeleteTaskItemDto
-    {
-        public int ID { get; set; }
-    }
+{
+    public int ID { get; set; }
+}
+
 ```
 
 ### Properties
@@ -49,6 +93,13 @@ public class DeleteTaskItemDto
 | Name | Type |
 |------|------|
 | `ID` | `int` |
+
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
 
 ## Class: `SearchTaskItemDto`
 
@@ -59,12 +110,13 @@ public class DeleteTaskItemDto
 
 ```csharp
 public class SearchTaskItemDto : AbstractSearchDto<TaskSortBy, TaskSortOrder>
-    {
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public TaskType? TaskType { get; set; }
-        public bool? IsCompleted { get; set; }
-    }
+{
+    public string? Title { get; set; }
+    public string? Description { get; set; }
+    public TaskType? TaskType { get; set; }
+    public bool? IsCompleted { get; set; }
+}
+
 ```
 
 ### Properties
@@ -76,6 +128,34 @@ public class SearchTaskItemDto : AbstractSearchDto<TaskSortBy, TaskSortOrder>
 | `TaskType` | `TaskType?` |
 | `IsCompleted` | `bool?` |
 
+#### Property: `Title`
+
+```csharp
+public string? Title { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public string? Description { get; set; }
+
+```
+
+#### Property: `TaskType`
+
+```csharp
+public TaskType? TaskType { get; set; }
+
+```
+
+#### Property: `IsCompleted`
+
+```csharp
+public bool? IsCompleted { get; set; }
+
+```
+
 ## Class: `TaskItemDto`
 
 - **File Path:** `MyApp.Application/DTOs/Management/TaskItemDto.cs`
@@ -85,18 +165,19 @@ public class SearchTaskItemDto : AbstractSearchDto<TaskSortBy, TaskSortOrder>
 
 ```csharp
 public class TaskItemDto
-    {
-        public int ID { get; set; }
-        public required string Title { get; set; }
-        public required string Description { get; set; }
-        public bool IsCompleted { get; set; }
-        public TaskType TaskType { get; set; }
-        public TaskSubType TaskSubType { get; set; }
-        public TaskObjectType TaskObjectType { get; set; }
-        public int? TaskObjectId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    public bool IsCompleted { get; set; }
+    public TaskType TaskType { get; set; }
+    public TaskSubType TaskSubType { get; set; }
+    public TaskObjectType TaskObjectType { get; set; }
+    public int? TaskObjectId { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
+}
+
 ```
 
 ### Properties
@@ -114,6 +195,76 @@ public class TaskItemDto
 | `CreatedDate` | `DateTime` |
 | `UpdatedDate` | `DateTime?` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public required string Description { get; set; }
+
+```
+
+#### Property: `IsCompleted`
+
+```csharp
+public bool IsCompleted { get; set; }
+
+```
+
+#### Property: `TaskType`
+
+```csharp
+public TaskType TaskType { get; set; }
+
+```
+
+#### Property: `TaskSubType`
+
+```csharp
+public TaskSubType TaskSubType { get; set; }
+
+```
+
+#### Property: `TaskObjectType`
+
+```csharp
+public TaskObjectType TaskObjectType { get; set; }
+
+```
+
+#### Property: `TaskObjectId`
+
+```csharp
+public int? TaskObjectId { get; set; }
+
+```
+
+#### Property: `CreatedDate`
+
+```csharp
+public DateTime CreatedDate { get; set; }
+
+```
+
+#### Property: `UpdatedDate`
+
+```csharp
+public DateTime? UpdatedDate { get; set; }
+
+```
+
 ## Class: `UpdateTaskItemDto`
 
 - **File Path:** `MyApp.Application/DTOs/Management/UpdateTaskItemDto.cs`
@@ -123,11 +274,12 @@ public class TaskItemDto
 
 ```csharp
 public class UpdateTaskItemDto
-    {
-        public required string Title { get; set; }
-        public required string Description { get; set; }
-        public bool IsCompleted { get; set; }
-    }
+{
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    public bool IsCompleted { get; set; }
+}
+
 ```
 
 ### Properties
@@ -137,4 +289,25 @@ public class UpdateTaskItemDto
 | `Title` | `string` |
 | `Description` | `string` |
 | `IsCompleted` | `bool` |
+
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public required string Description { get; set; }
+
+```
+
+#### Property: `IsCompleted`
+
+```csharp
+public bool IsCompleted { get; set; }
+
+```
 

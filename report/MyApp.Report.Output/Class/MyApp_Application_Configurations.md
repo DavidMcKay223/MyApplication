@@ -9,24 +9,25 @@
 
 ```csharp
 public static class AutoMapperConfiguration
+{
+    public static void AddAutoMapper(this IServiceCollection services)
     {
-        public static void AddAutoMapper(this IServiceCollection services)
+        var mapperConfig = new MapperConfiguration(cfg =>
         {
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                // Register all AutoMapper profiles here
-                cfg.AddProfile(new AlbumProfile());
-                cfg.AddProfile(new CDProfile());
-                cfg.AddProfile(new TrackProfile());
-                cfg.AddProfile(new TaskItemProfile());
-                cfg.AddProfile(new ProviderProfile());
-                cfg.AddProfile(new ClaimProfile());
-            });
+            // Register all AutoMapper profiles here
+            cfg.AddProfile(new AlbumProfile());
+            cfg.AddProfile(new CDProfile());
+            cfg.AddProfile(new TrackProfile());
+            cfg.AddProfile(new TaskItemProfile());
+            cfg.AddProfile(new ProviderProfile());
+            cfg.AddProfile(new ClaimProfile());
+        });
 
-            var mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-        }
+        var mapper = mapperConfig.CreateMapper();
+        services.AddSingleton(mapper);
     }
+}
+
 ```
 
 ### Methods
@@ -39,20 +40,21 @@ public static class AutoMapperConfiguration
 
 ```csharp
 public static void AddAutoMapper(this IServiceCollection services)
-        {
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                // Register all AutoMapper profiles here
-                cfg.AddProfile(new AlbumProfile());
-                cfg.AddProfile(new CDProfile());
-                cfg.AddProfile(new TrackProfile());
-                cfg.AddProfile(new TaskItemProfile());
-                cfg.AddProfile(new ProviderProfile());
-                cfg.AddProfile(new ClaimProfile());
-            });
+{
+    var mapperConfig = new MapperConfiguration(cfg =>
+    {
+        // Register all AutoMapper profiles here
+        cfg.AddProfile(new AlbumProfile());
+        cfg.AddProfile(new CDProfile());
+        cfg.AddProfile(new TrackProfile());
+        cfg.AddProfile(new TaskItemProfile());
+        cfg.AddProfile(new ProviderProfile());
+        cfg.AddProfile(new ClaimProfile());
+    });
 
-            var mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-        }
+    var mapper = mapperConfig.CreateMapper();
+    services.AddSingleton(mapper);
+}
+
 ```
 

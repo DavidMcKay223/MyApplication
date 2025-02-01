@@ -9,9 +9,10 @@
 
 ```csharp
 public class BadRequestException : Exception
-    {
-        public BadRequestException(string message) : base(message) { }
-    }
+{
+    public BadRequestException(string message) : base(message) { }
+}
+
 ```
 
 ## Class: `NotFoundException`
@@ -23,11 +24,12 @@ public class BadRequestException : Exception
 
 ```csharp
 public class NotFoundException : Exception
-    {
-        public NotFoundException(string message) : base(message) { }
+{
+    public NotFoundException(string message) : base(message) { }
 
-        public NotFoundException(string entityName, int id)
-            : base($"'{entityName}' with ID {id} was not found.") { }
-    }
+    public NotFoundException(string entityName, int id)
+        : base($"'{entityName}' with ID {id} was not found.") { }
+}
+
 ```
 

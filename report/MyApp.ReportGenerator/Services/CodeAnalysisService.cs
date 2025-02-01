@@ -1,4 +1,4 @@
-﻿using System;
+﻿// Services/CodeAnalysisService.cs
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,9 @@ namespace MyApp.ReportGenerator.Services
 {
     public class CodeAnalysisService
     {
+        /// <summary>
+        /// Analyzes C# source files and extracts class information.
+        /// </summary>
         public List<ClassInfo> AnalyzeSourceFiles(string projectPath)
         {
             var classes = new List<ClassInfo>();
@@ -27,11 +30,10 @@ namespace MyApp.ReportGenerator.Services
 
                 foreach (var classDecl in classDeclarations)
                 {
-                    // Get the text span corresponding to the class
                     var classSpan = classDecl.FullSpan;
-
-                    // Extract the class code from the original code using the span
-                    var classCode = code.Substring(classSpan.Start, classSpan.Length).Trim();
+                    var classCode = code.Substring(classSpan.Start, classSpan.Length);
+                    classCode = FileHelper.NormalizeCode(classCode);
+                    classCode = FileHelper.FixIndentation(classCode);
 
                     var classInfo = new ClassInfo
                     {
@@ -52,7 +54,6 @@ namespace MyApp.ReportGenerator.Services
 
             return classes;
         }
-
 
         private string GetNamespace(SyntaxNode classDecl)
         {
@@ -88,13 +89,15 @@ namespace MyApp.ReportGenerator.Services
                 var propName = prop.Identifier.Text;
 
                 // Get the full code of the property
-                var codeSnippet = prop.ToFullString().Trim();
+                var propCode = prop.ToFullString();
+                propCode = FileHelper.NormalizeCode(propCode);
+                propCode = FileHelper.FixIndentation(propCode);
 
                 properties.Add(new PropertyInfo
                 {
                     Name = propName,
                     Type = propType,
-                    CodeSnippet = codeSnippet
+                    CodeSnippet = propCode
                 });
             }
 
@@ -115,9 +118,15 @@ namespace MyApp.ReportGenerator.Services
                     ReturnType = methodDecl.ReturnType.ToString(),
                     AccessModifier = GetAccessModifier(methodDecl.Modifiers),
                     IsStatic = methodDecl.Modifiers.Any(SyntaxKind.StaticKeyword),
-                    Parameters = GetMethodParameters(methodDecl),
-                    CodeSnippet = methodDecl.ToFullString().Trim()
+                    Parameters = GetMethodParameters(methodDecl)
                 };
+
+                // Get the full code of the method
+                var methodCode = methodDecl.ToFullString();
+                methodCode = FileHelper.NormalizeCode(methodCode);
+                methodCode = FileHelper.FixIndentation(methodCode);
+
+                methodInfo.CodeSnippet = methodCode;
 
                 methods.Add(methodInfo);
             }

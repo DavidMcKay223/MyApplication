@@ -9,21 +9,22 @@
 
 ```csharp
 public class ProviderProfile : Profile
+{
+    public ProviderProfile()
     {
-        public ProviderProfile()
-        {
-            // Provider DTO ↔ Entity
-            CreateMap<ProviderDto, Provider>()
-                .ReverseMap(); // Add ReverseMap() if you need bidirectional mapping
+        // Provider DTO ↔ Entity
+        CreateMap<ProviderDto, Provider>()
+            .ReverseMap(); // Add ReverseMap() if you need bidirectional mapping
 
-            // Identifier DTO ↔ Entity
-            CreateMap<IdentifierDto, Identifier>()
-                .ReverseMap();
+        // Identifier DTO ↔ Entity
+        CreateMap<IdentifierDto, Identifier>()
+            .ReverseMap();
 
-            // Endpoint DTO ↔ Entity (assuming you have an Endpoint entity)
-            CreateMap<EndpointDto, Endpoint>()
-                .ReverseMap();
-        }
+        // Endpoint DTO ↔ Entity (assuming you have an Endpoint entity)
+        CreateMap<EndpointDto, Endpoint>()
+            .ReverseMap();
     }
+}
+
 ```
 

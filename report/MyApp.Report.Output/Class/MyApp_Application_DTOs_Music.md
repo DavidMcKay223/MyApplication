@@ -9,11 +9,12 @@
 
 ```csharp
 public class AlbumDto
-    {
-        public int ID { get; set; }
-        public required string ArtistName { get; set; }
-        public List<CDDto>? CDs { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required string ArtistName { get; set; }
+    public List<CDDto>? CDs { get; set; }
+}
+
 ```
 
 ### Properties
@@ -24,6 +25,27 @@ public class AlbumDto
 | `ArtistName` | `string` |
 | `CDs` | `List<CDDto>?` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `ArtistName`
+
+```csharp
+public required string ArtistName { get; set; }
+
+```
+
+#### Property: `CDs`
+
+```csharp
+public List<CDDto>? CDs { get; set; }
+
+```
+
 ## Class: `CDDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/CDDto.cs`
@@ -33,12 +55,13 @@ public class AlbumDto
 
 ```csharp
 public class CDDto
-    {
-        public int ID { get; set; }
-        public required string Name { get; set; }
-        public Genre Genre { get; set; }
-        public List<TrackDto>? Tracks { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required string Name { get; set; }
+    public Genre Genre { get; set; }
+    public List<TrackDto>? Tracks { get; set; }
+}
+
 ```
 
 ### Properties
@@ -50,6 +73,34 @@ public class CDDto
 | `Genre` | `Genre` |
 | `Tracks` | `List<TrackDto>?` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Name`
+
+```csharp
+public required string Name { get; set; }
+
+```
+
+#### Property: `Genre`
+
+```csharp
+public Genre Genre { get; set; }
+
+```
+
+#### Property: `Tracks`
+
+```csharp
+public List<TrackDto>? Tracks { get; set; }
+
+```
+
 ## Class: `CreateAlbumDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/CreateAlbumDto.cs`
@@ -59,10 +110,11 @@ public class CDDto
 
 ```csharp
 public class CreateAlbumDto
-    {
-        public required string ArtistName { get; set; }
-        public List<CreateCDDto>? CDs { get; set; }
-    }
+{
+    public required string ArtistName { get; set; }
+    public List<CreateCDDto>? CDs { get; set; }
+}
+
 ```
 
 ### Properties
@@ -71,6 +123,20 @@ public class CreateAlbumDto
 |------|------|
 | `ArtistName` | `string` |
 | `CDs` | `List<CreateCDDto>?` |
+
+#### Property: `ArtistName`
+
+```csharp
+public required string ArtistName { get; set; }
+
+```
+
+#### Property: `CDs`
+
+```csharp
+public List<CreateCDDto>? CDs { get; set; }
+
+```
 
 ## Class: `CreateCDDto`
 
@@ -81,11 +147,12 @@ public class CreateAlbumDto
 
 ```csharp
 public class CreateCDDto
-    {
-        public required string Name { get; set; }
-        public Genre Genre { get; set; }
-        public List<CreateTrackDto>? Tracks { get; set; }
-    }
+{
+    public required string Name { get; set; }
+    public Genre Genre { get; set; }
+    public List<CreateTrackDto>? Tracks { get; set; }
+}
+
 ```
 
 ### Properties
@@ -96,6 +163,27 @@ public class CreateCDDto
 | `Genre` | `Genre` |
 | `Tracks` | `List<CreateTrackDto>?` |
 
+#### Property: `Name`
+
+```csharp
+public required string Name { get; set; }
+
+```
+
+#### Property: `Genre`
+
+```csharp
+public Genre Genre { get; set; }
+
+```
+
+#### Property: `Tracks`
+
+```csharp
+public List<CreateTrackDto>? Tracks { get; set; }
+
+```
+
 ## Class: `CreateTrackDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/CreateTrackDto.cs`
@@ -105,11 +193,12 @@ public class CreateCDDto
 
 ```csharp
 public class CreateTrackDto
-    {
-        public required int Number { get; set; }
-        public required string Title { get; set; }
-        public required TimeSpan Length { get; set; }
-    }
+{
+    public required int Number { get; set; }
+    public required string Title { get; set; }
+    public required TimeSpan Length { get; set; }
+}
+
 ```
 
 ### Properties
@@ -120,6 +209,27 @@ public class CreateTrackDto
 | `Title` | `string` |
 | `Length` | `TimeSpan` |
 
+#### Property: `Number`
+
+```csharp
+public required int Number { get; set; }
+
+```
+
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Length`
+
+```csharp
+public required TimeSpan Length { get; set; }
+
+```
+
 ## Class: `DeleteAlbumDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/DeleteAlbumDto.cs`
@@ -129,10 +239,11 @@ public class CreateTrackDto
 
 ```csharp
 public class DeleteAlbumDto
-    {
-        public int ID { get; set; }
-        public List<DeleteCDDto>? CDs { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public List<DeleteCDDto>? CDs { get; set; }
+}
+
 ```
 
 ### Properties
@@ -141,6 +252,20 @@ public class DeleteAlbumDto
 |------|------|
 | `ID` | `int` |
 | `CDs` | `List<DeleteCDDto>?` |
+
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `CDs`
+
+```csharp
+public List<DeleteCDDto>? CDs { get; set; }
+
+```
 
 ## Class: `DeleteCDDto`
 
@@ -151,10 +276,11 @@ public class DeleteAlbumDto
 
 ```csharp
 public class DeleteCDDto
-    {
-        public int ID { get; set; }
-        public List<DeleteTrackDto>? Tracks { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public List<DeleteTrackDto>? Tracks { get; set; }
+}
+
 ```
 
 ### Properties
@@ -163,6 +289,20 @@ public class DeleteCDDto
 |------|------|
 | `ID` | `int` |
 | `Tracks` | `List<DeleteTrackDto>?` |
+
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Tracks`
+
+```csharp
+public List<DeleteTrackDto>? Tracks { get; set; }
+
+```
 
 ## Class: `DeleteTrackDto`
 
@@ -173,9 +313,10 @@ public class DeleteCDDto
 
 ```csharp
 public class DeleteTrackDto
-    {
-        public int ID { get; set; }
-    }
+{
+    public int ID { get; set; }
+}
+
 ```
 
 ### Properties
@@ -183,6 +324,13 @@ public class DeleteTrackDto
 | Name | Type |
 |------|------|
 | `ID` | `int` |
+
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
 
 ## Class: `SearchAlbumDto`
 
@@ -193,12 +341,13 @@ public class DeleteTrackDto
 
 ```csharp
 public class SearchAlbumDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
-    {
-        public string? ArtistName { get; set; }
-        public string? CdName { get; set; }
-        public string? TrackTitle { get; set; }
-        public Genre? Genre { get; set; }
-    }
+{
+    public string? ArtistName { get; set; }
+    public string? CdName { get; set; }
+    public string? TrackTitle { get; set; }
+    public Genre? Genre { get; set; }
+}
+
 ```
 
 ### Properties
@@ -210,6 +359,34 @@ public class SearchAlbumDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
 | `TrackTitle` | `string?` |
 | `Genre` | `Genre?` |
 
+#### Property: `ArtistName`
+
+```csharp
+public string? ArtistName { get; set; }
+
+```
+
+#### Property: `CdName`
+
+```csharp
+public string? CdName { get; set; }
+
+```
+
+#### Property: `TrackTitle`
+
+```csharp
+public string? TrackTitle { get; set; }
+
+```
+
+#### Property: `Genre`
+
+```csharp
+public Genre? Genre { get; set; }
+
+```
+
 ## Class: `TrackDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/TrackDto.cs`
@@ -219,12 +396,13 @@ public class SearchAlbumDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
 
 ```csharp
 public class TrackDto
-    {
-        public int ID { get; set; }
-        public required int Number { get; set; }
-        public required string Title { get; set; }
-        public required TimeSpan Length { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required int Number { get; set; }
+    public required string Title { get; set; }
+    public required TimeSpan Length { get; set; }
+}
+
 ```
 
 ### Properties
@@ -236,6 +414,34 @@ public class TrackDto
 | `Title` | `string` |
 | `Length` | `TimeSpan` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Number`
+
+```csharp
+public required int Number { get; set; }
+
+```
+
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Length`
+
+```csharp
+public required TimeSpan Length { get; set; }
+
+```
+
 ## Class: `UpdateAlbumDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/UpdateAlbumDto.cs`
@@ -245,11 +451,12 @@ public class TrackDto
 
 ```csharp
 public class UpdateAlbumDto
-    {
-        public int ID { get; set; }
-        public required string ArtistName { get; set; }
-        public List<UpdateCDDto>? CDs { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required string ArtistName { get; set; }
+    public List<UpdateCDDto>? CDs { get; set; }
+}
+
 ```
 
 ### Properties
@@ -260,6 +467,27 @@ public class UpdateAlbumDto
 | `ArtistName` | `string` |
 | `CDs` | `List<UpdateCDDto>?` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `ArtistName`
+
+```csharp
+public required string ArtistName { get; set; }
+
+```
+
+#### Property: `CDs`
+
+```csharp
+public List<UpdateCDDto>? CDs { get; set; }
+
+```
+
 ## Class: `UpdateCDDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/UpdateCDDto.cs`
@@ -269,13 +497,14 @@ public class UpdateAlbumDto
 
 ```csharp
 public class UpdateCDDto
-    {
-        public int ID { get; set; }
-        public required string Name { get; set; }
-        public Genre Genre { get; set; }
-        public int AlbumId { get; set; }
-        public List<UpdateTrackDto>? Tracks { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required string Name { get; set; }
+    public Genre Genre { get; set; }
+    public int AlbumId { get; set; }
+    public List<UpdateTrackDto>? Tracks { get; set; }
+}
+
 ```
 
 ### Properties
@@ -288,6 +517,41 @@ public class UpdateCDDto
 | `AlbumId` | `int` |
 | `Tracks` | `List<UpdateTrackDto>?` |
 
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Name`
+
+```csharp
+public required string Name { get; set; }
+
+```
+
+#### Property: `Genre`
+
+```csharp
+public Genre Genre { get; set; }
+
+```
+
+#### Property: `AlbumId`
+
+```csharp
+public int AlbumId { get; set; }
+
+```
+
+#### Property: `Tracks`
+
+```csharp
+public List<UpdateTrackDto>? Tracks { get; set; }
+
+```
+
 ## Class: `UpdateTrackDto`
 
 - **File Path:** `MyApp.Application/DTOs/Music/UpdateTrackDto.cs`
@@ -297,13 +561,14 @@ public class UpdateCDDto
 
 ```csharp
 public class UpdateTrackDto
-    {
-        public int ID { get; set; }
-        public required int Number { get; set; }
-        public required string Title { get; set; }
-        public required TimeSpan Length { get; set; }
-        public int CDId { get; set; }
-    }
+{
+    public int ID { get; set; }
+    public required int Number { get; set; }
+    public required string Title { get; set; }
+    public required TimeSpan Length { get; set; }
+    public int CDId { get; set; }
+}
+
 ```
 
 ### Properties
@@ -315,4 +580,39 @@ public class UpdateTrackDto
 | `Title` | `string` |
 | `Length` | `TimeSpan` |
 | `CDId` | `int` |
+
+#### Property: `ID`
+
+```csharp
+public int ID { get; set; }
+
+```
+
+#### Property: `Number`
+
+```csharp
+public required int Number { get; set; }
+
+```
+
+#### Property: `Title`
+
+```csharp
+public required string Title { get; set; }
+
+```
+
+#### Property: `Length`
+
+```csharp
+public required TimeSpan Length { get; set; }
+
+```
+
+#### Property: `CDId`
+
+```csharp
+public int CDId { get; set; }
+
+```
 

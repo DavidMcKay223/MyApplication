@@ -9,12 +9,13 @@
 
 ```csharp
 public class NavBarItemDto
-    {
-        public List<NavBarItemDto>? ChildList { get; set; }
-        public required string Description { get; set; }
-        public required string Class { get; set; }
-        public required string Href { get; set; }
-    }
+{
+    public List<NavBarItemDto>? ChildList { get; set; }
+    public required string Description { get; set; }
+    public required string Class { get; set; }
+    public required string Href { get; set; }
+}
+
 ```
 
 ### Properties
@@ -26,6 +27,34 @@ public class NavBarItemDto
 | `Class` | `string` |
 | `Href` | `string` |
 
+#### Property: `ChildList`
+
+```csharp
+public List<NavBarItemDto>? ChildList { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public required string Description { get; set; }
+
+```
+
+#### Property: `Class`
+
+```csharp
+public required string Class { get; set; }
+
+```
+
+#### Property: `Href`
+
+```csharp
+public required string Href { get; set; }
+
+```
+
 ## Class: `StateDto`
 
 - **File Path:** `MyApp.Shared/DTOs/StateDto.cs`
@@ -35,10 +64,11 @@ public class NavBarItemDto
 
 ```csharp
 public class StateDto
-    {
-        public required string Value { get; set; }
-        public required string Description { get; set; }
-    }
+{
+    public required string Value { get; set; }
+    public required string Description { get; set; }
+}
+
 ```
 
 ### Properties
@@ -47,4 +77,18 @@ public class StateDto
 |------|------|
 | `Value` | `string` |
 | `Description` | `string` |
+
+#### Property: `Value`
+
+```csharp
+public required string Value { get; set; }
+
+```
+
+#### Property: `Description`
+
+```csharp
+public required string Description { get; set; }
+
+```
 
