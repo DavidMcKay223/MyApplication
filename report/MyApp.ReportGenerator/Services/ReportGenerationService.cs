@@ -21,7 +21,7 @@ namespace MyApp.ReportGenerator.Services
 
             // Group By Namespace:
 
-            List<string> classNamespaceList = classes.Select(x => x.Name).Distinct().ToList();
+            List<string> classNamespaceList = classes.Select(x => x.Namespace).Distinct().ToList();
 
 
             foreach (string tempNamespace in classNamespaceList)
@@ -100,7 +100,7 @@ namespace MyApp.ReportGenerator.Services
 
             foreach (var classInfo in classes.OrderBy(c => c.Namespace).ThenBy(c => c.Name))
             {
-                var relativePath = $"{classInfo.Namespace}-{classInfo.Name}.md";
+                var relativePath = $"{classInfo.Namespace}.md";
                 sb.AppendLine($"- [{classInfo.Namespace}.{classInfo.Name}]({relativePath})");
             }
 
