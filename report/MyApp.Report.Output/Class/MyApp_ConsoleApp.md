@@ -1,6 +1,14 @@
 # Namespace: `MyApp.ConsoleApp`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `Program` | `MyApp.ConsoleApp/Program.cs` | N/A |
+## Class: `Program`
+
+- **File Path:** `MyApp.ConsoleApp/Program.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `Main` | `void` | `public` | `Yes` | None |
+| `SeedTestData_MusicAlbums` | `void` | `public` | `Yes` | None |
 

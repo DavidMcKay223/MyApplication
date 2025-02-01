@@ -1,7 +1,12 @@
 # Namespace: `MyApp.Domain.Exceptions`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `BadRequestException` | `MyApp.Domain/Exceptions/BadRequestException.cs` | `Exception` |
-| `NotFoundException` | `MyApp.Domain/Exceptions/NotFoundException.cs` | `Exception` |
+## Class: `BadRequestException`
+
+- **File Path:** `MyApp.Domain/Exceptions/BadRequestException.cs`
+- **Inherits From:** `Exception`
+
+## Class: `NotFoundException`
+
+- **File Path:** `MyApp.Domain/Exceptions/NotFoundException.cs`
+- **Inherits From:** `Exception`
 

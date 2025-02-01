@@ -1,6 +1,7 @@
 # Namespace: `MyApp.Application.Mappings.NPI`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `ProviderProfile` | `MyApp.Application/Mappings/NPI/ProviderProfile.cs` | `Profile` |
+## Class: `ProviderProfile`
+
+- **File Path:** `MyApp.Application/Mappings/NPI/ProviderProfile.cs`
+- **Inherits From:** `Profile`
 

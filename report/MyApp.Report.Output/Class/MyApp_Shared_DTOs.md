@@ -1,7 +1,28 @@
 # Namespace: `MyApp.Shared.DTOs`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `NavBarItemDto` | `MyApp.Shared/DTOs/NavBarItemDto.cs` | N/A |
-| `StateDto` | `MyApp.Shared/DTOs/StateDto.cs` | N/A |
+## Class: `NavBarItemDto`
+
+- **File Path:** `MyApp.Shared/DTOs/NavBarItemDto.cs`
+- **Inherits From:** N/A
+
+### Properties
+
+| Name | Type |
+|------|------|
+| `ChildList` | `List<NavBarItemDto>?` |
+| `Description` | `string` |
+| `Class` | `string` |
+| `Href` | `string` |
+
+## Class: `StateDto`
+
+- **File Path:** `MyApp.Shared/DTOs/StateDto.cs`
+- **Inherits From:** N/A
+
+### Properties
+
+| Name | Type |
+|------|------|
+| `Value` | `string` |
+| `Description` | `string` |
 

@@ -1,13 +1,42 @@
 # Namespace: `MyApp.Application.Validators.Medical`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `AddressDtoValidator` | `MyApp.Application/Validators/Medical/AddressDtoValidator.cs` | `AbstractValidator<AddressDto>` |
-| `ClaimDtoValidator` | `MyApp.Application/Validators/Medical/ClaimDtoValidator.cs` | `AbstractValidator<ClaimDto>` |
-| `DiagnosisCodeDtoValidator` | `MyApp.Application/Validators/Medical/DiagnosisCodeDtoValidator.cs` | `AbstractValidator<DiagnosisCodeDto>` |
-| `InsuredInfoDtoValidator` | `MyApp.Application/Validators/Medical/InsuredInfoDtoValidator.cs` | `AbstractValidator<InsuredInfoDto>` |
-| `OtherInsuranceInfoDtoValidator` | `MyApp.Application/Validators/Medical/OtherInsuranceInfoDtoValidator.cs` | `AbstractValidator<OtherInsuranceInfoDto>` |
-| `PatientInfoDtoValidator` | `MyApp.Application/Validators/Medical/PatientInfoDtoValidator.cs` | `AbstractValidator<PatientInfoDto>` |
-| `ProviderInfoDtoValidator` | `MyApp.Application/Validators/Medical/ProviderInfoDtoValidator.cs` | `AbstractValidator<ProviderInfoDto>` |
-| `ServiceLineDtoValidator` | `MyApp.Application/Validators/Medical/ServiceLineDtoValidator.cs` | `AbstractValidator<ServiceLineDto>` |
+## Class: `AddressDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/AddressDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<AddressDto>`
+
+## Class: `ClaimDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/ClaimDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<ClaimDto>`
+
+## Class: `DiagnosisCodeDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/DiagnosisCodeDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<DiagnosisCodeDto>`
+
+## Class: `InsuredInfoDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/InsuredInfoDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<InsuredInfoDto>`
+
+## Class: `OtherInsuranceInfoDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/OtherInsuranceInfoDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<OtherInsuranceInfoDto>`
+
+## Class: `PatientInfoDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/PatientInfoDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<PatientInfoDto>`
+
+## Class: `ProviderInfoDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/ProviderInfoDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<ProviderInfoDto>`
+
+## Class: `ServiceLineDtoValidator`
+
+- **File Path:** `MyApp.Application/Validators/Medical/ServiceLineDtoValidator.cs`
+- **Inherits From:** `AbstractValidator<ServiceLineDto>`
 

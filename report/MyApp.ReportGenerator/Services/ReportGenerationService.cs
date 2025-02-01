@@ -10,7 +10,7 @@ namespace MyApp.ReportGenerator.Services
     public class ReportGenerationService
     {
         /// <summary>
-        /// Generates Markdown reports for the provided classes, grouped by namespace.
+        /// Generates Markdown reports for the provided classes, including properties, grouped by namespace.
         /// </summary>
         /// <param name="classes">List of ClassInfo objects.</param>
         /// <param name="outputPath">Directory where the reports will be saved.</param>
@@ -24,7 +24,7 @@ namespace MyApp.ReportGenerator.Services
             foreach (var namespaceGroup in namespaceGroups)
             {
                 string content = $"# Namespace: `{namespaceGroup.Key}`\n\n";
-                content += GenerateNamespaceTable(namespaceGroup.ToList());
+                content += GenerateNamespaceContent(namespaceGroup.ToList());
 
                 var fileName = $"{namespaceGroup.Key.Replace('.', '_')}.md";
                 var filePath = Path.Combine(outputPath, fileName);
@@ -36,27 +36,71 @@ namespace MyApp.ReportGenerator.Services
             GenerateIndexMarkdown(namespaceGroups, outputPath);
         }
 
-        private string GenerateNamespaceTable(List<ClassInfo> classes)
+        private string GenerateNamespaceContent(List<ClassInfo> classes)
         {
             var sb = new StringBuilder();
 
-            // Table Header
-            sb.AppendLine("| Class Name | File Path | Inherits From |");
-            sb.AppendLine("|------------|-----------|---------------|");
-
-            // Table Rows
             foreach (var classInfo in classes.OrderBy(c => c.Name))
             {
-                var inheritsFrom = classInfo.BaseTypes.Any()
-                    ? string.Join(", ", classInfo.BaseTypes.Select(bt => $"`{bt}`"))
-                    : "N/A";
+                sb.AppendLine($"## Class: `{classInfo.Name}`");
+                sb.AppendLine();
 
-                var filePath = classInfo.RelativePath.Replace("\\", "/");
+                sb.AppendLine($"- **File Path:** `{classInfo.RelativePath.Replace("\\", "/")}`");
 
-                sb.AppendLine($"| `{classInfo.Name}` | `{filePath}` | {inheritsFrom} |");
+                if (classInfo.BaseTypes.Any())
+                {
+                    var inheritsFrom = string.Join(", ", classInfo.BaseTypes.Select(bt => $"`{bt}`"));
+                    sb.AppendLine($"- **Inherits From:** {inheritsFrom}");
+                }
+                else
+                {
+                    sb.AppendLine($"- **Inherits From:** N/A");
+                }
+
+                if (classInfo.Properties.Any())
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("### Properties");
+                    sb.AppendLine();
+
+                    // Table Header for Properties
+                    sb.AppendLine("| Name | Type |");
+                    sb.AppendLine("|------|------|");
+
+                    // Table Rows
+                    foreach (var prop in classInfo.Properties)
+                    {
+                        var propertyParts = prop.Split(' ');
+                        var propType = propertyParts[0];
+                        var propName = propertyParts[1];
+
+                        sb.AppendLine($"| `{propName}` | `{propType}` |");
+                    }
+                }
+
+                if (classInfo.Methods.Any())
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("### Methods");
+                    sb.AppendLine();
+
+                    // Table Header for Methods
+                    sb.AppendLine("| Name | Return Type | Access Modifier | Static | Parameters |");
+                    sb.AppendLine("|------|-------------|-----------------|--------|------------|");
+
+                    // Table Rows
+                    foreach (var method in classInfo.Methods)
+                    {
+                        var parameters = method.Parameters.Any()
+                            ? string.Join(", ", method.Parameters.Select(p => $"`{p.Type} {p.Name}`"))
+                            : "None";
+
+                        sb.AppendLine($"| `{method.Name}` | `{method.ReturnType}` | `{method.AccessModifier}` | `{(method.IsStatic ? "Yes" : "No")}` | {parameters} |");
+                    }
+                }
+
+                sb.AppendLine(); // Add an empty line after each class for readability
             }
-
-            sb.AppendLine(); // Add an empty line after the table for Markdown formatting
 
             return sb.ToString();
         }

@@ -1,6 +1,13 @@
 # Namespace: `MyApp.Application.Configurations`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `AutoMapperConfiguration` | `MyApp.Application/Configurations/AutoMapperConfiguration.cs` | N/A |
+## Class: `AutoMapperConfiguration`
+
+- **File Path:** `MyApp.Application/Configurations/AutoMapperConfiguration.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `AddAutoMapper` | `void` | `public` | `Yes` | `IServiceCollection services` |
 

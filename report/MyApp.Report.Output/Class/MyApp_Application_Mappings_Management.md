@@ -1,6 +1,7 @@
 # Namespace: `MyApp.Application.Mappings.Management`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `TaskItemProfile` | `MyApp.Application/Mappings/Management/TaskItemProfile.cs` | `Profile` |
+## Class: `TaskItemProfile`
+
+- **File Path:** `MyApp.Application/Mappings/Management/TaskItemProfile.cs`
+- **Inherits From:** `Profile`
 

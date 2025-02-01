@@ -1,7 +1,24 @@
 # Namespace: `MyApp.Shared.Services`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `NavBarService` | `MyApp.Shared/Services/NavBarService.cs` | `INavBarService` |
-| `StateService` | `MyApp.Shared/Services/StateService.cs` | `IStateService` |
+## Class: `NavBarService`
+
+- **File Path:** `MyApp.Shared/Services/NavBarService.cs`
+- **Inherits From:** `INavBarService`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `GetNavBarItems` | `List<NavBarItemDto>` | `public` | `No` | None |
+
+## Class: `StateService`
+
+- **File Path:** `MyApp.Shared/Services/StateService.cs`
+- **Inherits From:** `IStateService`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `GetStates` | `List<StateDto>` | `public` | `No` | None |
 

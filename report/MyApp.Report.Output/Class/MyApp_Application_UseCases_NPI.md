@@ -1,6 +1,13 @@
 # Namespace: `MyApp.Application.UseCases.NPI`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `ProviderUseCases` | `MyApp.Application/UseCases/NPI/ProviderUseCases.cs` | `IProviderUseCases` |
+## Class: `ProviderUseCases`
+
+- **File Path:** `MyApp.Application/UseCases/NPI/ProviderUseCases.cs`
+- **Inherits From:** `IProviderUseCases`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `GetProvidersAsync` | `Task<List<ProviderDto>?>` | `public` | `No` | `SearchProviderCriteria dto` |
 

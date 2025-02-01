@@ -1,14 +1,105 @@
 # Namespace: `MyApp.Infrastructure.Migrations`
 
-| Class Name | File Path | Inherits From |
-|------------|-----------|---------------|
-| `AppDbContextModelSnapshot` | `MyApp.Infrastructure/Migrations/AppDbContextModelSnapshot.cs` | `ModelSnapshot` |
-| `InitialCreate` | `MyApp.Infrastructure/Migrations/20250129035002_InitialCreate.cs` | `Migration` |
-| `InitialCreate` | `MyApp.Infrastructure/Migrations/20250129035002_InitialCreate.Designer.cs` | N/A |
-| `NewClaims` | `MyApp.Infrastructure/Migrations/20250131064954_NewClaims.cs` | `Migration` |
-| `NewClaims` | `MyApp.Infrastructure/Migrations/20250131064954_NewClaims.Designer.cs` | N/A |
-| `NewTaskItem` | `MyApp.Infrastructure/Migrations/20250130054003_NewTaskItem.cs` | `Migration` |
-| `NewTaskItem` | `MyApp.Infrastructure/Migrations/20250130054003_NewTaskItem.Designer.cs` | N/A |
-| `UpdatedDBStructure` | `MyApp.Infrastructure/Migrations/20250130034035_UpdatedDBStructure.cs` | `Migration` |
-| `UpdatedDBStructure` | `MyApp.Infrastructure/Migrations/20250130034035_UpdatedDBStructure.Designer.cs` | N/A |
+## Class: `AppDbContextModelSnapshot`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/AppDbContextModelSnapshot.cs`
+- **Inherits From:** `ModelSnapshot`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `BuildModel` | `void` | `protected` | `No` | `ModelBuilder modelBuilder` |
+
+## Class: `InitialCreate`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250129035002_InitialCreate.cs`
+- **Inherits From:** `Migration`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `Up` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+| `Down` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+
+## Class: `InitialCreate`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250129035002_InitialCreate.Designer.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `BuildTargetModel` | `void` | `protected` | `No` | `ModelBuilder modelBuilder` |
+
+## Class: `NewClaims`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250131064954_NewClaims.cs`
+- **Inherits From:** `Migration`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `Up` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+| `Down` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+
+## Class: `NewClaims`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250131064954_NewClaims.Designer.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `BuildTargetModel` | `void` | `protected` | `No` | `ModelBuilder modelBuilder` |
+
+## Class: `NewTaskItem`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250130054003_NewTaskItem.cs`
+- **Inherits From:** `Migration`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `Up` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+| `Down` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+
+## Class: `NewTaskItem`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250130054003_NewTaskItem.Designer.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `BuildTargetModel` | `void` | `protected` | `No` | `ModelBuilder modelBuilder` |
+
+## Class: `UpdatedDBStructure`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250130034035_UpdatedDBStructure.cs`
+- **Inherits From:** `Migration`
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `Up` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+| `Down` | `void` | `protected` | `No` | `MigrationBuilder migrationBuilder` |
+
+## Class: `UpdatedDBStructure`
+
+- **File Path:** `MyApp.Infrastructure/Migrations/20250130034035_UpdatedDBStructure.Designer.cs`
+- **Inherits From:** N/A
+
+### Methods
+
+| Name | Return Type | Access Modifier | Static | Parameters |
+|------|-------------|-----------------|--------|------------|
+| `BuildTargetModel` | `void` | `protected` | `No` | `ModelBuilder modelBuilder` |
 
