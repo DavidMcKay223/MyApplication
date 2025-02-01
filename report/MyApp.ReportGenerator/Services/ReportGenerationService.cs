@@ -89,7 +89,7 @@ namespace MyApp.ReportGenerator.Services
             foreach (var classInfo in classes.OrderBy(c => c.Name))
             {
                 var relativePath = $"{classInfo.Namespace}-{classInfo.Name}.md";
-                sb.AppendLine($"- [{classInfo.Name}]({relativePath})");
+                sb.AppendLine($"- [{classInfo.Namespace}.{classInfo.Name}]({relativePath})");
             }
 
             var filePath = Path.Combine(outputPath, "README.md");
