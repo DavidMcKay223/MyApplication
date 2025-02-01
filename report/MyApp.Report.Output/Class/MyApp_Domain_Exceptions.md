@@ -1,20 +1,35 @@
-# BadRequestException
+# Namespace: `MyApp.Domain.Exceptions`
 
-**Namespace:** `MyApp.Domain.Exceptions`
+## Class: `BadRequestException`
 
-**File Path:** `MyApp.Domain/Exceptions/BadRequestException.cs`
+- **File Path:** `MyApp.Domain/Exceptions/BadRequestException.cs`
+- **Inherits From:** `Exception`
 
-## Inherits From
+### Class Code
 
-- `Exception`
+```csharp
+public class BadRequestException : Exception
+{
+    public BadRequestException(string message) : base(message) { }
+}
 
-# NotFoundException
+```
 
-**Namespace:** `MyApp.Domain.Exceptions`
+## Class: `NotFoundException`
 
-**File Path:** `MyApp.Domain/Exceptions/NotFoundException.cs`
+- **File Path:** `MyApp.Domain/Exceptions/NotFoundException.cs`
+- **Inherits From:** `Exception`
 
-## Inherits From
+### Class Code
 
-- `Exception`
+```csharp
+public class NotFoundException : Exception
+{
+    public NotFoundException(string message) : base(message) { }
+
+    public NotFoundException(string entityName, int id)
+        : base($"'{entityName}' with ID {id} was not found.") { }
+}
+
+```
 
