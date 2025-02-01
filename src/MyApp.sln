@@ -21,6 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp.ConsoleApp", "MyApp.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp.Application.Tests", "..\test\MyApp.Application.Tests\MyApp.Application.Tests.csproj", "{44C76300-76E9-4908-B927-D27BC6F3D59F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "report", "report", "{DECC1992-B561-4FDF-B28B-21BF59F81546}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp.ReportGenerator", "..\report\MyApp.ReportGenerator\MyApp.ReportGenerator.csproj", "{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApp.ReportGenerator.ConsoleApp", "..\report\MyApp.ReportGenerator.ConsoleApp\MyApp.ReportGenerator.ConsoleApp.csproj", "{379572A4-690A-434C-937F-A777C3A8AF73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +61,14 @@ Global
 		{44C76300-76E9-4908-B927-D27BC6F3D59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44C76300-76E9-4908-B927-D27BC6F3D59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44C76300-76E9-4908-B927-D27BC6F3D59F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{379572A4-690A-434C-937F-A777C3A8AF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{379572A4-690A-434C-937F-A777C3A8AF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{379572A4-690A-434C-937F-A777C3A8AF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{379572A4-690A-434C-937F-A777C3A8AF73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +81,7 @@ Global
 		{90AFF1C7-960B-4917-BF14-B5A9B0A91AFF} = {D8C3C1CF-CAC5-4D6A-9EA6-8EF614132DFB}
 		{708312CA-6877-4E96-8FD6-0612AC1B556E} = {D8C3C1CF-CAC5-4D6A-9EA6-8EF614132DFB}
 		{44C76300-76E9-4908-B927-D27BC6F3D59F} = {DC19E4A6-F139-4F28-BDF4-96C4A7B4A80A}
+		{08D28E95-32B0-4A2E-A9F8-26F4C97F02CC} = {DECC1992-B561-4FDF-B28B-21BF59F81546}
+		{379572A4-690A-434C-937F-A777C3A8AF73} = {DECC1992-B561-4FDF-B28B-21BF59F81546}
 	EndGlobalSection
 EndGlobal
