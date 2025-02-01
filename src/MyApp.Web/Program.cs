@@ -22,6 +22,8 @@ using Blazored.FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.DataAnnotations;
 using MyApp.Application.DTOs.Medical;
+using MyApp.Application.DTOs.Management;
+using MyApp.Application.Validators.Management;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +34,7 @@ builder.Services.AddRazorComponents()
 // Add FluentValidation services
 builder.Services.AddScoped<FluentValidationValidator>();
 builder.Services.AddTransient<IValidator<ClaimDto>, ClaimDtoValidator>();
-//builder.Services.AddValidatorsFromAssemblyContaining<ClaimDtoValidator>();
+builder.Services.AddTransient<IValidator<TaskItemDto>, TaskItemDtoValidator>();
 
 // Music:
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();

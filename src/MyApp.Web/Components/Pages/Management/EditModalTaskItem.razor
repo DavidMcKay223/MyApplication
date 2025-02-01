@@ -3,56 +3,55 @@
 @using MyApp.Domain.Entities.Management
 @using MyApp.Domain.Enums.Management
 @using MyApp.Web.Components.Shared
+@using MyApp.Application.Validators.Management
 @using AutoMapper
+@using FluentValidation
 @inject ITaskItemUseCases TaskItemUseCases
 @inject IMapper Mapper
+@inject IValidator<TaskItemDto> TaskItemValidator
 
 @code {
     [Parameter]
     public EventCallback OnTaskItemSaved { get; set; }
+    private EditForm? EditForm;
 
     private TaskItemDto? TaskItem;
-    private List<TaskSubType> ValidSubTypes = new();
+
+    private FluentValidationValidator? _fluentValidationValidator;
 
     public void Show(TaskItemDto? TaskItemToEdit)
     {
         TaskItem = TaskItemToEdit ?? new TaskItemDto { Title = "", Description = "" };
-        ValidSubTypes = TaskTypeHelper.GetValidSubTypes(TaskItem.TaskType);
         StateHasChanged();
     }
 
     private async Task SaveTaskItem()
     {
-        if (TaskItem!.ID == 0)
+        if (await _fluentValidationValidator!.ValidateAsync())
         {
-            var createTaskItemDto = Mapper.Map<CreateTaskItemDto>(TaskItem);
-            await TaskItemUseCases.CreateTaskItemAsync(createTaskItemDto);
+            if (TaskItem!.ID == 0)
+            {
+                var createTaskItemDto = Mapper.Map<CreateTaskItemDto>(TaskItem);
+                await TaskItemUseCases.CreateTaskItemAsync(createTaskItemDto);
+            }
+            else
+            {
+                var updateTaskItemDto = Mapper.Map<UpdateTaskItemDto>(TaskItem);
+                await TaskItemUseCases.UpdateTaskItemAsync(TaskItem.ID, updateTaskItemDto);
+            }
+
+            TaskItem = null;
+            await OnTaskItemSaved.InvokeAsync();
         }
         else
         {
-            var updateTaskItemDto = Mapper.Map<UpdateTaskItemDto>(TaskItem);
-            await TaskItemUseCases.UpdateTaskItemAsync(TaskItem.ID, updateTaskItemDto);
+            EditForm?.EditContext?.NotifyValidationStateChanged();
         }
-
-        TaskItem = null;
-        await OnTaskItemSaved.InvokeAsync();
     }
 
     private void Cancel()
     {
         TaskItem = null;
-    }
-
-    private void OnTaskTypeChanged(ChangeEventArgs e)
-    {
-        if (Enum.TryParse<TaskType>(e.Value?.ToString(), out var taskType))
-        {
-            TaskItem!.TaskType = taskType;
-            ValidSubTypes = TaskTypeHelper.GetValidSubTypes(taskType);
-            TaskItem.TaskSubType = ValidSubTypes.FirstOrDefault();
-
-            StateHasChanged();
-        }
     }
 }
 
@@ -66,16 +65,12 @@
                         <h5 class="modal-title">@(TaskItem.ID == 0 ? "Add TaskItem" : "Edit TaskItem")</h5>
                         <button type="button" class="btn-close" @onclick="Cancel"></button>
                     </div>
-                    <EditForm Model="@TaskItem">
-                        <div class="modal-body">
-                            <DataAnnotationsValidator />
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Title</label>
-                                <InputText id="title" class="form-control" @bind-Value="TaskItem.Title" />
-                            </div>
+                    <div class="modal-body">
+                        <EditForm @ref="EditForm" Model="@TaskItem">
+                            <FluentValidationValidator @ref="_fluentValidationValidator" />
                             <div class="mb-3">
                                 <label for="taskType" class="form-label">Task Type</label>
-                                <InputSelect id="taskType" class="form-control" @bind-Value="TaskItem.TaskType" @onchange="OnTaskTypeChanged">
+                                <InputSelect id="taskType" class="form-control" @bind-Value="TaskItem.TaskType">
                                     @foreach (var taskType in Enum.GetValues<TaskType>())
                                     {
                                         <option value="@taskType">@taskType</option>
@@ -85,22 +80,29 @@
                             <div class="mb-3">
                                 <label for="taskSubType" class="form-label">Task SubType</label>
                                 <InputSelect id="taskSubType" class="form-control" @bind-Value="TaskItem.TaskSubType">
-                                    @foreach (var subType in ValidSubTypes)
+                                    @foreach (var subType in TaskTypeHelper.GetValidSubTypes(TaskItem.TaskType))
                                     {
                                         <option value="@subType">@subType</option>
                                     }
                                 </InputSelect>
+                                <ValidationMessage For="@(() => TaskItem.TaskSubType)" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <InputText id="title" class="form-control" @bind-Value="TaskItem.Title" />
+                                <ValidationMessage For="@(() => TaskItem.Title)" />
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <InputTextArea id="description" class="form-control" @bind-Value="TaskItem.Description" />
+                                <ValidationMessage For="@(() => TaskItem.Description)" />
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" @onclick="SaveTaskItem">Save</button>
-                            <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
-                        </div>
-                    </EditForm>
+                        </EditForm>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" @onclick="SaveTaskItem">Save</button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>

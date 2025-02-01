@@ -12,8 +12,10 @@ else
                 <th>Title</th>
                 <th>Description</th>
                 <th>Task Type</th>
+                <th>Task Sub Type</th>
                 <th>Completion Status</th>
                 <th>Created Date</th>
+                <th>Updated Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,8 +26,10 @@ else
                     <td>@taskItem.Title</td>
                     <td>@taskItem.Description</td>
                     <td>@taskItem.TaskType</td>
+                    <td>@taskItem.TaskSubType</td>
                     <td>@(taskItem.IsCompleted ? "Completed" : "Not Completed")</td>
                     <td>@taskItem.CreatedDate.ToShortDateString()</td>
+                    <td>@taskItem.UpdatedDate?.ToShortDateString()</td>
                     <td>
                         <button class="btn btn-primary btn-sm" @onclick="() => OnEdit.InvokeAsync(taskItem.ID)">Edit</button>
                         <button class="btn btn-danger btn-sm" @onclick="() => OnDelete.InvokeAsync(taskItem)">Delete</button>
