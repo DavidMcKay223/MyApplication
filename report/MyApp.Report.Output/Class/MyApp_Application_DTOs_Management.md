@@ -21,14 +21,14 @@ public class CreateTaskItemDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Description` | `string` | `public required string Description { get; set; }` |
-| `TaskType` | `TaskType` | `public TaskType TaskType { get; set; }` |
-| `TaskSubType` | `TaskSubType` | `public TaskSubType TaskSubType { get; set; }` |
-| `TaskObjectType` | `TaskObjectType` | `public TaskObjectType TaskObjectType { get; set; }` |
-| `TaskObjectId` | `int?` | `public int? TaskObjectId { get; set; }` |
+| Name | Type |
+|------|------|
+| `Title` | `string` |
+| `Description` | `string` |
+| `TaskType` | `TaskType` |
+| `TaskSubType` | `TaskSubType` |
+| `TaskObjectType` | `TaskObjectType` |
+| `TaskObjectId` | `int?` |
 
 ## Class: `DeleteTaskItemDto`
 
@@ -46,9 +46,9 @@ public class DeleteTaskItemDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
 
 ## Class: `SearchTaskItemDto`
 
@@ -69,12 +69,12 @@ public class SearchTaskItemDto : AbstractSearchDto<TaskSortBy, TaskSortOrder>
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Title` | `string?` | `public string? Title { get; set; }` |
-| `Description` | `string?` | `public string? Description { get; set; }` |
-| `TaskType` | `TaskType?` | `public TaskType? TaskType { get; set; }` |
-| `IsCompleted` | `bool?` | `public bool? IsCompleted { get; set; }` |
+| Name | Type |
+|------|------|
+| `Title` | `string?` |
+| `Description` | `string?` |
+| `TaskType` | `TaskType?` |
+| `IsCompleted` | `bool?` |
 
 ## Class: `TaskItemDto`
 
@@ -101,18 +101,18 @@ public class TaskItemDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Description` | `string` | `public required string Description { get; set; }` |
-| `IsCompleted` | `bool` | `public bool IsCompleted { get; set; }` |
-| `TaskType` | `TaskType` | `public TaskType TaskType { get; set; }` |
-| `TaskSubType` | `TaskSubType` | `public TaskSubType TaskSubType { get; set; }` |
-| `TaskObjectType` | `TaskObjectType` | `public TaskObjectType TaskObjectType { get; set; }` |
-| `TaskObjectId` | `int?` | `public int? TaskObjectId { get; set; }` |
-| `CreatedDate` | `DateTime` | `public DateTime CreatedDate { get; set; }` |
-| `UpdatedDate` | `DateTime?` | `public DateTime? UpdatedDate { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Title` | `string` |
+| `Description` | `string` |
+| `IsCompleted` | `bool` |
+| `TaskType` | `TaskType` |
+| `TaskSubType` | `TaskSubType` |
+| `TaskObjectType` | `TaskObjectType` |
+| `TaskObjectId` | `int?` |
+| `CreatedDate` | `DateTime` |
+| `UpdatedDate` | `DateTime?` |
 
 ## Class: `UpdateTaskItemDto`
 
@@ -132,9 +132,9 @@ public class UpdateTaskItemDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Description` | `string` | `public required string Description { get; set; }` |
-| `IsCompleted` | `bool` | `public bool IsCompleted { get; set; }` |
+| Name | Type |
+|------|------|
+| `Title` | `string` |
+| `Description` | `string` |
+| `IsCompleted` | `bool` |
 

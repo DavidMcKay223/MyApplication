@@ -20,13 +20,13 @@ public class AddressDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Street` | `string?` | `public string? Street { get; set; }` |
-| `City` | `string?` | `public string? City { get; set; }` |
-| `State` | `string?` | `public string? State { get; set; }` |
-| `ZipCode` | `string?` | `public string? ZipCode { get; set; }` |
-| `Phone` | `string?` | `public string? Phone { get; set; }` |
+| Name | Type |
+|------|------|
+| `Street` | `string?` |
+| `City` | `string?` |
+| `State` | `string?` |
+| `ZipCode` | `string?` |
+| `Phone` | `string?` |
 
 ## Class: `ClaimDto`
 
@@ -60,25 +60,25 @@ public class ClaimDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `FormId` | `int` | `public int FormId { get; set; }` |
-| `InsuranceProgram` | `InsuranceProgram` | `public InsuranceProgram InsuranceProgram { get; set; }` |
-| `InsuredIdNumber` | `string?` | `public string? InsuredIdNumber { get; set; }` |
-| `Patient` | `PatientInfoDto` | `public required PatientInfoDto Patient { get; set; }` |
-| `Insured` | `InsuredInfoDto` | `public required InsuredInfoDto Insured { get; set; }` |
-| `OtherInsurance` | `OtherInsuranceInfoDto` | `public required OtherInsuranceInfoDto OtherInsurance { get; set; }` |
-| `ConditionRelated` | `ConditionRelatedDto` | `public required ConditionRelatedDto ConditionRelated { get; set; }` |
-| `DiagnosisCodes` | `List<DiagnosisCodeDto>` | `public required List<DiagnosisCodeDto> DiagnosisCodes { get; set; } = [];` |
-| `ServiceLines` | `List<ServiceLineDto>` | `public required List<ServiceLineDto> ServiceLines { get; set; } = [];` |
-| `BillingProvider` | `ProviderInfoDto` | `public required ProviderInfoDto BillingProvider { get; set; }` |
-| `ServiceFacility` | `ProviderInfoDto` | `public required ProviderInfoDto ServiceFacility { get; set; }` |
-| `TotalCharge` | `decimal` | `public decimal TotalCharge { get; set; }` |
-| `AmountPaid` | `decimal` | `public decimal AmountPaid { get; set; }` |
-| `PatientSignatureDate` | `DateTime?` | `public DateTime? PatientSignatureDate { get; set; }` |
-| `PhysicianSignatureDate` | `DateTime?` | `public DateTime? PhysicianSignatureDate { get; set; }` |
-| `CreatedDate` | `DateTime` | `public DateTime CreatedDate { get; set; } = DateTime.UtcNow;` |
-| `UpdatedDate` | `DateTime?` | `public DateTime? UpdatedDate { get; set; }` |
+| Name | Type |
+|------|------|
+| `FormId` | `int` |
+| `InsuranceProgram` | `InsuranceProgram` |
+| `InsuredIdNumber` | `string?` |
+| `Patient` | `PatientInfoDto` |
+| `Insured` | `InsuredInfoDto` |
+| `OtherInsurance` | `OtherInsuranceInfoDto` |
+| `ConditionRelated` | `ConditionRelatedDto` |
+| `DiagnosisCodes` | `List<DiagnosisCodeDto>` |
+| `ServiceLines` | `List<ServiceLineDto>` |
+| `BillingProvider` | `ProviderInfoDto` |
+| `ServiceFacility` | `ProviderInfoDto` |
+| `TotalCharge` | `decimal` |
+| `AmountPaid` | `decimal` |
+| `PatientSignatureDate` | `DateTime?` |
+| `PhysicianSignatureDate` | `DateTime?` |
+| `CreatedDate` | `DateTime` |
+| `UpdatedDate` | `DateTime?` |
 
 ## Class: `ConditionRelatedDto`
 
@@ -99,12 +99,12 @@ public class ConditionRelatedDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Employment` | `bool` | `public bool Employment { get; set; }` |
-| `AutoAccident` | `bool` | `public bool AutoAccident { get; set; }` |
-| `OtherAccident` | `bool` | `public bool OtherAccident { get; set; }` |
-| `AccidentState` | `string?` | `public string? AccidentState { get; set; }` |
+| Name | Type |
+|------|------|
+| `Employment` | `bool` |
+| `AutoAccident` | `bool` |
+| `OtherAccident` | `bool` |
+| `AccidentState` | `string?` |
 
 ## Class: `DiagnosisCodeDto`
 
@@ -124,11 +124,11 @@ public class DiagnosisCodeDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `DiagnosisId` | `int` | `public int DiagnosisId { get; set; }` |
-| `Code` | `string?` | `public string? Code { get; set; }` |
-| `Priority` | `int` | `public int Priority { get; set; }` |
+| Name | Type |
+|------|------|
+| `DiagnosisId` | `int` |
+| `Code` | `string?` |
+| `Priority` | `int` |
 
 ## Class: `InsuredInfoDto`
 
@@ -149,12 +149,12 @@ public class InsuredInfoDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `LastName` | `string?` | `public string? LastName { get; set; }` |
-| `FirstName` | `string?` | `public string? FirstName { get; set; }` |
-| `Address` | `AddressDto` | `public required AddressDto Address { get; set; }` |
-| `GroupNumber` | `string?` | `public string? GroupNumber { get; set; }` |
+| Name | Type |
+|------|------|
+| `LastName` | `string?` |
+| `FirstName` | `string?` |
+| `Address` | `AddressDto` |
+| `GroupNumber` | `string?` |
 
 ## Class: `OtherInsuranceInfoDto`
 
@@ -174,11 +174,11 @@ public class OtherInsuranceInfoDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `PolicyHolderName` | `string?` | `public string? PolicyHolderName { get; set; }` |
-| `PolicyNumber` | `string?` | `public string? PolicyNumber { get; set; }` |
-| `PlanName` | `string?` | `public string? PlanName { get; set; }` |
+| Name | Type |
+|------|------|
+| `PolicyHolderName` | `string?` |
+| `PolicyNumber` | `string?` |
+| `PlanName` | `string?` |
 
 ## Class: `PatientInfoDto`
 
@@ -201,14 +201,14 @@ public class PatientInfoDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `LastName` | `string?` | `public string? LastName { get; set; }` |
-| `FirstName` | `string?` | `public string? FirstName { get; set; }` |
-| `BirthDate` | `DateTime?` | `public DateTime? BirthDate { get; set; }` |
-| `Sex` | `Sex` | `public Sex Sex { get; set; }` |
-| `Address` | `AddressDto` | `public required AddressDto Address { get; set; }` |
-| `RelationshipToInsured` | `Relationship` | `public Relationship RelationshipToInsured { get; set; }` |
+| Name | Type |
+|------|------|
+| `LastName` | `string?` |
+| `FirstName` | `string?` |
+| `BirthDate` | `DateTime?` |
+| `Sex` | `Sex` |
+| `Address` | `AddressDto` |
+| `RelationshipToInsured` | `Relationship` |
 
 ## Class: `ProviderInfoDto`
 
@@ -230,13 +230,13 @@ public class ProviderInfoDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Name` | `string?` | `public string? Name { get; set; }` |
-| `FederalTaxId` | `string?` | `public string? FederalTaxId { get; set; }` |
-| `Address` | `AddressDto` | `public required AddressDto Address { get; set; }` |
-| `NpiNumber` | `string?` | `public string? NpiNumber { get; set; }` |
-| `Phone` | `string?` | `public string? Phone { get; set; }` |
+| Name | Type |
+|------|------|
+| `Name` | `string?` |
+| `FederalTaxId` | `string?` |
+| `Address` | `AddressDto` |
+| `NpiNumber` | `string?` |
+| `Phone` | `string?` |
 
 ## Class: `SearchClaimDto`
 
@@ -257,12 +257,12 @@ public class SearchClaimDto : AbstractSearchDto<ClaimSortBy, ClaimSortOrder>
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `InsuredIdNumber` | `string?` | `public string? InsuredIdNumber { get; set; }` |
-| `PatientLastName` | `string?` | `public string? PatientLastName { get; set; }` |
-| `PatientFirstName` | `string?` | `public string? PatientFirstName { get; set; }` |
-| `InsuranceProgram` | `InsuranceProgram?` | `public InsuranceProgram? InsuranceProgram { get; set; }` |
+| Name | Type |
+|------|------|
+| `InsuredIdNumber` | `string?` |
+| `PatientLastName` | `string?` |
+| `PatientFirstName` | `string?` |
+| `InsuranceProgram` | `InsuranceProgram?` |
 
 ## Class: `ServiceLineDto`
 
@@ -287,14 +287,14 @@ public class ServiceLineDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ServiceLineId` | `int` | `public int ServiceLineId { get; set; }` |
-| `ServiceStartDate` | `DateTime?` | `public DateTime? ServiceStartDate { get; set; }` |
-| `ServiceEndDate` | `DateTime?` | `public DateTime? ServiceEndDate { get; set; }` |
-| `ProcedureCode` | `string?` | `public string? ProcedureCode { get; set; }` |
-| `Modifier` | `string?` | `public string? Modifier { get; set; }` |
-| `DiagnosisPointer` | `string?` | `public string? DiagnosisPointer { get; set; }` |
-| `Charge` | `decimal` | `public decimal Charge { get; set; }` |
-| `RenderingProviderId` | `string?` | `public string? RenderingProviderId { get; set; }` |
+| Name | Type |
+|------|------|
+| `ServiceLineId` | `int` |
+| `ServiceStartDate` | `DateTime?` |
+| `ServiceEndDate` | `DateTime?` |
+| `ProcedureCode` | `string?` |
+| `Modifier` | `string?` |
+| `DiagnosisPointer` | `string?` |
+| `Charge` | `decimal` |
+| `RenderingProviderId` | `string?` |
 

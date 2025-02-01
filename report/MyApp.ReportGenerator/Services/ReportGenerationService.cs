@@ -57,7 +57,7 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine($"- **Inherits From:** N/A");
                 }
 
-                // Include the full class code
+                // Include the full class code (optional)
                 sb.AppendLine();
                 sb.AppendLine("### Class Code");
                 sb.AppendLine();
@@ -72,15 +72,13 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine();
 
                     // Table Header for Properties
-                    sb.AppendLine("| Name | Type | Definition |");
-                    sb.AppendLine("|------|------|-------------|");
+                    sb.AppendLine("| Name | Type |");
+                    sb.AppendLine("|------|------|");
 
                     // Table Rows
                     foreach (var prop in classInfo.Properties)
                     {
-                        // Include the property code directly in the "Definition" column
-                        var code = prop.CodeSnippet.Replace("\n", "<br>").Replace("|", "\\|"); // Replace newlines with <br>, escape pipes
-                        sb.AppendLine($"| `{prop.Name}` | `{prop.Type}` | `{code}` |");
+                        sb.AppendLine($"| `{prop.Name}` | `{prop.Type}` |");
                     }
                 }
 
@@ -91,8 +89,8 @@ namespace MyApp.ReportGenerator.Services
                     sb.AppendLine();
 
                     // Table Header for Methods
-                    sb.AppendLine("| Name | Signature | Definition |");
-                    sb.AppendLine("|------|-----------|-------------|");
+                    sb.AppendLine("| Name | Signature |");
+                    sb.AppendLine("|------|-----------|");
 
                     // Table Rows
                     foreach (var method in classInfo.Methods)
@@ -101,8 +99,19 @@ namespace MyApp.ReportGenerator.Services
                             ? string.Join(", ", method.Parameters.Select(p => $"{p.Type} {p.Name}"))
                             : "";
                         var signature = $"{(method.AccessModifier != "private" ? method.AccessModifier + " " : "")}{(method.IsStatic ? "static " : "")}{method.ReturnType} {method.Name}({parameters})";
-                        var code = method.CodeSnippet.Replace("\n", "<br>").Replace("|", "\\|"); // Replace newlines with <br>, escape pipes
-                        sb.AppendLine($"| `{method.Name}` | `{signature}` | `{code}` |");
+
+                        sb.AppendLine($"| `{method.Name}` | `{signature}` |");
+                    }
+
+                    // Include code snippets for methods
+                    foreach (var method in classInfo.Methods)
+                    {
+                        sb.AppendLine();
+                        sb.AppendLine($"#### Method: `{method.Name}`");
+                        sb.AppendLine();
+                        sb.AppendLine("```csharp");
+                        sb.AppendLine(method.CodeSnippet);
+                        sb.AppendLine("```");
                     }
                 }
 
@@ -111,7 +120,6 @@ namespace MyApp.ReportGenerator.Services
 
             return sb.ToString();
         }
-
 
         private void GenerateIndexMarkdown(IEnumerable<IGrouping<string, ClassInfo>> namespaceGroups, string outputPath)
         {

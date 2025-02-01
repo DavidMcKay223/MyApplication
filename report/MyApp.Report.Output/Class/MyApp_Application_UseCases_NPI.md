@@ -30,7 +30,16 @@ public class ProviderUseCases : IProviderUseCases
 
 ### Methods
 
-| Name | Signature | Definition |
-|------|-----------|-------------|
-| `GetProvidersAsync` | `public Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)` | `public async Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)<br>        {<br>            return _mapper.Map<List<ProviderDto>?>(await _npiRegistryClient.GetProvidersAsync(dto));<br>        }` |
+| Name | Signature |
+|------|-----------|
+| `GetProvidersAsync` | `public Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)` |
+
+#### Method: `GetProvidersAsync`
+
+```csharp
+public async Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)
+        {
+            return _mapper.Map<List<ProviderDto>?>(await _npiRegistryClient.GetProvidersAsync(dto));
+        }
+```
 

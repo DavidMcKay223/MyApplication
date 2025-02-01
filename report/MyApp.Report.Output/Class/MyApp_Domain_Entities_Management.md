@@ -38,18 +38,18 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `[Key]<br>        public int ID { get; set; }` |
-| `Title` | `string` | `[MaxLength(500)]<br>        public required string Title { get; set; }` |
-| `Description` | `string` | `[MaxLength(5000)]<br>        public required string Description { get; set; }` |
-| `IsCompleted` | `bool` | `public bool IsCompleted { get; set; } = false;` |
-| `TaskType` | `TaskType` | `public TaskType TaskType { get; set; }` |
-| `TaskSubType` | `TaskSubType` | `public TaskSubType TaskSubType { get; set; }` |
-| `TaskObjectType` | `TaskObjectType` | `public TaskObjectType TaskObjectType { get; set; } = TaskObjectType.None;` |
-| `TaskObjectId` | `int?` | `public int? TaskObjectId { get; set; }` |
-| `CreatedDate` | `DateTime` | `public DateTime CreatedDate { get; set; } = DateTime.UtcNow;` |
-| `UpdatedDate` | `DateTime?` | `public DateTime? UpdatedDate { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Title` | `string` |
+| `Description` | `string` |
+| `IsCompleted` | `bool` |
+| `TaskType` | `TaskType` |
+| `TaskSubType` | `TaskSubType` |
+| `TaskObjectType` | `TaskObjectType` |
+| `TaskObjectId` | `int?` |
+| `CreatedDate` | `DateTime` |
+| `UpdatedDate` | `DateTime?` |
 
 ## Class: `TaskTypeHelper`
 
@@ -86,8 +86,28 @@ public static class TaskTypeHelper
 
 ### Methods
 
-| Name | Signature | Definition |
-|------|-----------|-------------|
-| `GetValidSubTypes` | `public static List<TaskSubType> GetValidSubTypes(TaskType taskType)` | `// Get valid TaskSubTypes for a given TaskType<br>        public static List<TaskSubType> GetValidSubTypes(TaskType taskType)<br>        {<br>            return TaskTypeSubTypes.TryGetValue(taskType, out var subTypes) ? subTypes : new List<TaskSubType>();<br>        }` |
-| `IsValidSubType` | `public static bool IsValidSubType(TaskType taskType, TaskSubType taskSubType)` | `// Validate if a TaskSubType is valid for a given TaskType<br>        public static bool IsValidSubType(TaskType taskType, TaskSubType taskSubType)<br>        {<br>            return TaskTypeSubTypes.TryGetValue(taskType, out var subTypes) && subTypes.Contains(taskSubType);<br>        }` |
+| Name | Signature |
+|------|-----------|
+| `GetValidSubTypes` | `public static List<TaskSubType> GetValidSubTypes(TaskType taskType)` |
+| `IsValidSubType` | `public static bool IsValidSubType(TaskType taskType, TaskSubType taskSubType)` |
+
+#### Method: `GetValidSubTypes`
+
+```csharp
+// Get valid TaskSubTypes for a given TaskType
+        public static List<TaskSubType> GetValidSubTypes(TaskType taskType)
+        {
+            return TaskTypeSubTypes.TryGetValue(taskType, out var subTypes) ? subTypes : new List<TaskSubType>();
+        }
+```
+
+#### Method: `IsValidSubType`
+
+```csharp
+// Validate if a TaskSubType is valid for a given TaskType
+        public static bool IsValidSubType(TaskType taskType, TaskSubType taskSubType)
+        {
+            return TaskTypeSubTypes.TryGetValue(taskType, out var subTypes) && subTypes.Contains(taskSubType);
+        }
+```
 

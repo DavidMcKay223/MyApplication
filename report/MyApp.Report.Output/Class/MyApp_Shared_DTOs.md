@@ -19,12 +19,12 @@ public class NavBarItemDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ChildList` | `List<NavBarItemDto>?` | `public List<NavBarItemDto>? ChildList { get; set; }` |
-| `Description` | `string` | `public required string Description { get; set; }` |
-| `Class` | `string` | `public required string Class { get; set; }` |
-| `Href` | `string` | `public required string Href { get; set; }` |
+| Name | Type |
+|------|------|
+| `ChildList` | `List<NavBarItemDto>?` |
+| `Description` | `string` |
+| `Class` | `string` |
+| `Href` | `string` |
 
 ## Class: `StateDto`
 
@@ -43,8 +43,8 @@ public class StateDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Value` | `string` | `public required string Value { get; set; }` |
-| `Description` | `string` | `public required string Description { get; set; }` |
+| Name | Type |
+|------|------|
+| `Value` | `string` |
+| `Description` | `string` |
 

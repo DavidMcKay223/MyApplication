@@ -22,11 +22,11 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `[Key]<br>        public int ID { get; set; }` |
-| `ArtistName` | `string` | `[MaxLength(500)]<br>        public required string ArtistName { get; set; }` |
-| `CDs` | `List<CD>` | `public List<CD> CDs { get; set; } = [];` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `ArtistName` | `string` |
+| `CDs` | `List<CD>` |
 
 ## Class: `CD`
 
@@ -53,14 +53,14 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `[Key]<br>        public int ID { get; set; }` |
-| `Name` | `string` | `[MaxLength(500)]<br>        public required string Name { get; set; }` |
-| `Genre` | `Genre` | `public Genre Genre { get; set; }` |
-| `Tracks` | `List<Track>` | `public List<Track> Tracks { get; set; } = [];` |
-| `AlbumId` | `int` | `public int AlbumId { get; set; }` |
-| `Album` | `Album?` | `public Album? Album { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Name` | `string` |
+| `Genre` | `Genre` |
+| `Tracks` | `List<Track>` |
+| `AlbumId` | `int` |
+| `Album` | `Album?` |
 
 ## Class: `Track`
 
@@ -86,12 +86,12 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `[Key]<br>        public int ID { get; set; }` |
-| `Number` | `int` | `public int Number { get; set; }` |
-| `Title` | `string` | `[MaxLength(500)]<br>        public required string Title { get; set; }` |
-| `Length` | `TimeSpan` | `public TimeSpan Length { get; set; }` |
-| `CDId` | `int` | `public int CDId { get; set; }` |
-| `CD` | `CD?` | `public CD? CD { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Number` | `int` |
+| `Title` | `string` |
+| `Length` | `TimeSpan` |
+| `CDId` | `int` |
+| `CD` | `CD?` |
 

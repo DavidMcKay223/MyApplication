@@ -18,11 +18,11 @@ public class AlbumDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `ArtistName` | `string` | `public required string ArtistName { get; set; }` |
-| `CDs` | `List<CDDto>?` | `public List<CDDto>? CDs { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `ArtistName` | `string` |
+| `CDs` | `List<CDDto>?` |
 
 ## Class: `CDDto`
 
@@ -43,12 +43,12 @@ public class CDDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Name` | `string` | `public required string Name { get; set; }` |
-| `Genre` | `Genre` | `public Genre Genre { get; set; }` |
-| `Tracks` | `List<TrackDto>?` | `public List<TrackDto>? Tracks { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Name` | `string` |
+| `Genre` | `Genre` |
+| `Tracks` | `List<TrackDto>?` |
 
 ## Class: `CreateAlbumDto`
 
@@ -67,10 +67,10 @@ public class CreateAlbumDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ArtistName` | `string` | `public required string ArtistName { get; set; }` |
-| `CDs` | `List<CreateCDDto>?` | `public List<CreateCDDto>? CDs { get; set; }` |
+| Name | Type |
+|------|------|
+| `ArtistName` | `string` |
+| `CDs` | `List<CreateCDDto>?` |
 
 ## Class: `CreateCDDto`
 
@@ -90,11 +90,11 @@ public class CreateCDDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Name` | `string` | `public required string Name { get; set; }` |
-| `Genre` | `Genre` | `public Genre Genre { get; set; }` |
-| `Tracks` | `List<CreateTrackDto>?` | `public List<CreateTrackDto>? Tracks { get; set; }` |
+| Name | Type |
+|------|------|
+| `Name` | `string` |
+| `Genre` | `Genre` |
+| `Tracks` | `List<CreateTrackDto>?` |
 
 ## Class: `CreateTrackDto`
 
@@ -114,11 +114,11 @@ public class CreateTrackDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Number` | `int` | `public required int Number { get; set; }` |
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Length` | `TimeSpan` | `public required TimeSpan Length { get; set; }` |
+| Name | Type |
+|------|------|
+| `Number` | `int` |
+| `Title` | `string` |
+| `Length` | `TimeSpan` |
 
 ## Class: `DeleteAlbumDto`
 
@@ -137,10 +137,10 @@ public class DeleteAlbumDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `CDs` | `List<DeleteCDDto>?` | `public List<DeleteCDDto>? CDs { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `CDs` | `List<DeleteCDDto>?` |
 
 ## Class: `DeleteCDDto`
 
@@ -159,10 +159,10 @@ public class DeleteCDDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Tracks` | `List<DeleteTrackDto>?` | `public List<DeleteTrackDto>? Tracks { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Tracks` | `List<DeleteTrackDto>?` |
 
 ## Class: `DeleteTrackDto`
 
@@ -180,9 +180,9 @@ public class DeleteTrackDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
 
 ## Class: `SearchAlbumDto`
 
@@ -203,12 +203,12 @@ public class SearchAlbumDto : AbstractSearchDto<AlbumSortBy, AlbumSortOrder>
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ArtistName` | `string?` | `public string? ArtistName { get; set; }` |
-| `CdName` | `string?` | `public string? CdName { get; set; }` |
-| `TrackTitle` | `string?` | `public string? TrackTitle { get; set; }` |
-| `Genre` | `Genre?` | `public Genre? Genre { get; set; }` |
+| Name | Type |
+|------|------|
+| `ArtistName` | `string?` |
+| `CdName` | `string?` |
+| `TrackTitle` | `string?` |
+| `Genre` | `Genre?` |
 
 ## Class: `TrackDto`
 
@@ -229,12 +229,12 @@ public class TrackDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Number` | `int` | `public required int Number { get; set; }` |
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Length` | `TimeSpan` | `public required TimeSpan Length { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Number` | `int` |
+| `Title` | `string` |
+| `Length` | `TimeSpan` |
 
 ## Class: `UpdateAlbumDto`
 
@@ -254,11 +254,11 @@ public class UpdateAlbumDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `ArtistName` | `string` | `public required string ArtistName { get; set; }` |
-| `CDs` | `List<UpdateCDDto>?` | `public List<UpdateCDDto>? CDs { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `ArtistName` | `string` |
+| `CDs` | `List<UpdateCDDto>?` |
 
 ## Class: `UpdateCDDto`
 
@@ -280,13 +280,13 @@ public class UpdateCDDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Name` | `string` | `public required string Name { get; set; }` |
-| `Genre` | `Genre` | `public Genre Genre { get; set; }` |
-| `AlbumId` | `int` | `public int AlbumId { get; set; }` |
-| `Tracks` | `List<UpdateTrackDto>?` | `public List<UpdateTrackDto>? Tracks { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Name` | `string` |
+| `Genre` | `Genre` |
+| `AlbumId` | `int` |
+| `Tracks` | `List<UpdateTrackDto>?` |
 
 ## Class: `UpdateTrackDto`
 
@@ -308,11 +308,11 @@ public class UpdateTrackDto
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `ID` | `int` | `public int ID { get; set; }` |
-| `Number` | `int` | `public required int Number { get; set; }` |
-| `Title` | `string` | `public required string Title { get; set; }` |
-| `Length` | `TimeSpan` | `public required TimeSpan Length { get; set; }` |
-| `CDId` | `int` | `public int CDId { get; set; }` |
+| Name | Type |
+|------|------|
+| `ID` | `int` |
+| `Number` | `int` |
+| `Title` | `string` |
+| `Length` | `TimeSpan` |
+| `CDId` | `int` |
 

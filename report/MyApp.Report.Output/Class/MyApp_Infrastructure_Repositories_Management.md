@@ -51,11 +51,65 @@ public class TaskItemRepository : ITaskItemRepository
 
 ### Methods
 
-| Name | Signature | Definition |
-|------|-----------|-------------|
-| `AddAsync` | `public Task AddAsync(TaskItem TaskItem)` | `public async Task AddAsync(TaskItem TaskItem)<br>        {<br>            await _context.TaskItems.AddAsync(TaskItem);<br>            await _context.SaveChangesAsync();<br>        }` |
-| `UpdateAsync` | `public Task UpdateAsync(TaskItem TaskItem)` | `public async Task UpdateAsync(TaskItem TaskItem)<br>        {<br>            _context.TaskItems.Update(TaskItem);<br>            await _context.SaveChangesAsync();<br>        }` |
-| `DeleteAsync` | `public Task DeleteAsync(int id)` | `public async Task DeleteAsync(int id)<br>        {<br>            var TaskItem = await GetByIdAsync(id);<br>            if (TaskItem != null)<br>            {<br>                _context.TaskItems.Remove(TaskItem);<br>                await _context.SaveChangesAsync();<br>            }<br>        }` |
-| `GetByIdAsync` | `public Task<TaskItem?> GetByIdAsync(int id)` | `public async Task<TaskItem?> GetByIdAsync(int id)<br>        {<br>            return await _context.TaskItems<br>                .FirstOrDefaultAsync(a => a.ID == id);<br>        }` |
-| `GetAllAsync` | `public IQueryable<TaskItem> GetAllAsync()` | `public IQueryable<TaskItem> GetAllAsync()<br>        {<br>            return _context.TaskItems<br>                .AsQueryable();<br>        }` |
+| Name | Signature |
+|------|-----------|
+| `AddAsync` | `public Task AddAsync(TaskItem TaskItem)` |
+| `UpdateAsync` | `public Task UpdateAsync(TaskItem TaskItem)` |
+| `DeleteAsync` | `public Task DeleteAsync(int id)` |
+| `GetByIdAsync` | `public Task<TaskItem?> GetByIdAsync(int id)` |
+| `GetAllAsync` | `public IQueryable<TaskItem> GetAllAsync()` |
+
+#### Method: `AddAsync`
+
+```csharp
+public async Task AddAsync(TaskItem TaskItem)
+        {
+            await _context.TaskItems.AddAsync(TaskItem);
+            await _context.SaveChangesAsync();
+        }
+```
+
+#### Method: `UpdateAsync`
+
+```csharp
+public async Task UpdateAsync(TaskItem TaskItem)
+        {
+            _context.TaskItems.Update(TaskItem);
+            await _context.SaveChangesAsync();
+        }
+```
+
+#### Method: `DeleteAsync`
+
+```csharp
+public async Task DeleteAsync(int id)
+        {
+            var TaskItem = await GetByIdAsync(id);
+            if (TaskItem != null)
+            {
+                _context.TaskItems.Remove(TaskItem);
+                await _context.SaveChangesAsync();
+            }
+        }
+```
+
+#### Method: `GetByIdAsync`
+
+```csharp
+public async Task<TaskItem?> GetByIdAsync(int id)
+        {
+            return await _context.TaskItems
+                .FirstOrDefaultAsync(a => a.ID == id);
+        }
+```
+
+#### Method: `GetAllAsync`
+
+```csharp
+public IQueryable<TaskItem> GetAllAsync()
+        {
+            return _context.TaskItems
+                .AsQueryable();
+        }
+```
 

@@ -30,21 +30,21 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `EndpointType` | `string?` | `public string? EndpointType { get; set; }` |
-| `EndpointTypeDescription` | `string?` | `public string? EndpointTypeDescription { get; set; }` |
-| `EndpointValue` | `string?` | `public string? EndpointValue { get; set; }` |
-| `Affiliation` | `string?` | `public string? Affiliation { get; set; }` |
-| `UseDescription` | `string?` | `public string? UseDescription { get; set; }` |
-| `ContentTypeDescription` | `string?` | `public string? ContentTypeDescription { get; set; }` |
-| `CountryCode` | `string?` | `public string? CountryCode { get; set; }` |
-| `CountryName` | `string?` | `public string? CountryName { get; set; }` |
-| `AddressType` | `string?` | `public string? AddressType { get; set; }` |
-| `Address1` | `string?` | `public string? Address1 { get; set; }` |
-| `City` | `string?` | `public string? City { get; set; }` |
-| `State` | `string?` | `public string? State { get; set; }` |
-| `PostalCode` | `string?` | `public string? PostalCode { get; set; }` |
+| Name | Type |
+|------|------|
+| `EndpointType` | `string?` |
+| `EndpointTypeDescription` | `string?` |
+| `EndpointValue` | `string?` |
+| `Affiliation` | `string?` |
+| `UseDescription` | `string?` |
+| `ContentTypeDescription` | `string?` |
+| `CountryCode` | `string?` |
+| `CountryName` | `string?` |
+| `AddressType` | `string?` |
+| `Address1` | `string?` |
+| `City` | `string?` |
+| `State` | `string?` |
+| `PostalCode` | `string?` |
 
 ## Class: `Identifier`
 
@@ -68,13 +68,13 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `Code` | `string?` | `public string? Code { get; set; }` |
-| `Description` | `string?` | `public string? Description { get; set; }` |
-| `Issuer` | `string?` | `public string? Issuer { get; set; }` |
-| `IdentifierValue` | `string?` | `public string? IdentifierValue { get; set; }` |
-| `State` | `string?` | `public string? State { get; set; }` |
+| Name | Type |
+|------|------|
+| `Code` | `string?` |
+| `Description` | `string?` |
+| `Issuer` | `string?` |
+| `IdentifierValue` | `string?` |
+| `State` | `string?` |
 
 ## Class: `Provider`
 
@@ -151,39 +151,39 @@
 
 ### Properties
 
-| Name | Type | Definition |
-|------|------|-------------|
-| `NPI` | `string` | `[Key]<br>        #region -- NPI Number --<br>        [MaxLength(10)]<br>        public required string NPI { get; set; }` |
-| `Address1` | `string?` | `#endregion<br><br>        #region -- Address Info --<br>        public string? Address1 { get; set; }` |
-| `Address2` | `string?` | `public string? Address2 { get; set; }` |
-| `City` | `string?` | `public string? City { get; set; }` |
-| `State` | `string?` | `public string? State { get; set; }` |
-| `Zip` | `string?` | `public string? Zip { get; set; }` |
-| `Phone` | `string?` | `public string? Phone { get; set; }` |
-| `Fax` | `string?` | `public string? Fax { get; set; }` |
-| `MailingAddress1` | `string?` | `#endregion<br><br>        #region -- Mailing Address Info --<br>        public string? MailingAddress1 { get; set; }` |
-| `MailingAddress2` | `string?` | `public string? MailingAddress2 { get; set; }` |
-| `MailingCity` | `string?` | `public string? MailingCity { get; set; }` |
-| `MailingState` | `string?` | `public string? MailingState { get; set; }` |
-| `MailingZip` | `string?` | `public string? MailingZip { get; set; }` |
-| `MailingPhone` | `string?` | `public string? MailingPhone { get; set; }` |
-| `MailingFax` | `string?` | `public string? MailingFax { get; set; }` |
-| `Name` | `string?` | `#endregion<br><br>        #region -- Basic Info --<br>        public string? Name { get; set; }` |
-| `ProviderName` | `string?` | `public string? ProviderName { get; set; }` |
-| `ProviderFirstName` | `string?` | `public string? ProviderFirstName { get; set; }` |
-| `ProviderLastName` | `string?` | `public string? ProviderLastName { get; set; }` |
-| `OrganizationName` | `string?` | `public string? OrganizationName { get; set; }` |
-| `ParentOrganizationLegalBusinessName` | `string?` | `public string? ParentOrganizationLegalBusinessName { get; set; }` |
-| `Gender` | `string?` | `public string? Gender { get; set; }` |
-| `SoleProprietor` | `string?` | `public string? SoleProprietor { get; set; }` |
-| `EnumerationDate` | `string?` | `public string? EnumerationDate { get; set; }` |
-| `LastUpdated` | `string?` | `public string? LastUpdated { get; set; }` |
-| `Status` | `string?` | `public string? Status { get; set; }` |
-| `OtherOrganizationName` | `string?` | `#endregion<br><br>        #region -- Other Names --<br>        public string? OtherOrganizationName { get; set; }` |
-| `PrimaryTaxonomyCode` | `string?` | `#endregion<br><br>        #region -- Taxonomy --<br>        public string? PrimaryTaxonomyCode { get; set; }` |
-| `PrimaryTaxonomyStateLicense` | `string?` | `public string? PrimaryTaxonomyStateLicense { get; set; }` |
-| `PrimaryTaxonomyDescription` | `string?` | `public string? PrimaryTaxonomyDescription { get; set; }` |
-| `PrimaryTaxonomyGroup` | `string?` | `public string? PrimaryTaxonomyGroup { get; set; }` |
-| `Identifiers` | `List<Identifier>?` | `#endregion<br><br>        #region -- Identifiers --<br>        public List<Identifier>? Identifiers { get; set; }` |
-| `Endpoints` | `List<Endpoint>?` | `#endregion<br><br>        #region -- Endpoints --<br>        public List<Endpoint>? Endpoints { get; set; }` |
+| Name | Type |
+|------|------|
+| `NPI` | `string` |
+| `Address1` | `string?` |
+| `Address2` | `string?` |
+| `City` | `string?` |
+| `State` | `string?` |
+| `Zip` | `string?` |
+| `Phone` | `string?` |
+| `Fax` | `string?` |
+| `MailingAddress1` | `string?` |
+| `MailingAddress2` | `string?` |
+| `MailingCity` | `string?` |
+| `MailingState` | `string?` |
+| `MailingZip` | `string?` |
+| `MailingPhone` | `string?` |
+| `MailingFax` | `string?` |
+| `Name` | `string?` |
+| `ProviderName` | `string?` |
+| `ProviderFirstName` | `string?` |
+| `ProviderLastName` | `string?` |
+| `OrganizationName` | `string?` |
+| `ParentOrganizationLegalBusinessName` | `string?` |
+| `Gender` | `string?` |
+| `SoleProprietor` | `string?` |
+| `EnumerationDate` | `string?` |
+| `LastUpdated` | `string?` |
+| `Status` | `string?` |
+| `OtherOrganizationName` | `string?` |
+| `PrimaryTaxonomyCode` | `string?` |
+| `PrimaryTaxonomyStateLicense` | `string?` |
+| `PrimaryTaxonomyDescription` | `string?` |
+| `PrimaryTaxonomyGroup` | `string?` |
+| `Identifiers` | `List<Identifier>?` |
+| `Endpoints` | `List<Endpoint>?` |
 
