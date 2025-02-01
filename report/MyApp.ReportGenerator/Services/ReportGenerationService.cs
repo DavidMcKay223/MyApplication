@@ -1,4 +1,5 @@
 ﻿using MyApp.ReportGenerator.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace MyApp.ReportGenerator.Services
     public class ReportGenerationService
     {
         /// <summary>
-        /// Generates Markdown reports for the provided classes, including properties and methods with code snippets, grouped by namespace.
+        /// Generates Markdown reports for the provided classes.
         /// </summary>
+        /// <param name="classes">List of ClassInfo objects.</param>
+        /// <param name="outputPath">Directory where the reports will be saved.</param>
         public void GenerateReports(List<ClassInfo> classes, string outputPath)
         {
             Directory.CreateDirectory(outputPath);
@@ -20,150 +23,84 @@ namespace MyApp.ReportGenerator.Services
 
             foreach (var namespaceGroup in namespaceGroups)
             {
-                string content = $"# Namespace: `{namespaceGroup.Key}`\n\n";
-                content += GenerateNamespaceContent(namespaceGroup.ToList());
+                var namespaceName = namespaceGroup.Key;
+                var content = new StringBuilder();
 
-                var fileName = $"{namespaceGroup.Key.Replace('.', '_')}.md";
+                foreach (var classInfo in namespaceGroup)
+                {
+                    content.Append(GenerateClassMarkdown(classInfo));
+                }
+
+                var fileName = $"{namespaceName.Replace('.', '_')}.md";
                 var filePath = Path.Combine(outputPath, fileName);
 
-                File.WriteAllText(filePath, content);
+                File.WriteAllText(filePath, content.ToString());
             }
 
-            // Generate an index or summary README
-            GenerateIndexMarkdown(namespaceGroups, outputPath);
+            // Optionally, generate an index or summary README
+            GenerateIndexMarkdown(classes, outputPath);
         }
 
-        private string GenerateNamespaceContent(List<ClassInfo> classes)
+        private string GenerateClassMarkdown(ClassInfo classInfo)
         {
             var sb = new StringBuilder();
 
-            foreach (var classInfo in classes.OrderBy(c => c.Name))
+            sb.AppendLine($"# {classInfo.Name}");
+            sb.AppendLine();
+            sb.AppendLine($"**Namespace:** `{classInfo.Namespace}`");
+            sb.AppendLine();
+            sb.AppendLine($"**File Path:** `{classInfo.RelativePath.Replace("\\", "/")}`");
+            sb.AppendLine();
+
+            if (classInfo.BaseTypes.Any())
             {
-                sb.AppendLine($"## Class: `{classInfo.Name}`");
+                sb.AppendLine("## Inherits From");
                 sb.AppendLine();
-
-                sb.AppendLine($"- **File Path:** `{classInfo.RelativePath.Replace("\\", "/")}`");
-
-                if (classInfo.BaseTypes.Any())
+                foreach (var baseType in classInfo.BaseTypes)
                 {
-                    var inheritsFrom = string.Join(", ", classInfo.BaseTypes.Select(bt => $"`{bt}`"));
-                    sb.AppendLine($"- **Inherits From:** {inheritsFrom}");
+                    sb.AppendLine($"- `{baseType}`");
                 }
-                else
-                {
-                    sb.AppendLine($"- **Inherits From:** N/A");
-                }
-
-                // Include the full class code (optional)
                 sb.AppendLine();
-                sb.AppendLine("### Class Code");
+            }
+
+            //if (classInfo.Properties.Any())
+            //{
+            //    sb.AppendLine("## Properties");
+            //    sb.AppendLine();
+            //    foreach (var prop in classInfo.Properties)
+            //    {
+            //        sb.AppendLine($"- `{prop.Name}` : `{prop.Type}`");
+            //    }
+            //    sb.AppendLine();
+            //}
+
+            if (classInfo.Methods.Any())
+            {
+                sb.AppendLine("## Methods");
                 sb.AppendLine();
-                sb.AppendLine("```csharp");
-                sb.AppendLine(classInfo.CodeSnippet);
-                sb.AppendLine("```");
-
-                if (classInfo.Properties.Any())
+                foreach (var method in classInfo.Methods)
                 {
-                    sb.AppendLine();
-                    sb.AppendLine("### Properties");
-                    sb.AppendLine();
-
-                    // Table Header for Properties
-                    sb.AppendLine("| Name | Type |");
-                    sb.AppendLine("|------|------|");
-
-                    // Table Rows
-                    foreach (var prop in classInfo.Properties)
-                    {
-                        sb.AppendLine($"| `{prop.Name}` | `{prop.Type}` |");
-                    }
-
-                    // Include code snippets for properties
-                    foreach (var prop in classInfo.Properties)
-                    {
-                        sb.AppendLine();
-                        sb.AppendLine($"#### Property: `{prop.Name}`");
-                        sb.AppendLine();
-                        sb.AppendLine("```csharp");
-                        sb.AppendLine(prop.CodeSnippet);
-                        sb.AppendLine("```");
-                    }
+                    var parameters = string.Join(", ", method.Parameters.Select(p => $"{p.Type} {p.Name}"));
+                    sb.AppendLine($"- `{method.AccessModifier}` {(method.IsStatic ? "static " : "")}`{method.ReturnType} {method.Name}({parameters})`");
                 }
-
-                if (classInfo.Methods.Any())
-                {
-                    sb.AppendLine();
-                    sb.AppendLine("### Methods");
-                    sb.AppendLine();
-
-                    // Table Header for Methods
-                    sb.AppendLine("| Name | Signature |");
-                    sb.AppendLine("|------|-----------|");
-
-                    // Table Rows
-                    foreach (var method in classInfo.Methods)
-                    {
-                        var parameters = method.Parameters.Any()
-                            ? string.Join(", ", method.Parameters.Select(p => $"{p.Type} {p.Name}"))
-                            : "";
-                        var signature = $"{(method.AccessModifier != "private" ? method.AccessModifier + " " : "")}{(method.IsStatic ? "static " : "")}{method.ReturnType} {method.Name}({parameters})";
-
-                        sb.AppendLine($"| `{method.Name}` | `{signature}` |");
-                    }
-
-                    // Include code snippets for methods
-                    foreach (var method in classInfo.Methods)
-                    {
-                        sb.AppendLine();
-                        sb.AppendLine($"#### Method: `{method.Name}`");
-                        sb.AppendLine();
-                        sb.AppendLine("```csharp");
-                        sb.AppendLine(method.CodeSnippet);
-                        sb.AppendLine("```");
-                    }
-                }
-
-                sb.AppendLine(); // Add an empty line after each class for readability
+                sb.AppendLine();
             }
 
             return sb.ToString();
         }
 
-        private void GenerateIndexMarkdown(IEnumerable<IGrouping<string, ClassInfo>> namespaceGroups, string outputPath)
+        private void GenerateIndexMarkdown(List<ClassInfo> classes, string outputPath)
         {
             var sb = new StringBuilder();
 
-            // Project Title
-            sb.AppendLine("# Project Documentation");
+            sb.AppendLine("# Project Classes Index");
             sb.AppendLine();
 
-            // Project Description
-            sb.AppendLine("This documentation provides an overview of the project's classes, organized by namespace.");
-            sb.AppendLine();
-
-            // Table of Contents
-            sb.AppendLine("## Table of Contents");
-            sb.AppendLine();
-
-            foreach (var namespaceGroup in namespaceGroups.OrderBy(g => g.Key))
+            foreach (var classInfo in classes.OrderBy(c => c.Namespace).ThenBy(c => c.Name))
             {
-                var namespaceFileName = $"{namespaceGroup.Key.Replace('.', '_')}.md";
-
-                sb.AppendLine($"- [Namespace: `{namespaceGroup.Key}`]({namespaceFileName})");
-
-                // List classes under the namespace
-                foreach (var classInfo in namespaceGroup.OrderBy(c => c.Name))
-                {
-                    var classAnchor = $"class-{classInfo.Name.ToLower()}";
-                    sb.AppendLine($"  - [`{classInfo.Name}`]({namespaceFileName}#{classAnchor})");
-                }
-
-                sb.AppendLine();
+                var namespaceFileName = $"{classInfo.Namespace.Replace('.', '_')}.md";
+                sb.AppendLine($"- [`{classInfo.Namespace}.{classInfo.Name}`]({namespaceFileName})");
             }
-
-            // Footer
-            sb.AppendLine("---");
-            sb.AppendLine("*Generated by MyApp.ReportGenerator*");
 
             var filePath = Path.Combine(outputPath, "README.md");
             File.WriteAllText(filePath, sb.ToString());

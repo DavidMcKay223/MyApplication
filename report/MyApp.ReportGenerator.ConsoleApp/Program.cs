@@ -40,22 +40,26 @@ namespace MyApp.ReportGenerator.ConsoleApp
 
             var codeAnalysisService = new CodeAnalysisService();
             var reportGenerationService = new ReportGenerationService();
+            var diagramGenerationService = new DiagramGenerationService();
 
             try
             {
                 Console.WriteLine("Analyzing source files...");
                 var classes = codeAnalysisService.AnalyzeSourceFiles(projectPath);
 
-                Console.WriteLine("Generating reports...");
+                Console.WriteLine("Generating documentation...");
                 reportGenerationService.GenerateReports(classes, outputPath);
 
-                Console.WriteLine("Reports generated successfully!");
-                Console.WriteLine($"Reports are saved in: {Path.GetFullPath(outputPath)}");
+                Console.WriteLine("Generating diagrams...");
+                diagramGenerationService.GenerateDependencyGraph(classes, outputPath);
+                diagramGenerationService.GenerateProjectDependencyGraph(classes, outputPath);
+
+                Console.WriteLine("Documentation and diagrams generated successfully!");
+                Console.WriteLine($"Output located at: {Path.GetFullPath(outputPath)}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                // Optionally, log the full exception stack trace
             }
         }
     }

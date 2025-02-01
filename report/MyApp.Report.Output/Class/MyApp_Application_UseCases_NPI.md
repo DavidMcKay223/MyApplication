@@ -1,48 +1,14 @@
-# Namespace: `MyApp.Application.UseCases.NPI`
+# ProviderUseCases
 
-## Class: `ProviderUseCases`
+**Namespace:** `MyApp.Application.UseCases.NPI`
 
-- **File Path:** `MyApp.Application/UseCases/NPI/ProviderUseCases.cs`
-- **Inherits From:** `IProviderUseCases`
+**File Path:** `MyApp.Application/UseCases/NPI/ProviderUseCases.cs`
 
-### Class Code
+## Inherits From
 
-```csharp
-public class ProviderUseCases : IProviderUseCases
-{
-    private readonly INpiRegistryClient _npiRegistryClient;
-    private readonly IMapper _mapper;
-    private readonly ILogger<ProviderUseCases> _logger;
+- `IProviderUseCases`
 
-    public ProviderUseCases(INpiRegistryClient npiRegistryClient, IMapper mapper, ILogger<ProviderUseCases> logger)
-    {
-        _npiRegistryClient = npiRegistryClient;
-        _mapper = mapper;
-        _logger = logger;
-    }
+## Methods
 
-    public async Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)
-    {
-        return _mapper.Map<List<ProviderDto>?>(await _npiRegistryClient.GetProvidersAsync(dto));
-    }
-}
-
-```
-
-### Methods
-
-| Name | Signature |
-|------|-----------|
-| `GetProvidersAsync` | `public Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)` |
-
-#### Method: `GetProvidersAsync`
-
-```csharp
-
-public async Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)
-{
-    return _mapper.Map<List<ProviderDto>?>(await _npiRegistryClient.GetProvidersAsync(dto));
-}
-
-```
+- `public` `Task<List<ProviderDto>?> GetProvidersAsync(SearchProviderCriteria dto)`
 

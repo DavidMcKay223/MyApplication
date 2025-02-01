@@ -1,30 +1,10 @@
-# Namespace: `MyApp.Application.Mappings.NPI`
+# ProviderProfile
 
-## Class: `ProviderProfile`
+**Namespace:** `MyApp.Application.Mappings.NPI`
 
-- **File Path:** `MyApp.Application/Mappings/NPI/ProviderProfile.cs`
-- **Inherits From:** `Profile`
+**File Path:** `MyApp.Application/Mappings/NPI/ProviderProfile.cs`
 
-### Class Code
+## Inherits From
 
-```csharp
-public class ProviderProfile : Profile
-{
-    public ProviderProfile()
-    {
-        // Provider DTO ↔ Entity
-        CreateMap<ProviderDto, Provider>()
-            .ReverseMap(); // Add ReverseMap() if you need bidirectional mapping
-
-        // Identifier DTO ↔ Entity
-        CreateMap<IdentifierDto, Identifier>()
-            .ReverseMap();
-
-        // Endpoint DTO ↔ Entity (assuming you have an Endpoint entity)
-        CreateMap<EndpointDto, Endpoint>()
-            .ReverseMap();
-    }
-}
-
-```
+- `Profile`
 

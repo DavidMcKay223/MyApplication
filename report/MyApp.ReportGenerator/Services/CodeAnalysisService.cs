@@ -1,4 +1,4 @@
-﻿// Services/CodeAnalysisService.cs
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,10 +15,10 @@ namespace MyApp.ReportGenerator.Services
         /// <summary>
         /// Analyzes C# source files and extracts class information.
         /// </summary>
-        public List<ClassInfo> AnalyzeSourceFiles(string projectPath)
+        public List<ClassInfo> AnalyzeSourceFiles(string solutionPath)
         {
             var classes = new List<ClassInfo>();
-            var csFiles = Directory.GetFiles(projectPath, "*.cs", SearchOption.AllDirectories);
+            var csFiles = Directory.GetFiles(solutionPath, "*.cs", SearchOption.AllDirectories);
 
             foreach (var file in csFiles)
             {
@@ -35,24 +35,84 @@ namespace MyApp.ReportGenerator.Services
                     classCode = FileHelper.NormalizeCode(classCode);
                     classCode = FileHelper.FixIndentation(classCode);
 
+                    var relativeFilePath = Path.GetRelativePath(solutionPath, file);
+
+                    // Get project name and subfolder path
+                    var (projectName, subfolderPath) = GetProjectAndSubfolderFromPath(relativeFilePath);
+
                     var classInfo = new ClassInfo
                     {
                         Name = classDecl.Identifier.Text,
                         Namespace = GetNamespace(classDecl),
                         FilePath = file,
-                        RelativePath = Path.GetRelativePath(projectPath, file),
-                        CodeSnippet = classCode
+                        RelativePath = relativeFilePath,
+                        CodeSnippet = classCode,
+                        ProjectName = projectName,
+                        SubfolderPath = subfolderPath
                     };
 
                     classInfo.BaseTypes.AddRange(GetBaseTypes(classDecl));
                     classInfo.Properties.AddRange(GetProperties(classDecl));
                     classInfo.Methods.AddRange(GetMethods(classDecl));
+                    classInfo.Dependencies.AddRange(GetDependencies(classDecl));
 
                     classes.Add(classInfo);
                 }
             }
 
             return classes;
+        }
+
+        private (string ProjectName, string SubfolderPath) GetProjectAndSubfolderFromPath(string relativeFilePath)
+        {
+            var parts = relativeFilePath.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+
+            // The first part is assumed to be the project folder
+            string projectName = parts.Length > 0 ? parts[0] : "Unknown";
+
+            // Combine the subfolder parts
+            string subfolderPath = string.Empty;
+            if (parts.Length > 2)
+            {
+                subfolderPath = Path.Combine(parts.Skip(1).Take(parts.Length - 2).ToArray());
+            }
+
+            return (projectName, subfolderPath);
+        }
+
+        private List<string> GetDependencies(ClassDeclarationSyntax classDecl)
+        {
+            var dependencies = new List<string>();
+
+            // Analyze property types
+            var propertyTypes = classDecl.Members.OfType<PropertyDeclarationSyntax>()
+                .Select(p => p.Type.ToString());
+
+            dependencies.AddRange(propertyTypes);
+
+            // Analyze method parameter and return types
+            var methodDeclarations = classDecl.Members.OfType<MethodDeclarationSyntax>();
+            foreach (var method in methodDeclarations)
+            {
+                // Return type
+                dependencies.Add(method.ReturnType.ToString());
+
+                // Parameter types
+                var parameterTypes = method.ParameterList.Parameters
+                    .Select(p => p.Type?.ToString())
+                    .Where(t => !string.IsNullOrEmpty(t));
+
+                dependencies.AddRange(parameterTypes);
+            }
+
+            // Filter out system types and primitives
+            var systemTypes = new HashSet<string> { "int", "string", "bool", "double", "float", "decimal", "object", "void", "char", "byte", "short", "long", "ulong", "ushort", "uint", "sbyte", "dynamic" };
+            dependencies = dependencies
+                .Where(dep => !systemTypes.Contains(dep) && !string.IsNullOrWhiteSpace(dep))
+                .Distinct()
+                .ToList();
+
+            return dependencies;
         }
 
         private string GetNamespace(SyntaxNode classDecl)

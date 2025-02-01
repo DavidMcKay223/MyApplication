@@ -47,5 +47,17 @@ namespace MyApp.ReportGenerator.Models
         /// The full code of the class.
         /// </summary>
         public string CodeSnippet { get; set; }
+
+        public List<string> Dependencies { get; set; } = new List<string>();
+
+        /// <summary>
+        /// The name of the project the class belongs to.
+        /// </summary>
+        public string ProjectName { get; set; }
+
+        /// <summary>
+        /// The subfolder path within the project.
+        /// </summary>
+        public string SubfolderPath { get; set; }
     }
 }
